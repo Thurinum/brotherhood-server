@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Brotherhood_Server.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Brotherhood_Server.Data
 {
-	public class BrotherhoodServerContext : DbContext
+	public class BrotherhoodServerContext : IdentityDbContext<Assassin>
 	{
 		public BrotherhoodServerContext(DbContextOptions<BrotherhoodServerContext> options) : base(options) { }
 

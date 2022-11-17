@@ -13,6 +13,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Brotherhood_Server.Data;
+using Brotherhood_Server.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Brotherhood_Server
 {
@@ -39,6 +41,8 @@ namespace Brotherhood_Server
 				options.UseLazyLoadingProxies();
 				options.UseSqlServer(Configuration.GetConnectionString("BrotherhoodServerContext"));
 			});
+
+			services.AddIdentity<Assassin, IdentityRole>().AddEntityFrameworkStores<BrotherhoodServerContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +58,8 @@ namespace Brotherhood_Server
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+			app.UseAuthentication();
 
             app.UseAuthorization();
 
