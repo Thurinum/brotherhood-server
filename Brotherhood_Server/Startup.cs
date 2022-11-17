@@ -34,8 +34,11 @@ namespace Brotherhood_Server
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Brotherhood_Server", Version = "v1" });
             });
 
-            services.AddDbContext<BrotherhoodServerContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("BrotherhoodServerContext")));
+			services.AddDbContext<BrotherhoodServerContext>(options =>
+			{
+				options.UseLazyLoadingProxies();
+				options.UseSqlServer(Configuration.GetConnectionString("BrotherhoodServerContext"));
+			});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
