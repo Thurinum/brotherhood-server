@@ -21,14 +21,14 @@ namespace Brotherhood_Server.Controllers
             _context = context;
         }
 
-        // GET: api/Cities
+		// GET: api/cities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<City>>> GetCity()
+		public async Task<ActionResult<IEnumerable<City>>> GetCity()
         {
             return await _context.City.ToListAsync();
         }
 
-        // GET: api/Cities/5
+        // GET: api/cities/69
         [HttpGet("{id}")]
         public async Task<ActionResult<City>> GetCity(int id)
         {
@@ -42,9 +42,9 @@ namespace Brotherhood_Server.Controllers
             return city;
         }
 
-        // PUT: api/Cities/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        // PUT: api/cities/69
+        [HttpPut]
+		[Route("{id}/edit")]
         public async Task<IActionResult> PutCity(int id, City city)
         {
             if (id != city.Id)
@@ -73,10 +73,10 @@ namespace Brotherhood_Server.Controllers
             return NoContent();
         }
 
-        // POST: api/Cities
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // POST: api/cities/69
         [HttpPost]
-        public async Task<ActionResult<City>> PostCity(City city)
+		[Route("add")]
+		public async Task<ActionResult<City>> PostCity(City city)
         {
             _context.City.Add(city);
             await _context.SaveChangesAsync();
@@ -85,8 +85,9 @@ namespace Brotherhood_Server.Controllers
         }
 
         // DELETE: api/Cities/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCity(int id)
+        [HttpDelete]
+		[Route("{id}/nuke")]
+		public async Task<IActionResult> DeleteCity(int id)
         {
             var city = await _context.City.FindAsync(id);
             if (city == null)
