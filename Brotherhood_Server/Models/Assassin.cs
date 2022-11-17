@@ -5,6 +5,6 @@ namespace Brotherhood_Server.Models
 {
 	public class Assassin : IdentityUser
 	{
-		public List<City> Cities { get; set; }
+		public virtual List<City> Cities { get; set; }
 	}
 }
