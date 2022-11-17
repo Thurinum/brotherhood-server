@@ -43,6 +43,15 @@ namespace Brotherhood_Server
 			});
 
 			services.AddIdentity<Assassin, IdentityRole>().AddEntityFrameworkStores<BrotherhoodServerContext>();
+
+			services.Configure<IdentityOptions>(options =>
+			{
+				options.Password.RequireDigit = false;
+				options.Password.RequiredLength = 5;
+				options.Password.RequireNonAlphanumeric = false;
+				options.Password.RequireUppercase = false;
+				options.Password.RequireLowercase = false;
+			});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
