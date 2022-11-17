@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Brotherhood_Server.Data;
 using Brotherhood_Server.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Brotherhood_Server.Controllers
 {
@@ -15,10 +17,12 @@ namespace Brotherhood_Server.Controllers
     public class CitiesController : ControllerBase
     {
         private readonly BrotherhoodServerContext _context;
+		private UserManager<Assassin> _UserManager;
 
-        public CitiesController(BrotherhoodServerContext context)
+        public CitiesController(BrotherhoodServerContext context, UserManager<Assassin> userManager)
         {
             _context = context;
+			_UserManager = userManager;
         }
 
 		// GET: api/cities
@@ -78,7 +82,11 @@ namespace Brotherhood_Server.Controllers
 		[Route("add")]
 		public async Task<ActionResult<City>> PostCity(City city)
         {
-            _context.City.Add(city);
+			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			Assassin assassin = await _UserManager.FindByIdAsync(userId);
+			city.Assassins = new List<Assassin>();
+			city.Assassins.Add(assassin);
+			_context.City.Add(city);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCity", new { id = city.Id }, city);
