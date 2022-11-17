@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Identity;
 
 namespace Brotherhood_Server.Models
@@ -15,6 +16,7 @@ namespace Brotherhood_Server.Models
 		[Required]
 		public bool IsPublic { get; set; }
 
+		[JsonIgnore]
 		public virtual List<Assassin> Assassins { get; set; }
 	}
 }
