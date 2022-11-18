@@ -12,106 +12,109 @@ using System.Security.Claims;
 
 namespace Brotherhood_Server.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CitiesController : ControllerBase
-    {
-        private readonly BrotherhoodServerContext _context;
+	[Route("api/[controller]")]
+	[ApiController]
+	public class CitiesController : ControllerBase
+	{
+		private readonly BrotherhoodServerContext _context;
 		private UserManager<Assassin> _UserManager;
 
-        public CitiesController(BrotherhoodServerContext context, UserManager<Assassin> userManager)
-        {
-            _context = context;
+		public CitiesController(BrotherhoodServerContext context, UserManager<Assassin> userManager)
+		{
+			_context = context;
 			_UserManager = userManager;
-        }
+		}
 
 		// GET: api/cities
-        [HttpGet]
+		[HttpGet]
 		public async Task<ActionResult<IEnumerable<City>>> GetCity()
-        {
-            return await _context.City.ToListAsync();
-        }
+		{
+			return await _context.City.ToListAsync();
+		}
 
-        // GET: api/cities/69
-        [HttpGet("{id}")]
-        public async Task<ActionResult<City>> GetCity(int id)
-        {
-            var city = await _context.City.FindAsync(id);
+		// GET: api/cities/69
+		[HttpGet("{id}")]
+		public async Task<ActionResult<City>> GetCity(int id)
+		{
+			var city = await _context.City.FindAsync(id);
 
-            if (city == null)
-            {
-                return NotFound();
-            }
+			if (city == null)
+			{
+				return NotFound();
+			}
 
-            return city;
-        }
+			return city;
+		}
 
-        // PUT: api/cities/69
-        [HttpPut]
+		// PUT: api/cities/69
+		[HttpPut]
 		[Route("{id}/edit")]
-        public async Task<IActionResult> PutCity(int id, City city)
-        {
-            if (id != city.Id)
-            {
-                return BadRequest();
-            }
+		public async Task<IActionResult> PutCity(int id, City city)
+		{
+			if (id != city.Id)
+			{
+				return BadRequest();
+			}
 
-            _context.Entry(city).State = EntityState.Modified;
+			_context.Entry(city).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CityExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+			try
+			{
+				await _context.SaveChangesAsync();
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				if (!CityExists(id))
+				{
+					return NotFound();
+				}
+				else
+				{
+					throw;
+				}
+			}
 
-            return NoContent();
-        }
+			return NoContent();
+		}
 
-        // POST: api/cities/69
-        [HttpPost]
+		// POST: api/cities/69
+		[HttpPost]
 		[Route("add")]
 		public async Task<ActionResult<City>> PostCity(City city)
-        {
+		{
 			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			Assassin assassin = await _UserManager.FindByIdAsync(userId);
-			city.Assassins = new List<Assassin>();
-			city.Assassins.Add(assassin);
+
+			if (assassin == null)
+				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = "Must be logged in to perform this action." });
+
+			city.Assassins = new List<Assassin> { assassin };
 			_context.City.Add(city);
-            await _context.SaveChangesAsync();
+			await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCity", new { id = city.Id }, city);
-        }
+			return CreatedAtAction("GetCity", new { id = city.Id }, city);
+		}
 
-        // DELETE: api/Cities/5
-        [HttpDelete]
+		// DELETE: api/Cities/5
+		[HttpDelete]
 		[Route("{id}/nuke")]
 		public async Task<IActionResult> DeleteCity(int id)
-        {
-            var city = await _context.City.FindAsync(id);
-            if (city == null)
-            {
-                return NotFound();
-            }
+		{
+			var city = await _context.City.FindAsync(id);
+			if (city == null)
+			{
+				return NotFound();
+			}
 
-            _context.City.Remove(city);
-            await _context.SaveChangesAsync();
+			_context.City.Remove(city);
+			await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+			return NoContent();
+		}
 
-        private bool CityExists(int id)
-        {
-            return _context.City.Any(e => e.Id == id);
-        }
-    }
+		private bool CityExists(int id)
+		{
+			return _context.City.Any(e => e.Id == id);
+		}
+	}
 }
