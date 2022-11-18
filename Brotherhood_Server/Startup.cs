@@ -40,6 +40,16 @@ namespace Brotherhood_Server
 
 			services.AddIdentity<Assassin, IdentityRole>().AddEntityFrameworkStores<BrotherhoodServerContext>();
 
+			services.AddCors(options =>
+			{
+				options.AddPolicy("Allow all", builder =>
+				{
+					builder.AllowAnyOrigin();
+					builder.AllowAnyMethod();
+					builder.AllowAnyHeader();
+				});
+			});
+
 			services.Configure<IdentityOptions>(options =>
 			{
 				options.Password.RequireDigit = false;
@@ -62,8 +72,8 @@ namespace Brotherhood_Server
 				{
 					ValidateAudience = true,
 					ValidateIssuer = true,
-					ValidAudience = "https://localhost:4200",
-					ValidIssuer = "https://localhost:44386",
+					ValidAudience = "http://localhost:4200",
+					ValidIssuer = "https://localhost:5001",
 					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.Configuration["JWT:Secret"]))
 				};
 			});
@@ -78,6 +88,8 @@ namespace Brotherhood_Server
 				app.UseSwagger();
 				app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Brotherhood_Server v1"));
 			}
+
+			app.UseCors("Allow all");
 
 			app.UseHttpsRedirection();
 

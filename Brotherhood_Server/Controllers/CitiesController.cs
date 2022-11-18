@@ -82,13 +82,13 @@ namespace Brotherhood_Server.Controllers
 		[Route("add")]
 		public async Task<ActionResult<City>> PostCity(City city)
 		{
-			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			Assassin assassin = await _UserManager.FindByIdAsync(userId);
+			// string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			/*Assassin assassin = await _UserManager.FindByIdAsync(userId);
 
 			if (assassin == null)
 				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = "Must be logged in to perform this action." });
 
-			city.Assassins = new List<Assassin> { assassin };
+			city.Assassins = new List<Assassin> { assassin };*/
 			_context.City.Add(city);
 			await _context.SaveChangesAsync();
 
