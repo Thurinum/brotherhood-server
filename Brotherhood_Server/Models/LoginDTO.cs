@@ -6,8 +6,10 @@ namespace Brotherhood_Server.Models
 {
 	public class LoginDTO
 	{
-		[Required]
 		public string UserName { get; set; }
+
+		[EmailAddress]
+		public string Email { get; set; }
 
 		[Required]
 		public string Password { get; set; }

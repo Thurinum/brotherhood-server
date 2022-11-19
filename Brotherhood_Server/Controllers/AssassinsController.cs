@@ -50,10 +50,12 @@ namespace Brotherhood_Server.Controllers
 		[Route("login")]
 		public async Task<ActionResult> Login(LoginDTO login)
 		{
-			Assassin assassin = await _UserManager.FindByNameAsync(login.UserName);
+			Assassin assassin = login.Email == null 
+				? await _UserManager.FindByNameAsync(login.UserName) 
+				: await _UserManager.FindByEmailAsync(login.Email);
 
 			if (assassin == null || !(await _UserManager.CheckPasswordAsync(assassin, login.Password)))
-				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "Invalid username or password." });
+				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "Invalid identifier or password." });
 
 			IList<string> roles = await _UserManager.GetRolesAsync(assassin);
 			List<Claim> authClaims = new List<Claim>();
@@ -61,7 +63,7 @@ namespace Brotherhood_Server.Controllers
 			foreach (string role in roles)
 				authClaims.Add(new Claim(ClaimTypes.Role, role));
 
-			authClaims.Add(new Claim(ClaimTypes.NameIdentifier, assassin.Id));
+			authClaims.Add(new Claim(ClaimTypes.Name, assassin.Id));
 
 			SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_Configuration["JWT:Secret"]));
 			JwtSecurityToken token = new JwtSecurityToken(
