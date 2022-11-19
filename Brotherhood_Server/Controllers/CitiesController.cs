@@ -96,7 +96,7 @@ namespace Brotherhood_Server.Controllers
 			if (city.Assassins.SingleOrDefault(a => a.Id == user.Id) == null)
 				return StatusCode(
 					StatusCodes.Status403Forbidden,
-					new { Message = "Ownership of this object is required to modify it." }
+					new { Message = "You must be assigned to this city in order to request a partner." }
 				);
 
 			Assassin sharee = await _UserManager.FindByNameAsync(assassinId) ?? await _UserManager.FindByEmailAsync(assassinId);
@@ -128,7 +128,14 @@ namespace Brotherhood_Server.Controllers
 		{
 			var city = await _context.City.FindAsync(id);
 			if (city == null)
-				return NotFound();
+				return NotFound($"The city {id} doesn't exist.");
+
+			Assassin user = await GetCurrentUser();
+			if (city.Assassins.SingleOrDefault(a => a.Id == user.Id) == null)
+				return StatusCode(
+					StatusCodes.Status403Forbidden,
+					new { Message = "You must be assigned to this city in order to unregister it." }
+				);
 
 			_context.City.Remove(city);
 			await _context.SaveChangesAsync();
