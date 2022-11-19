@@ -9,6 +9,7 @@ using Brotherhood_Server.Data;
 using Brotherhood_Server.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Brotherhood_Server.Controllers
 {
@@ -26,58 +27,70 @@ namespace Brotherhood_Server.Controllers
 		}
 
 		// GET: api/cities
+		// GET: api/cities/public
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<City>>> GetCity()
+		[Route("")]
+		[Route("public")]
+		public async Task<ActionResult<IEnumerable<City>>> GetCities()
 		{
 			return await _context.City.ToListAsync();
 		}
 
+		// GET: api/cities/user
+		[Authorize]
+		[HttpGet]
+		[Route("user")]
+		public async Task<ActionResult<IEnumerable<City>>> GetUserCities()
+		{
+			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			Assassin user = _context.Users.Single(u => u.Id == userId);
+
+			return user.Cities;
+		}
+
 		// GET: api/cities/69
+		[Authorize]
 		[HttpGet("{id}")]
 		public async Task<ActionResult<City>> GetCity(int id)
 		{
 			var city = await _context.City.FindAsync(id);
 
 			if (city == null)
-			{
 				return NotFound();
-			}
+
 
 			return city;
 		}
 
 		// PUT: api/cities/69
+		[Authorize]
 		[HttpPut]
 		[Route("{id}/edit")]
 		public async Task<IActionResult> PutCity(int id, City city)
 		{
-			if (id != city.Id)
-			{
+			return StatusCode(
+				StatusCodes.Status501NotImplemented,
+				"This functionality is not yet implemented. See you in TP4."
+			);
+
+			/*if (id != city.Id)
 				return BadRequest();
-			}
 
 			_context.Entry(city).State = EntityState.Modified;
 
-			try
-			{
-				await _context.SaveChangesAsync();
-			}
+			try { await _context.SaveChangesAsync(); }
 			catch (DbUpdateConcurrencyException)
 			{
 				if (!CityExists(id))
-				{
 					return NotFound();
-				}
-				else
-				{
-					throw;
-				}
+				else throw;				
 			}
 
-			return NoContent();
+			return NoContent();*/
 		}
 
-		// POST: api/cities/69
+		// POST: api/cities/add
+		[Authorize]
 		[HttpPost]
 		[Route("add")]
 		public async Task<ActionResult<City>> PostCity(City city)
@@ -95,7 +108,8 @@ namespace Brotherhood_Server.Controllers
 			return CreatedAtAction("GetCity", new { id = city.Id }, city);
 		}
 
-		// DELETE: api/Cities/5
+		// DELETE: api/cities/69/nuke
+		[Authorize]
 		[HttpDelete]
 		[Route("{id}/nuke")]
 		public async Task<IActionResult> DeleteCity(int id)
@@ -110,11 +124,6 @@ namespace Brotherhood_Server.Controllers
 			await _context.SaveChangesAsync();
 
 			return NoContent();
-		}
-
-		private bool CityExists(int id)
-		{
-			return _context.City.Any(e => e.Id == id);
 		}
 	}
 }

@@ -52,7 +52,7 @@ namespace Brotherhood_Server.Controllers
 		{
 			Assassin assassin = await _UserManager.FindByNameAsync(login.UserName);
 
-			if (assassin == null && !(await _UserManager.CheckPasswordAsync(assassin, login.Password)))
+			if (assassin == null || !(await _UserManager.CheckPasswordAsync(assassin, login.Password)))
 				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "Invalid username or password." });
 
 			IList<string> roles = await _UserManager.GetRolesAsync(assassin);
@@ -65,8 +65,8 @@ namespace Brotherhood_Server.Controllers
 
 			SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_Configuration["JWT:Secret"]));
 			JwtSecurityToken token = new JwtSecurityToken(
-				issuer: "https://localhost:4200",
-				audience: "https://localhost:44386",
+				audience: "http://localhost:4200",
+				issuer: "https://localhost:5001",
 				claims: authClaims,
 				expires: DateTime.Now.AddMinutes(30),
 				signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)

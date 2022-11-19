@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Brotherhood_Server.Migrations
 {
     [DbContext(typeof(BrotherhoodServerContext))]
-    [Migration("20221118154042_a")]
+    [Migration("20221119160803_a")]
     partial class a
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -112,15 +112,15 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "02842761-ebb2-41fd-b23d-51f0157cd00f",
+                            ConcurrencyStamp = "1712d7be-05aa-4494-bcf9-29013c5cd652",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKg4gUqCgrbcMNG/Eq8nKRK1yHN9tg73JyKbopy7AlEN+2A7fpK0EgBg1VBYcmP1lQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPHipG+l+Pt7XsNiWrz6oATOcUt33+IIyHFJ5sDeBmDvwghFkU8bQ3zB9A7JsHoBmg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "cc9d136b-30d9-443d-919e-fc43f70ec843",
+                            SecurityStamp = "04809786-e8f9-43cf-86a6-a9fa9a815cae",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });

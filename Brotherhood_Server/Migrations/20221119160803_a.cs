@@ -193,7 +193,7 @@ namespace Brotherhood_Server.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "11111111-1111-1111-1111-111111111111", 0, "02842761-ebb2-41fd-b23d-51f0157cd00f", "admin@mail.com", false, false, null, "ADMIN@MAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEKg4gUqCgrbcMNG/Eq8nKRK1yHN9tg73JyKbopy7AlEN+2A7fpK0EgBg1VBYcmP1lQ==", null, false, "cc9d136b-30d9-443d-919e-fc43f70ec843", false, "admin" });
+                values: new object[] { "11111111-1111-1111-1111-111111111111", 0, "1712d7be-05aa-4494-bcf9-29013c5cd652", "admin@mail.com", false, false, null, "ADMIN@MAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEPHipG+l+Pt7XsNiWrz6oATOcUt33+IIyHFJ5sDeBmDvwghFkU8bQ3zB9A7JsHoBmg==", null, false, "04809786-e8f9-43cf-86a6-a9fa9a815cae", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "City",
