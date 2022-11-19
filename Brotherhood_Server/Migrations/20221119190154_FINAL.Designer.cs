@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Brotherhood_Server.Migrations
 {
     [DbContext(typeof(BrotherhoodServerContext))]
-    [Migration("20221119160803_a")]
-    partial class a
+    [Migration("20221119190154_FINAL")]
+    partial class FINAL
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,8 +38,13 @@ namespace Brotherhood_Server.Migrations
                     b.HasData(
                         new
                         {
-                            AssassinsId = "11111111-1111-1111-1111-111111111111",
-                            CitiesId = 1
+                            AssassinsId = "69696969-6969-6969-6969-696969696969",
+                            CitiesId = 3
+                        },
+                        new
+                        {
+                            AssassinsId = "96969696-9696-9696-9696-969696969696",
+                            CitiesId = 5
                         });
                 });
 
@@ -110,19 +115,35 @@ namespace Brotherhood_Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "11111111-1111-1111-1111-111111111111",
+                            Id = "69696969-6969-6969-6969-696969696969",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1712d7be-05aa-4494-bcf9-29013c5cd652",
-                            Email = "admin@mail.com",
+                            ConcurrencyStamp = "7162fac2-8a5f-4eb9-8cf3-4d695659f1c5",
+                            Email = "arno.dorian@brotherhood.org",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@MAIL.COM",
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPHipG+l+Pt7XsNiWrz6oATOcUt33+IIyHFJ5sDeBmDvwghFkU8bQ3zB9A7JsHoBmg==",
+                            NormalizedEmail = "ARNO.DORIAN@BROTHERHOOD.ORG",
+                            NormalizedUserName = "ARNO",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBSNFyhPisOuVJdsvWDZTS6F6m0n0Vzb8aQgtzdnwsN0bQBHR2HMnFC13yNqAFAAFA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "04809786-e8f9-43cf-86a6-a9fa9a815cae",
+                            SecurityStamp = "359f334e-ec53-4ec5-bacf-5961ee9b961b",
                             TwoFactorEnabled = false,
-                            UserName = "admin"
+                            UserName = "Arno"
+                        },
+                        new
+                        {
+                            Id = "96969696-9696-9696-9696-969696969696",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "45b0c8d5-4351-462d-81ca-99f924add912",
+                            Email = "theodore.lheureux@archlinux.net",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "THEODORE.LHEUREUX@ARCHLINUX.NET",
+                            NormalizedUserName = "THEODORE",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJUHOQTplk8LM7lkjBst2Pa0cCNkgkMRIG43PrBMWytYVoUsqtGok3W0b8tla/EbFQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "6e55451c-b65a-45f0-9055-777a14b68b82",
+                            TwoFactorEnabled = false,
+                            UserName = "Theodore"
                         });
                 });
 
@@ -150,13 +171,13 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = 1,
                             IsPublic = true,
-                            Name = "New York"
+                            Name = "Florence"
                         },
                         new
                         {
                             Id = 2,
                             IsPublic = true,
-                            Name = "London"
+                            Name = "Rome"
                         },
                         new
                         {
@@ -168,13 +189,13 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = 4,
                             IsPublic = true,
-                            Name = "Rome"
+                            Name = "New York"
                         },
                         new
                         {
                             Id = 5,
-                            IsPublic = true,
-                            Name = "Tokyo"
+                            IsPublic = false,
+                            Name = "Longueuil"
                         });
                 });
 

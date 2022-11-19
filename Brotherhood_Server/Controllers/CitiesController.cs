@@ -87,7 +87,7 @@ namespace Brotherhood_Server.Controllers
 			if (cityDTO == null)
 				return BadRequest("The provided city is invalid.");
 
-			City city = _context.City.SingleOrDefault(c => c.Id == cityDTO.Id);
+			City city = await _context.City.FindAsync(cityDTO.Id);
 
 			if (city == null)
 				return BadRequest("The provided city is invalid.");
@@ -102,7 +102,10 @@ namespace Brotherhood_Server.Controllers
 			Assassin sharee = await _UserManager.FindByNameAsync(assassinId) ?? await _UserManager.FindByEmailAsync(assassinId);
 
 			if (sharee == null)
-				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"User {assassinId} does not exist." });
+				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Assassin {assassinId} does not exist." });
+
+			if (city.Assassins.SingleOrDefault(a => a.Id == sharee.Id) != null)
+				return StatusCode(StatusCodes.Status302Found, new { Message = $"Assassin {assassinId} is already assigned to {city.Name}." });
 
 			city.Assassins.Add(sharee);
 

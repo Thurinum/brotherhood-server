@@ -1,9 +1,9 @@
-﻿using System;
+﻿	using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Brotherhood_Server.Migrations
 {
-    public partial class a : Migration
+    public partial class FINAL : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -193,24 +193,33 @@ namespace Brotherhood_Server.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "11111111-1111-1111-1111-111111111111", 0, "1712d7be-05aa-4494-bcf9-29013c5cd652", "admin@mail.com", false, false, null, "ADMIN@MAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEPHipG+l+Pt7XsNiWrz6oATOcUt33+IIyHFJ5sDeBmDvwghFkU8bQ3zB9A7JsHoBmg==", null, false, "04809786-e8f9-43cf-86a6-a9fa9a815cae", false, "admin" });
+                values: new object[,]
+                {
+                    { "69696969-6969-6969-6969-696969696969", 0, "7162fac2-8a5f-4eb9-8cf3-4d695659f1c5", "arno.dorian@brotherhood.org", false, false, null, "ARNO.DORIAN@BROTHERHOOD.ORG", "ARNO", "AQAAAAEAACcQAAAAEBSNFyhPisOuVJdsvWDZTS6F6m0n0Vzb8aQgtzdnwsN0bQBHR2HMnFC13yNqAFAAFA==", null, false, "359f334e-ec53-4ec5-bacf-5961ee9b961b", false, "Arno" },
+                    { "96969696-9696-9696-9696-969696969696", 0, "45b0c8d5-4351-462d-81ca-99f924add912", "theodore.lheureux@archlinux.net", false, false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAEJUHOQTplk8LM7lkjBst2Pa0cCNkgkMRIG43PrBMWytYVoUsqtGok3W0b8tla/EbFQ==", null, false, "6e55451c-b65a-45f0-9055-777a14b68b82", false, "Theodore" }
+                });
 
             migrationBuilder.InsertData(
                 table: "City",
                 columns: new[] { "Id", "IsPublic", "Name" },
                 values: new object[,]
                 {
-                    { 1, true, "New York" },
-                    { 2, true, "London" },
+                    { 1, true, "Florence" },
+                    { 2, true, "Rome" },
                     { 3, true, "Paris" },
-                    { 4, true, "Rome" },
-                    { 5, true, "Tokyo" }
+                    { 4, true, "New York" },
+                    { 5, false, "Longueuil" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AssassinCity",
                 columns: new[] { "AssassinsId", "CitiesId" },
-                values: new object[] { "11111111-1111-1111-1111-111111111111", 1 });
+                values: new object[] { "69696969-6969-6969-6969-696969696969", 3 });
+
+            migrationBuilder.InsertData(
+                table: "AssassinCity",
+                columns: new[] { "AssassinsId", "CitiesId" },
+                values: new object[] { "96969696-9696-9696-9696-969696969696", 5 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
