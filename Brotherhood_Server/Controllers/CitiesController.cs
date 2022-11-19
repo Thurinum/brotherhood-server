@@ -33,7 +33,7 @@ namespace Brotherhood_Server.Controllers
 		[Route("public")]
 		public async Task<ActionResult<IEnumerable<City>>> GetCities()
 		{
-			return await _context.City.ToListAsync();
+			return await _context.City.Where(c => c.IsPublic).ToListAsync();
 		}
 
 		// GET: api/cities/user
@@ -43,7 +43,7 @@ namespace Brotherhood_Server.Controllers
 		public async Task<ActionResult<IEnumerable<City>>> GetUserCities()
 		{
 			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			Assassin user = _context.Users.Single(u => u.Id == userId);
+			Assassin user = await _UserManager.FindByIdAsync(userId);
 
 			return user.Cities;
 		}
@@ -95,13 +95,9 @@ namespace Brotherhood_Server.Controllers
 		[Route("add")]
 		public async Task<ActionResult<City>> PostCity(City city)
 		{
-			// string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			/*Assassin assassin = await _UserManager.FindByIdAsync(userId);
-
-			if (assassin == null)
-				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = "Must be logged in to perform this action." });
-
-			city.Assassins = new List<Assassin> { assassin };*/
+			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			Assassin assassin = await _UserManager.FindByIdAsync(userId);
+			city.Assassins = new List<Assassin> { assassin };
 			_context.City.Add(city);
 			await _context.SaveChangesAsync();
 
