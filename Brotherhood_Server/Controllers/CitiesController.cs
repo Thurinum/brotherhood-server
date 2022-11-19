@@ -42,8 +42,7 @@ namespace Brotherhood_Server.Controllers
 		[Route("user")]
 		public async Task<ActionResult<IEnumerable<City>>> GetUserCities()
 		{
-			Assassin user = await GetCurrentUser();
-			return user.Cities;
+			return (await GetCurrentUser()).Cities;
 		}
 
 		// GET: api/cities/69
@@ -64,28 +63,6 @@ namespace Brotherhood_Server.Controllers
 			return city;*/
 		}
 
-		// PUT: api/cities/69
-		[Authorize]
-		[HttpPut]
-		[Route("{id}/edit")]
-		public async Task<IActionResult> PutCity(int id, City city)
-		{
-			if (id != city.Id)
-				return BadRequest();
-
-			_context.Entry(city).State = EntityState.Modified;
-
-			try { await _context.SaveChangesAsync(); }
-			catch (DbUpdateConcurrencyException)
-			{
-				if (!CityExists(id))
-					return NotFound();
-				else throw;
-			}
-
-			return NoContent();
-		}
-
 		// POST: api/cities/add
 		[Authorize]
 		[HttpPost]
@@ -99,6 +76,45 @@ namespace Brotherhood_Server.Controllers
 			await _context.SaveChangesAsync();
 
 			return CreatedAtAction("GetCity", new { id = city.Id }, city);
+		}
+
+		// PUT: api/cities/69/edit
+		[Authorize]
+		[HttpPut]
+		[Route("share/{assassinId}")]
+		public async Task<IActionResult> AddCityAssassin(string assassinId, City cityDTO)
+		{
+			if (cityDTO == null)
+				return BadRequest("The provided city is invalid.");
+
+			City city = _context.City.SingleOrDefault(c => c.Id == cityDTO.Id);
+
+			if (city == null)
+				return BadRequest("The provided city is invalid.");
+
+			Assassin user = await GetCurrentUser();
+			if (city.Assassins.SingleOrDefault(a => a.Id == user.Id) == null)
+				return StatusCode(
+					StatusCodes.Status403Forbidden,
+					new { Message = "Ownership of this object is required to modify it." }
+				);
+
+			Assassin sharee = await _UserManager.FindByNameAsync(assassinId) ?? await _UserManager.FindByEmailAsync(assassinId);
+
+			if (sharee == null)
+				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"User {assassinId} does not exist." });
+
+			city.Assassins.Add(sharee);
+
+			_context.Entry(city).State = EntityState.Modified;
+
+			try { await _context.SaveChangesAsync(); }
+			catch (DbUpdateConcurrencyException)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "Something went wrong when adding owner." });
+			}
+
+			return NoContent();
 		}
 
 		// DELETE: api/cities/69/nuke
@@ -118,6 +134,5 @@ namespace Brotherhood_Server.Controllers
 		}
 
 		private async Task<Assassin> GetCurrentUser() => await _UserManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
-		private bool CityExists(int id) => _context.City.Any(e => e.Id == id);
 	}
 }
