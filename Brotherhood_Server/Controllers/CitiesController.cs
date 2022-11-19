@@ -53,11 +53,15 @@ namespace Brotherhood_Server.Controllers
 		[HttpGet("{id}")]
 		public async Task<ActionResult<City>> GetCity(int id)
 		{
+			return StatusCode(
+				StatusCodes.Status501NotImplemented,
+				"This functionality is not yet implemented. See you in TP4."
+			);
+
 			var city = await _context.City.FindAsync(id);
 
 			if (city == null)
 				return NotFound();
-
 
 			return city;
 		}
