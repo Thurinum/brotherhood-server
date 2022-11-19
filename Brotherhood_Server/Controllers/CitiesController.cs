@@ -42,15 +42,7 @@ namespace Brotherhood_Server.Controllers
 		[Route("user")]
 		public async Task<ActionResult<IEnumerable<City>>> GetUserCities()
 		{
-			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			Assassin user = await _UserManager.FindByIdAsync(userId);
-
-			if (user == null)
-				return StatusCode(
-					StatusCodes.Status401Unauthorized,
-					new { Message = "Must be logged in to perform this action." }
-				);
-
+			Assassin user = await GetCurrentUser();
 			return user.Cities;
 		}
 
@@ -125,6 +117,7 @@ namespace Brotherhood_Server.Controllers
 			return NoContent();
 		}
 
+		private async Task<Assassin> GetCurrentUser() => await _UserManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
 		private bool CityExists(int id) => _context.City.Any(e => e.Id == id);
 	}
 }
