@@ -63,7 +63,7 @@ namespace Brotherhood_Server.Controllers
 			foreach (string role in roles)
 				authClaims.Add(new Claim(ClaimTypes.Role, role));
 
-			authClaims.Add(new Claim(ClaimTypes.Name, assassin.Id));
+			authClaims.Add(new Claim(ClaimTypes.NameIdentifier, assassin.Id));
 
 			SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_Configuration["JWT:Secret"]));
 			JwtSecurityToken token = new JwtSecurityToken(

@@ -45,6 +45,12 @@ namespace Brotherhood_Server.Controllers
 			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			Assassin user = await _UserManager.FindByIdAsync(userId);
 
+			if (user == null)
+				return StatusCode(
+					StatusCodes.Status401Unauthorized,
+					new { Message = "Must be logged in to perform this action." }
+				);
+
 			return user.Cities;
 		}
 
@@ -55,15 +61,15 @@ namespace Brotherhood_Server.Controllers
 		{
 			return StatusCode(
 				StatusCodes.Status501NotImplemented,
-				"This functionality is not yet implemented. See you in TP4."
+				new { Message = "This feature is unimplemented. See you in TP4." }
 			);
 
-			var city = await _context.City.FindAsync(id);
+			/*var city = await _context.City.FindAsync(id);
 
 			if (city == null)
 				return NotFound();
 
-			return city;
+			return city;*/
 		}
 
 		// PUT: api/cities/69
@@ -72,12 +78,7 @@ namespace Brotherhood_Server.Controllers
 		[Route("{id}/edit")]
 		public async Task<IActionResult> PutCity(int id, City city)
 		{
-			return StatusCode(
-				StatusCodes.Status501NotImplemented,
-				"This functionality is not yet implemented. See you in TP4."
-			);
-
-			/*if (id != city.Id)
+			if (id != city.Id)
 				return BadRequest();
 
 			_context.Entry(city).State = EntityState.Modified;
@@ -87,10 +88,10 @@ namespace Brotherhood_Server.Controllers
 			{
 				if (!CityExists(id))
 					return NotFound();
-				else throw;				
+				else throw;
 			}
 
-			return NoContent();*/
+			return NoContent();
 		}
 
 		// POST: api/cities/add
@@ -116,14 +117,14 @@ namespace Brotherhood_Server.Controllers
 		{
 			var city = await _context.City.FindAsync(id);
 			if (city == null)
-			{
 				return NotFound();
-			}
 
 			_context.City.Remove(city);
 			await _context.SaveChangesAsync();
 
 			return NoContent();
 		}
+
+		private bool CityExists(int id) => _context.City.Any(e => e.Id == id);
 	}
 }
