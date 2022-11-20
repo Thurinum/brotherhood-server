@@ -1,9 +1,9 @@
-﻿	using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Brotherhood_Server.Migrations
 {
-    public partial class FINAL : Migration
+    public partial class final : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -195,8 +195,8 @@ namespace Brotherhood_Server.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "69696969-6969-6969-6969-696969696969", 0, "7162fac2-8a5f-4eb9-8cf3-4d695659f1c5", "arno.dorian@brotherhood.org", false, false, null, "ARNO.DORIAN@BROTHERHOOD.ORG", "ARNO", "AQAAAAEAACcQAAAAEBSNFyhPisOuVJdsvWDZTS6F6m0n0Vzb8aQgtzdnwsN0bQBHR2HMnFC13yNqAFAAFA==", null, false, "359f334e-ec53-4ec5-bacf-5961ee9b961b", false, "Arno" },
-                    { "96969696-9696-9696-9696-969696969696", 0, "45b0c8d5-4351-462d-81ca-99f924add912", "theodore.lheureux@archlinux.net", false, false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAEJUHOQTplk8LM7lkjBst2Pa0cCNkgkMRIG43PrBMWytYVoUsqtGok3W0b8tla/EbFQ==", null, false, "6e55451c-b65a-45f0-9055-777a14b68b82", false, "Theodore" }
+                    { "69696969-6969-6969-6969-696969696969", 0, "47b20896-df81-4f45-8520-cc45eb1db9ba", "arno.dorian@brotherhood.org", false, false, null, "ARNO.DORIAN@BROTHERHOOD.ORG", "ARNO", "AQAAAAEAACcQAAAAEL1NVwoNyfPfzia1qwMtLLPJ099RP6KjNwxOxm1QjGi1D89jfSbOjRSQW0fQQyu6IQ==", null, false, "e192ad9a-a0e7-4760-83b9-418e8d9d1370", false, "Arno" },
+                    { "96969696-9696-9696-9696-969696969696", 0, "6c51c489-e9dc-4956-9dca-208d6f743781", "theodore.lheureux@archlinux.net", false, false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAEJXCGmKlX4DAgynNCXQr9TA1B89bl/iRSCgfH/OuAFzrFRgBXrFz8hQfPsmLOH0HZw==", null, false, "1140e243-367b-450d-945d-9cd8189f33dc", false, "Theodore" }
                 });
 
             migrationBuilder.InsertData(
@@ -207,19 +207,21 @@ namespace Brotherhood_Server.Migrations
                     { 1, true, "Florence" },
                     { 2, true, "Rome" },
                     { 3, true, "Paris" },
-                    { 4, true, "New York" },
+                    { 4, true, "Venice" },
                     { 5, false, "Longueuil" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AssassinCity",
                 columns: new[] { "AssassinsId", "CitiesId" },
-                values: new object[] { "69696969-6969-6969-6969-696969696969", 3 });
-
-            migrationBuilder.InsertData(
-                table: "AssassinCity",
-                columns: new[] { "AssassinsId", "CitiesId" },
-                values: new object[] { "96969696-9696-9696-9696-969696969696", 5 });
+                values: new object[,]
+                {
+                    { "96969696-9696-9696-9696-969696969696", 1 },
+                    { "96969696-9696-9696-9696-969696969696", 2 },
+                    { "69696969-6969-6969-6969-696969696969", 3 },
+                    { "96969696-9696-9696-9696-969696969696", 4 },
+                    { "96969696-9696-9696-9696-969696969696", 5 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

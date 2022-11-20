@@ -36,8 +36,23 @@ namespace Brotherhood_Server.Migrations
                     b.HasData(
                         new
                         {
+                            AssassinsId = "96969696-9696-9696-9696-969696969696",
+                            CitiesId = 1
+                        },
+                        new
+                        {
+                            AssassinsId = "96969696-9696-9696-9696-969696969696",
+                            CitiesId = 2
+                        },
+                        new
+                        {
                             AssassinsId = "69696969-6969-6969-6969-696969696969",
                             CitiesId = 3
+                        },
+                        new
+                        {
+                            AssassinsId = "96969696-9696-9696-9696-969696969696",
+                            CitiesId = 4
                         },
                         new
                         {
@@ -115,15 +130,15 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "69696969-6969-6969-6969-696969696969",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7162fac2-8a5f-4eb9-8cf3-4d695659f1c5",
+                            ConcurrencyStamp = "47b20896-df81-4f45-8520-cc45eb1db9ba",
                             Email = "arno.dorian@brotherhood.org",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ARNO.DORIAN@BROTHERHOOD.ORG",
                             NormalizedUserName = "ARNO",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBSNFyhPisOuVJdsvWDZTS6F6m0n0Vzb8aQgtzdnwsN0bQBHR2HMnFC13yNqAFAAFA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEL1NVwoNyfPfzia1qwMtLLPJ099RP6KjNwxOxm1QjGi1D89jfSbOjRSQW0fQQyu6IQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "359f334e-ec53-4ec5-bacf-5961ee9b961b",
+                            SecurityStamp = "e192ad9a-a0e7-4760-83b9-418e8d9d1370",
                             TwoFactorEnabled = false,
                             UserName = "Arno"
                         },
@@ -131,15 +146,15 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "96969696-9696-9696-9696-969696969696",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "45b0c8d5-4351-462d-81ca-99f924add912",
+                            ConcurrencyStamp = "6c51c489-e9dc-4956-9dca-208d6f743781",
                             Email = "theodore.lheureux@archlinux.net",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "THEODORE.LHEUREUX@ARCHLINUX.NET",
                             NormalizedUserName = "THEODORE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJUHOQTplk8LM7lkjBst2Pa0cCNkgkMRIG43PrBMWytYVoUsqtGok3W0b8tla/EbFQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJXCGmKlX4DAgynNCXQr9TA1B89bl/iRSCgfH/OuAFzrFRgBXrFz8hQfPsmLOH0HZw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6e55451c-b65a-45f0-9055-777a14b68b82",
+                            SecurityStamp = "1140e243-367b-450d-945d-9cd8189f33dc",
                             TwoFactorEnabled = false,
                             UserName = "Theodore"
                         });
@@ -187,7 +202,7 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = 4,
                             IsPublic = true,
-                            Name = "New York"
+                            Name = "Venice"
                         },
                         new
                         {

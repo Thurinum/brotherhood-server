@@ -17,7 +17,7 @@ namespace Brotherhood_Server.Data
 				new City() { Id = 1, Name = "Florence", IsPublic = true },
 				new City() { Id = 2, Name = "Rome", IsPublic = true },
 				new City() { Id = 3, Name = "Paris", IsPublic = true },
-				new City() { Id = 4, Name = "New York", IsPublic = true },
+				new City() { Id = 4, Name = "Venice", IsPublic = true },
 				new City() { Id = 5, Name = "Longueuil", IsPublic = false }
 			);
 
@@ -44,12 +44,26 @@ namespace Brotherhood_Server.Data
 			};
 			erhion.PasswordHash = hasher.HashPassword(erhion, "dioxus420");
 
+			// Theodore
+			Assassin ezio = new Assassin()
+			{
+				Id = "96969696-9696-9696-9696-969696969696",
+				UserName = "Ezio",
+				NormalizedUserName = "EZIO",
+				Email = "ezio.auditore@firenze.it",
+				NormalizedEmail = "EZIO.AUDITORE@FIRENZE.IT"
+			};
+			ezio.PasswordHash = hasher.HashPassword(ezio, "requiescat in pace");
+
 			builder.Entity<Assassin>().HasData(arno, erhion);
 			builder.Entity<City>()
 				.HasMany(c => c.Assassins)
 				.WithMany(a => a.Cities)
 				.UsingEntity(e => e.HasData(
+					new { CitiesId = 1, AssassinsId = ezio.Id },
+					new { CitiesId = 2, AssassinsId = ezio.Id },
 					new { CitiesId = 3, AssassinsId = arno.Id },
+					new { CitiesId = 4, AssassinsId = ezio.Id },
 					new { CitiesId = 5, AssassinsId = erhion.Id }
 				));
 		}
