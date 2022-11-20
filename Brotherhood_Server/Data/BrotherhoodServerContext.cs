@@ -47,7 +47,7 @@ namespace Brotherhood_Server.Data
 			// Theodore
 			Assassin ezio = new Assassin()
 			{
-				Id = "96969696-9696-9696-9696-969696969696",
+				Id = "11111111-1111-1111-1111-111111111111",
 				UserName = "Ezio",
 				NormalizedUserName = "EZIO",
 				Email = "ezio.auditore@firenze.it",
@@ -55,7 +55,7 @@ namespace Brotherhood_Server.Data
 			};
 			ezio.PasswordHash = hasher.HashPassword(ezio, "requiescat in pace");
 
-			builder.Entity<Assassin>().HasData(arno, erhion);
+			builder.Entity<Assassin>().HasData(ezio, arno, erhion);
 			builder.Entity<City>()
 				.HasMany(c => c.Assassins)
 				.WithMany(a => a.Cities)

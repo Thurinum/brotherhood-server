@@ -195,8 +195,9 @@ namespace Brotherhood_Server.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "69696969-6969-6969-6969-696969696969", 0, "47b20896-df81-4f45-8520-cc45eb1db9ba", "arno.dorian@brotherhood.org", false, false, null, "ARNO.DORIAN@BROTHERHOOD.ORG", "ARNO", "AQAAAAEAACcQAAAAEL1NVwoNyfPfzia1qwMtLLPJ099RP6KjNwxOxm1QjGi1D89jfSbOjRSQW0fQQyu6IQ==", null, false, "e192ad9a-a0e7-4760-83b9-418e8d9d1370", false, "Arno" },
-                    { "96969696-9696-9696-9696-969696969696", 0, "6c51c489-e9dc-4956-9dca-208d6f743781", "theodore.lheureux@archlinux.net", false, false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAEJXCGmKlX4DAgynNCXQr9TA1B89bl/iRSCgfH/OuAFzrFRgBXrFz8hQfPsmLOH0HZw==", null, false, "1140e243-367b-450d-945d-9cd8189f33dc", false, "Theodore" }
+                    { "11111111-1111-1111-1111-111111111111", 0, "734fed8e-ecf7-4b69-b7e0-55d0b3d15fa2", "ezio.auditore@firenze.it", false, false, null, "EZIO.AUDITORE@FIRENZE.IT", "EZIO", "AQAAAAEAACcQAAAAEPIhphdi3udgU4xxNabbehlHba732TgB/oooaPo6nyhyBSZ9L5lIusmhB0HZLwxDeQ==", null, false, "fca5c500-6de8-42eb-b8b5-30b4846e70ba", false, "Ezio" },
+                    { "69696969-6969-6969-6969-696969696969", 0, "9c12f1f4-b2cd-4b28-9c07-e433abbfdad0", "arno.dorian@brotherhood.org", false, false, null, "ARNO.DORIAN@BROTHERHOOD.ORG", "ARNO", "AQAAAAEAACcQAAAAEDLN8SdO2g2h50cCXIANccUQjMRGe3rIATHwYkqrPChaQkFnBm+zP6+HZZLch9yJ+w==", null, false, "3c3c08ff-e817-45b1-9727-6a9edf1ff480", false, "Arno" },
+                    { "96969696-9696-9696-9696-969696969696", 0, "e6195a8d-532b-4538-a32b-4b9d8a66c3d2", "theodore.lheureux@archlinux.net", false, false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAEE4SoN3dVFPd+xmDR638UACFWzX1k30WrKDgYLnpBTqb7/bzmNZ7leBCNFB3Wgza3g==", null, false, "9b4ace7b-d8f9-49f6-a8ce-d200afe0de0a", false, "Theodore" }
                 });
 
             migrationBuilder.InsertData(
@@ -216,10 +217,10 @@ namespace Brotherhood_Server.Migrations
                 columns: new[] { "AssassinsId", "CitiesId" },
                 values: new object[,]
                 {
-                    { "96969696-9696-9696-9696-969696969696", 1 },
-                    { "96969696-9696-9696-9696-969696969696", 2 },
+                    { "11111111-1111-1111-1111-111111111111", 1 },
+                    { "11111111-1111-1111-1111-111111111111", 2 },
                     { "69696969-6969-6969-6969-696969696969", 3 },
-                    { "96969696-9696-9696-9696-969696969696", 4 },
+                    { "11111111-1111-1111-1111-111111111111", 4 },
                     { "96969696-9696-9696-9696-969696969696", 5 }
                 });
 
