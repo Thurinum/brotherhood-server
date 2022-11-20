@@ -55,7 +55,7 @@ namespace Brotherhood_Server.Data
 			};
 			ezio.PasswordHash = hasher.HashPassword(ezio, "requiescat in pace");
 
-			builder.Entity<Assassin>().HasData(ezio, arno, erhion);
+			builder.Entity<Assassin>().HasData(ezio,	arno, erhion);
 			builder.Entity<City>()
 				.HasMany(c => c.Assassins)
 				.WithMany(a => a.Cities)
