@@ -93,6 +93,8 @@ namespace Brotherhood_Server
 
 			app.UseHttpsRedirection();
 
+			app.UseStaticFiles();
+
 			app.UseRouting();
 
 			app.UseAuthentication();
