@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Brotherhood_Server.Migrations
 {
-    public partial class final : Migration
+    public partial class a : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,11 +47,28 @@ namespace Brotherhood_Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AssassinationTarget",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CityId = table.Column<int>(type: "int", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssassinationTarget", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "City",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CoverTargetId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     IsPublic = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -195,21 +212,33 @@ namespace Brotherhood_Server.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "11111111-1111-1111-1111-111111111111", 0, "734fed8e-ecf7-4b69-b7e0-55d0b3d15fa2", "ezio.auditore@firenze.it", false, false, null, "EZIO.AUDITORE@FIRENZE.IT", "EZIO", "AQAAAAEAACcQAAAAEPIhphdi3udgU4xxNabbehlHba732TgB/oooaPo6nyhyBSZ9L5lIusmhB0HZLwxDeQ==", null, false, "fca5c500-6de8-42eb-b8b5-30b4846e70ba", false, "Ezio" },
-                    { "69696969-6969-6969-6969-696969696969", 0, "9c12f1f4-b2cd-4b28-9c07-e433abbfdad0", "arno.dorian@brotherhood.org", false, false, null, "ARNO.DORIAN@BROTHERHOOD.ORG", "ARNO", "AQAAAAEAACcQAAAAEDLN8SdO2g2h50cCXIANccUQjMRGe3rIATHwYkqrPChaQkFnBm+zP6+HZZLch9yJ+w==", null, false, "3c3c08ff-e817-45b1-9727-6a9edf1ff480", false, "Arno" },
-                    { "96969696-9696-9696-9696-969696969696", 0, "e6195a8d-532b-4538-a32b-4b9d8a66c3d2", "theodore.lheureux@archlinux.net", false, false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAEE4SoN3dVFPd+xmDR638UACFWzX1k30WrKDgYLnpBTqb7/bzmNZ7leBCNFB3Wgza3g==", null, false, "9b4ace7b-d8f9-49f6-a8ce-d200afe0de0a", false, "Theodore" }
+                    { "11111111-1111-1111-1111-111111111111", 0, "b5aadd78-5832-4622-8f89-e7188cb131ff", "ezio.auditore@firenze.it", false, false, null, "EZIO.AUDITORE@FIRENZE.IT", "EZIO", "AQAAAAEAACcQAAAAEFxLLV1yk7lI5DQ3fAjhXno+QZx13DlIe0YV3lvswSZ+ObmCorbnnvOSVTBoV8eiTA==", null, false, "bc12f292-6842-492f-be38-58d42f55852d", false, "Ezio" },
+                    { "69696969-6969-6969-6969-696969696969", 0, "ba5a0a25-2e3f-4310-a6cf-21e152575277", "arno.dorian@brotherhood.org", false, false, null, "ARNO.DORIAN@BROTHERHOOD.ORG", "ARNO", "AQAAAAEAACcQAAAAEKyP0WvSoX63XesVzLpDDglqEkL6FThi1RWsLKD43KBgdmxU+XNwe75gR+tXXwzrxA==", null, false, "68981de8-e979-407e-b626-dfeca51de42a", false, "Arno" },
+                    { "96969696-9696-9696-9696-969696969696", 0, "b78819ad-3636-41a9-99a4-8bd1c83286fa", "theodore.lheureux@archlinux.net", false, false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAEEHO0AN4EQojLajhRHgoM+YzCxkPQky4LHZaTBBK/60jUkA1AcyVj7N/rusXAbpqrg==", null, false, "e7678bc0-1c9d-4865-9eb7-d54cb8b6967e", false, "Theodore" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AssassinationTarget",
+                columns: new[] { "Id", "CityId", "EmailAddress", "FirstName", "LastName" },
+                values: new object[,]
+                {
+                    { 1, 5, "haytham.kenway@order.org", "Haytham", "Kenway" },
+                    { 2, 2, "rodrigo.borgia@vatican.va", "Rodrigo", "Borgia" },
+                    { 3, 5, "shay.cormac@order.org", "Shay", "Cormac" },
+                    { 4, 5, "charles.lee@order.org", "Charles", "Lee" },
+                    { 5, 3, "valerie.turgeon@abstergo.org", "Valerie", "Turgeon" }
                 });
 
             migrationBuilder.InsertData(
                 table: "City",
-                columns: new[] { "Id", "IsPublic", "Name" },
+                columns: new[] { "Id", "CoverTargetId", "IsPublic", "Name" },
                 values: new object[,]
                 {
-                    { 1, true, "Florence" },
-                    { 2, true, "Rome" },
-                    { 3, true, "Paris" },
-                    { 4, true, "Venice" },
-                    { 5, false, "Longueuil" }
+                    { 1, 0, true, "Florence" },
+                    { 2, 0, true, "Rome" },
+                    { 3, 0, true, "Paris" },
+                    { 4, 0, true, "Venice" },
+                    { 5, 0, false, "Longueuil" }
                 });
 
             migrationBuilder.InsertData(
@@ -285,6 +314,9 @@ namespace Brotherhood_Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "AssassinationTarget");
 
             migrationBuilder.DropTable(
                 name: "AssassinCity");

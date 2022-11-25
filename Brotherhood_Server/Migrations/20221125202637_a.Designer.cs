@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Brotherhood_Server.Migrations
 {
     [DbContext(typeof(BrotherhoodServerContext))]
-    [Migration("20221120003622_final")]
-    partial class final
+    [Migration("20221125202637_a")]
+    partial class a
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -132,15 +132,15 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "734fed8e-ecf7-4b69-b7e0-55d0b3d15fa2",
+                            ConcurrencyStamp = "b5aadd78-5832-4622-8f89-e7188cb131ff",
                             Email = "ezio.auditore@firenze.it",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "EZIO.AUDITORE@FIRENZE.IT",
                             NormalizedUserName = "EZIO",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPIhphdi3udgU4xxNabbehlHba732TgB/oooaPo6nyhyBSZ9L5lIusmhB0HZLwxDeQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFxLLV1yk7lI5DQ3fAjhXno+QZx13DlIe0YV3lvswSZ+ObmCorbnnvOSVTBoV8eiTA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "fca5c500-6de8-42eb-b8b5-30b4846e70ba",
+                            SecurityStamp = "bc12f292-6842-492f-be38-58d42f55852d",
                             TwoFactorEnabled = false,
                             UserName = "Ezio"
                         },
@@ -148,15 +148,15 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "69696969-6969-6969-6969-696969696969",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9c12f1f4-b2cd-4b28-9c07-e433abbfdad0",
+                            ConcurrencyStamp = "ba5a0a25-2e3f-4310-a6cf-21e152575277",
                             Email = "arno.dorian@brotherhood.org",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ARNO.DORIAN@BROTHERHOOD.ORG",
                             NormalizedUserName = "ARNO",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDLN8SdO2g2h50cCXIANccUQjMRGe3rIATHwYkqrPChaQkFnBm+zP6+HZZLch9yJ+w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKyP0WvSoX63XesVzLpDDglqEkL6FThi1RWsLKD43KBgdmxU+XNwe75gR+tXXwzrxA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3c3c08ff-e817-45b1-9727-6a9edf1ff480",
+                            SecurityStamp = "68981de8-e979-407e-b626-dfeca51de42a",
                             TwoFactorEnabled = false,
                             UserName = "Arno"
                         },
@@ -164,17 +164,87 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "96969696-9696-9696-9696-969696969696",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e6195a8d-532b-4538-a32b-4b9d8a66c3d2",
+                            ConcurrencyStamp = "b78819ad-3636-41a9-99a4-8bd1c83286fa",
                             Email = "theodore.lheureux@archlinux.net",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "THEODORE.LHEUREUX@ARCHLINUX.NET",
                             NormalizedUserName = "THEODORE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEE4SoN3dVFPd+xmDR638UACFWzX1k30WrKDgYLnpBTqb7/bzmNZ7leBCNFB3Wgza3g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEHO0AN4EQojLajhRHgoM+YzCxkPQky4LHZaTBBK/60jUkA1AcyVj7N/rusXAbpqrg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9b4ace7b-d8f9-49f6-a8ce-d200afe0de0a",
+                            SecurityStamp = "e7678bc0-1c9d-4865-9eb7-d54cb8b6967e",
                             TwoFactorEnabled = false,
                             UserName = "Theodore"
+                        });
+                });
+
+            modelBuilder.Entity("Brotherhood_Server.Models.AssassinationTarget", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EmailAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AssassinationTarget");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CityId = 5,
+                            EmailAddress = "haytham.kenway@order.org",
+                            FirstName = "Haytham",
+                            LastName = "Kenway"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CityId = 2,
+                            EmailAddress = "rodrigo.borgia@vatican.va",
+                            FirstName = "Rodrigo",
+                            LastName = "Borgia"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CityId = 5,
+                            EmailAddress = "shay.cormac@order.org",
+                            FirstName = "Shay",
+                            LastName = "Cormac"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CityId = 5,
+                            EmailAddress = "charles.lee@order.org",
+                            FirstName = "Charles",
+                            LastName = "Lee"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CityId = 3,
+                            EmailAddress = "valerie.turgeon@abstergo.org",
+                            FirstName = "Valerie",
+                            LastName = "Turgeon"
                         });
                 });
 
@@ -184,6 +254,9 @@ namespace Brotherhood_Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CoverTargetId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsPublic")
                         .HasColumnType("bit");
@@ -201,30 +274,35 @@ namespace Brotherhood_Server.Migrations
                         new
                         {
                             Id = 1,
+                            CoverTargetId = 0,
                             IsPublic = true,
                             Name = "Florence"
                         },
                         new
                         {
                             Id = 2,
+                            CoverTargetId = 0,
                             IsPublic = true,
                             Name = "Rome"
                         },
                         new
                         {
                             Id = 3,
+                            CoverTargetId = 0,
                             IsPublic = true,
                             Name = "Paris"
                         },
                         new
                         {
                             Id = 4,
+                            CoverTargetId = 0,
                             IsPublic = true,
                             Name = "Venice"
                         },
                         new
                         {
                             Id = 5,
+                            CoverTargetId = 0,
                             IsPublic = false,
                             Name = "Longueuil"
                         });

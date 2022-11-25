@@ -21,6 +21,14 @@ namespace Brotherhood_Server.Data
 				new City() { Id = 5, Name = "Longueuil", IsPublic = false }
 			);
 
+			builder.Entity<AssassinationTarget>().HasData(
+				new AssassinationTarget() { Id = 1, CityId = 5, FirstName = "Haytham", LastName = "Kenway", EmailAddress = "haytham.kenway@order.org" },
+				new AssassinationTarget() { Id = 2, CityId = 2, FirstName = "Rodrigo", LastName = "Borgia", EmailAddress = "rodrigo.borgia@vatican.va" },
+				new AssassinationTarget() { Id = 3, CityId = 5, FirstName = "Shay", LastName = "Cormac", EmailAddress = "shay.cormac@order.org" },
+				new AssassinationTarget() { Id = 4, CityId = 5, FirstName = "Charles", LastName = "Lee", EmailAddress = "charles.lee@order.org" },
+				new AssassinationTarget() { Id = 5, CityId = 3, FirstName = "Valerie", LastName = "Turgeon", EmailAddress = "valerie.turgeon@abstergo.org" }
+			);
+
 			// Arno
 			PasswordHasher<Assassin> hasher = new PasswordHasher<Assassin>();
 			Assassin arno = new Assassin()
