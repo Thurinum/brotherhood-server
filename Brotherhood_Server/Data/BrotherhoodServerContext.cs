@@ -79,5 +79,9 @@ namespace Brotherhood_Server.Data
 
 
 		public DbSet<City> City { get; set; }
+
+
+
+		public DbSet<Brotherhood_Server.Models.AssassinationTarget> AssassinationTarget { get; set; }
 	}
 }

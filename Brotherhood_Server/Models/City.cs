@@ -20,5 +20,8 @@ namespace Brotherhood_Server.Models
 
 		[JsonIgnore]
 		public virtual List<Assassin> Assassins { get; set; }
+
+		[JsonIgnore]
+		public virtual List<AssassinationTarget> Targets { get; set; }
 	}
 }

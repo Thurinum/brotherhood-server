@@ -45,22 +45,22 @@ namespace Brotherhood_Server.Controllers
 			return (await GetCurrentUser()).Cities;
 		}
 
-		// GET: api/cities/69
+		// GET: api/cities/69/targets
 		[Authorize]
-		[HttpGet("{id}")]
-		public async Task<ActionResult<City>> GetCity(int id)
+		[HttpGet("{id}/targets")]
+		public async Task<ActionResult<IEnumerable<AssassinationTarget>>> GetCityTargets(int id)
 		{
-			return StatusCode(
-				StatusCodes.Status501NotImplemented,
-				new { Message = "This feature is unimplemented. See you in TP4." }
-			);
-
-			/*var city = await _context.City.FindAsync(id);
+			var city = await _context.City.FindAsync(id);
 
 			if (city == null)
 				return NotFound();
 
-			return city;*/
+			Assassin user = await GetCurrentUser();
+			if (!city.IsPublic && city.Assassins.SingleOrDefault(a => a.Id == user.Id) == null)
+				return StatusCode(StatusCodes.Status403Forbidden,
+					new { Message = "You must be assigned to this city in order view its targets." });
+
+			return city.Targets;
 		}
 
 		// POST: api/cities/add
