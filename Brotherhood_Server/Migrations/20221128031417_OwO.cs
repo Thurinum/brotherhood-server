@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Brotherhood_Server.Migrations
 {
-    public partial class a : Migration
+    public partial class OwO : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,6 +26,8 @@ namespace Brotherhood_Server.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -47,34 +49,34 @@ namespace Brotherhood_Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AssassinationTarget",
+                name: "Cities",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CityId = table.Column<int>(type: "int", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AssassinationTarget", x => x.Id);
+                    table.PrimaryKey("PK_Cities", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "City",
+                name: "Contracts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CoverTargetId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    FeaturedContractId = table.Column<int>(type: "int", nullable: true),
+                    CityId = table.Column<int>(type: "int", nullable: false),
+                    Codename = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Briefing = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
                     IsPublic = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_City", x => x.Id);
+                    table.PrimaryKey("PK_Contracts", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -184,66 +186,87 @@ namespace Brotherhood_Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AssassinCity",
+                name: "AssassinContract",
                 columns: table => new
                 {
                     AssassinsId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CitiesId = table.Column<int>(type: "int", nullable: false)
+                    ContractsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AssassinCity", x => new { x.AssassinsId, x.CitiesId });
+                    table.PrimaryKey("PK_AssassinContract", x => new { x.AssassinsId, x.ContractsId });
                     table.ForeignKey(
-                        name: "FK_AssassinCity_AspNetUsers_AssassinsId",
+                        name: "FK_AssassinContract_AspNetUsers_AssassinsId",
                         column: x => x.AssassinsId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AssassinCity_City_CitiesId",
-                        column: x => x.CitiesId,
-                        principalTable: "City",
+                        name: "FK_AssassinContract_Contracts_ContractsId",
+                        column: x => x.ContractsId,
+                        principalTable: "Contracts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Targets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ContractId = table.Column<int>(type: "int", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Targets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Targets_Contracts_ContractId",
+                        column: x => x.ContractId,
+                        principalTable: "Contracts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "11111111-1111-1111-1111-111111111111", 0, "b5aadd78-5832-4622-8f89-e7188cb131ff", "ezio.auditore@firenze.it", false, false, null, "EZIO.AUDITORE@FIRENZE.IT", "EZIO", "AQAAAAEAACcQAAAAEFxLLV1yk7lI5DQ3fAjhXno+QZx13DlIe0YV3lvswSZ+ObmCorbnnvOSVTBoV8eiTA==", null, false, "bc12f292-6842-492f-be38-58d42f55852d", false, "Ezio" },
-                    { "69696969-6969-6969-6969-696969696969", 0, "ba5a0a25-2e3f-4310-a6cf-21e152575277", "arno.dorian@brotherhood.org", false, false, null, "ARNO.DORIAN@BROTHERHOOD.ORG", "ARNO", "AQAAAAEAACcQAAAAEKyP0WvSoX63XesVzLpDDglqEkL6FThi1RWsLKD43KBgdmxU+XNwe75gR+tXXwzrxA==", null, false, "68981de8-e979-407e-b626-dfeca51de42a", false, "Arno" },
-                    { "96969696-9696-9696-9696-969696969696", 0, "b78819ad-3636-41a9-99a4-8bd1c83286fa", "theodore.lheureux@archlinux.net", false, false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAEEHO0AN4EQojLajhRHgoM+YzCxkPQky4LHZaTBBK/60jUkA1AcyVj7N/rusXAbpqrg==", null, false, "e7678bc0-1c9d-4865-9eb7-d54cb8b6967e", false, "Theodore" }
+                    { "11111111-1111-1111-1111-111111111111", 0, "85bdc95b-43f3-431a-a3ef-7039eb1f8531", "ezio.auditore@firenze.it", false, "Ezio", "Auditore", false, null, "EZIO.AUDITORE@FIRENZE.IT", "EZIO", "AQAAAAEAACcQAAAAEMwKXyY54FBWk+5Ov7SFs8HL551vDaRySnk8mO3whfRdEjWrUHV2BLbtdvcUNzKQBg==", null, false, "addfe49f-ffa6-43b8-9e77-3f07c4d04f39", false, "Ezio" },
+                    { "69696969-6969-6969-6969-696969696969", 0, "b06e4d75-9786-40cd-82a4-6e4dab2ccbe9", "arno.dorian@brotherhood.fr", false, "Arno", "Dorian", false, null, "ARNO.DORIAN@BROTHERHOOD.fr", "ARNO", "AQAAAAEAACcQAAAAECqyuqxc30N9POc3A/bBnFU8XdFSUv0JggBeT+N3pHkUzb8ORKLsmZnDhxR2gYfOVw==", null, false, "bca832ca-1dd0-4501-9bd7-46ea436f61c9", false, "Arno" },
+                    { "96969696-9696-9696-9696-969696969696", 0, "5dbc2d7e-761a-480b-bf2a-43470e2a8eb2", "theodore.lheureux@archlinux.net", false, "Theodore", "l'Heureux", false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAEI+U9idSpbKoh19tMbgHh4ynqDODALcHLtks+ar5Xk/9lSdP4ZwrwpYa1wGjgX49Ew==", null, false, "a13f04ea-1fe0-4faf-bdd9-2cff0566ca51", false, "Theodore" }
                 });
 
             migrationBuilder.InsertData(
-                table: "AssassinationTarget",
-                columns: new[] { "Id", "CityId", "EmailAddress", "FirstName", "LastName" },
+                table: "Cities",
+                columns: new[] { "Id", "Country", "Name" },
                 values: new object[,]
                 {
-                    { 1, 5, "haytham.kenway@order.org", "Haytham", "Kenway" },
-                    { 2, 2, "rodrigo.borgia@vatican.va", "Rodrigo", "Borgia" },
-                    { 3, 5, "shay.cormac@order.org", "Shay", "Cormac" },
-                    { 4, 5, "charles.lee@order.org", "Charles", "Lee" },
-                    { 5, 3, "valerie.turgeon@abstergo.org", "Valerie", "Turgeon" }
+                    { 1, "Italy", "Florence" },
+                    { 2, "Italy", "Rome" },
+                    { 3, "France", "Paris" },
+                    { 4, "Italy", "Venice" },
+                    { 5, "Canada", "Longueuil" }
                 });
 
             migrationBuilder.InsertData(
-                table: "City",
-                columns: new[] { "Id", "CoverTargetId", "IsPublic", "Name" },
+                table: "Contracts",
+                columns: new[] { "Id", "Briefing", "CityId", "Codename", "FeaturedContractId", "IsPublic" },
                 values: new object[,]
                 {
-                    { 1, 0, true, "Florence" },
-                    { 2, 0, true, "Rome" },
-                    { 3, 0, true, "Paris" },
-                    { 4, 0, true, "Venice" },
-                    { 5, 0, false, "Longueuil" }
+                    { 1, "The dastarly Haytham Kenway is disrupting peace and hindering freedom of the people of America. Bring him and his acolytes down and ensure justice is brought to the people.", 5, "Codename: LoneEagle", null, true },
+                    { 2, "The Pope is a threat to the people of Italy. Bring him down and ensure justice is brought to the people.", 2, "Pope", null, true },
+                    { 3, "The dastarly Shay Cormac is disrupting peace and hindering freedom of the people of America. Bring him down and ensure justice is brought to the people.", 5, "Rogue", null, true },
+                    { 4, "The dastarly Charles lee is disrupting peace and hindering freedom of the people of America. Bring him down and ensure justice is brought to the people.", 5, "Dastardly", null, true },
+                    { 5, "The dastarly Julie Pro is disrupting peace and hindering freedom of the people of America. Bring him down and ensure justice is brought to the people.", 3, "ViewModel", null, false }
                 });
 
             migrationBuilder.InsertData(
-                table: "AssassinCity",
-                columns: new[] { "AssassinsId", "CitiesId" },
+                table: "AssassinContract",
+                columns: new[] { "AssassinsId", "ContractsId" },
                 values: new object[,]
                 {
                     { "11111111-1111-1111-1111-111111111111", 1 },
@@ -251,6 +274,21 @@ namespace Brotherhood_Server.Migrations
                     { "69696969-6969-6969-6969-696969696969", 3 },
                     { "11111111-1111-1111-1111-111111111111", 4 },
                     { "96969696-9696-9696-9696-969696969696", 5 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Targets",
+                columns: new[] { "Id", "ContractId", "FirstName", "LastName" },
+                values: new object[,]
+                {
+                    { 5, 1, "Valerie", "Turgeon" },
+                    { 6, 1, "Valerie", "Turgeon" },
+                    { 7, 1, "Valerie", "Turgeon" },
+                    { 8, 1, "Valerie", "Turgeon" },
+                    { 2, 2, "Rodrigo", "Borgia" },
+                    { 1, 5, "Haytham", "Kenway" },
+                    { 3, 5, "Shay", "Cormac" },
+                    { 4, 5, "Charles", "Lee" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -293,9 +331,14 @@ namespace Brotherhood_Server.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AssassinCity_CitiesId",
-                table: "AssassinCity",
-                column: "CitiesId");
+                name: "IX_AssassinContract_ContractsId",
+                table: "AssassinContract",
+                column: "ContractsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Targets_ContractId",
+                table: "Targets",
+                column: "ContractId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -316,10 +359,13 @@ namespace Brotherhood_Server.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "AssassinationTarget");
+                name: "AssassinContract");
 
             migrationBuilder.DropTable(
-                name: "AssassinCity");
+                name: "Cities");
+
+            migrationBuilder.DropTable(
+                name: "Targets");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -328,7 +374,7 @@ namespace Brotherhood_Server.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "City");
+                name: "Contracts");
         }
     }
 }

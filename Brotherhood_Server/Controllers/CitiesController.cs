@@ -1,148 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Brotherhood_Server.Data;
 using Brotherhood_Server.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Brotherhood_Server.Controllers
 {
-	[Route("api/[controller]")]
 	[ApiController]
+	[Route("api")]
 	public class CitiesController : ControllerBase
 	{
 		private readonly BrotherhoodServerContext _context;
-		private UserManager<Assassin> _UserManager;
+		private readonly UserManager<Assassin> _userManager;
 
 		public CitiesController(BrotherhoodServerContext context, UserManager<Assassin> userManager)
 		{
 			_context = context;
-			_UserManager = userManager;
+			_userManager = userManager;
 		}
 
-		// GET: api/cities
-		// GET: api/cities/public
+		// get all cities
 		[HttpGet]
-		[Route("")]
-		[Route("public")]
+		[Route("cities")]
 		public async Task<ActionResult<IEnumerable<City>>> GetCities()
 		{
-			return await _context.City.Where(c => c.IsPublic).ToListAsync();
+			return await _context.Cities.ToListAsync();
 		}
-
-		// GET: api/cities/user
-		[Authorize]
-		[HttpGet]
-		[Route("user")]
-		public async Task<ActionResult<IEnumerable<City>>> GetUserCities()
-		{
-			return (await GetCurrentUser()).Cities;
-		}
-
-		// GET: api/cities/69/targets
-		[Authorize]
-		[HttpGet("{id}/targets")]
-		public async Task<ActionResult<IEnumerable<AssassinationTarget>>> GetCityTargets(int id)
-		{
-			var city = await _context.City.FindAsync(id);
-
-			if (city == null)
-				return NotFound();
-
-			Assassin user = await GetCurrentUser();
-			if (!city.IsPublic && city.Assassins.SingleOrDefault(a => a.Id == user.Id) == null)
-				return StatusCode(StatusCodes.Status403Forbidden,
-					new { Message = "You must be assigned to this city in order view its targets." });
-
-			return city.Targets;
-		}
-
-		// POST: api/cities/add
-		[Authorize]
-		[HttpPost]
-		[Route("add")]
-		public async Task<ActionResult<City>> PostCity(City city)
-		{
-			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			Assassin assassin = await _UserManager.FindByIdAsync(userId);
-			city.Assassins = new List<Assassin> { assassin };
-			_context.City.Add(city);
-			await _context.SaveChangesAsync();
-
-			return CreatedAtAction("GetCity", new { id = city.Id }, city);
-		}
-
-		// PUT: api/cities/69/edit
-		[Authorize]
-		[HttpPut]
-		[Route("share/{assassinId}")]
-		public async Task<IActionResult> AddCityAssassin(string assassinId, City cityDTO)
-		{
-			if (cityDTO == null)
-				return BadRequest("The provided city is invalid.");
-
-			City city = await _context.City.FindAsync(cityDTO.Id);
-
-			if (city == null)
-				return BadRequest("The provided city is invalid.");
-
-			Assassin user = await GetCurrentUser();
-			if (city.Assassins.SingleOrDefault(a => a.Id == user.Id) == null)
-				return StatusCode(
-					StatusCodes.Status403Forbidden,
-					new { Message = "You must be assigned to this city in order to request a partner." }
-				);
-
-			Assassin sharee = await _UserManager.FindByNameAsync(assassinId) ?? await _UserManager.FindByEmailAsync(assassinId);
-
-			if (sharee == null)
-				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Assassin {assassinId} does not exist." });
-
-			if (city.Assassins.SingleOrDefault(a => a.Id == sharee.Id) != null)
-				return StatusCode(StatusCodes.Status302Found, new { Message = $"Assassin {assassinId} is already assigned to {city.Name}." });
-
-			city.Assassins.Add(sharee);
-
-			_context.Entry(city).State = EntityState.Modified;
-
-			try { await _context.SaveChangesAsync(); }
-			catch (DbUpdateConcurrencyException)
-			{
-				return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "Something went wrong when adding owner." });
-			}
-
-			return NoContent();
-		}
-
-		// DELETE: api/cities/69/nuke
-		[Authorize]
-		[HttpDelete]
-		[Route("{id}/nuke")]
-		public async Task<IActionResult> DeleteCity(int id)
-		{
-			var city = await _context.City.FindAsync(id);
-			if (city == null)
-				return NotFound($"The city {id} doesn't exist.");
-
-			Assassin user = await GetCurrentUser();
-			if (city.Assassins.SingleOrDefault(a => a.Id == user.Id) == null)
-				return StatusCode(
-					StatusCodes.Status403Forbidden,
-					new { Message = "You must be assigned to this city in order to unregister it." }
-				);
-
-			_context.City.Remove(city);
-			await _context.SaveChangesAsync();
-
-			return NoContent();
-		}
-
-		private async Task<Assassin> GetCurrentUser() => await _UserManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
 	}
 }

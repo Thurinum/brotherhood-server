@@ -13,12 +13,12 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Brotherhood_Server.Controllers
 {
-	[Route("api/[controller]")]
 	[ApiController]
+	[Route("api")]
 	public class AssassinsController : ControllerBase
 	{
-		private UserManager<Assassin> _UserManager;
-		private IConfiguration _Configuration;
+		private readonly UserManager<Assassin> _UserManager;
+		private readonly IConfiguration _Configuration;
 
 		public AssassinsController(UserManager<Assassin> userManager, IConfiguration configuration)
 		{
@@ -58,15 +58,15 @@ namespace Brotherhood_Server.Controllers
 				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "Invalid identifier or password." });
 
 			IList<string> roles = await _UserManager.GetRolesAsync(assassin);
-			List<Claim> authClaims = new List<Claim>();
+			List<Claim> authClaims = new();
 
 			foreach (string role in roles)
 				authClaims.Add(new Claim(ClaimTypes.Role, role));
 
 			authClaims.Add(new Claim(ClaimTypes.NameIdentifier, assassin.Id));
 
-			SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_Configuration["JWT:Secret"]));
-			JwtSecurityToken token = new JwtSecurityToken(
+			SymmetricSecurityKey key = new(Encoding.UTF8.GetBytes(_Configuration["JWT:Secret"]));
+			JwtSecurityToken token = new(
 				audience: "http://localhost:4200",
 				issuer: "https://localhost:5001",
 				claims: authClaims,

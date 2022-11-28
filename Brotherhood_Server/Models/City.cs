@@ -9,19 +9,12 @@ namespace Brotherhood_Server.Models
 	{
 		public int Id { get; set; }
 
-		public int CoverTargetId { get; set; }
-
 		[Required]
-		[MaxLength(50)]
+		[MaxLength(80)]
 		public string Name { get; set; }
 
 		[Required]
-		public bool IsPublic { get; set; }
-
-		[JsonIgnore]
-		public virtual List<Assassin> Assassins { get; set; }
-
-		[JsonIgnore]
-		public virtual List<AssassinationTarget> Targets { get; set; }
+		[MaxLength(80)]
+		public string Country { get; set; }
 	}
 }

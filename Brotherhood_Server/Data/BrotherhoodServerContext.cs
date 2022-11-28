@@ -9,79 +9,101 @@ namespace Brotherhood_Server.Data
 	{
 		public BrotherhoodServerContext(DbContextOptions<BrotherhoodServerContext> options) : base(options) { }
 
+		public DbSet<Contract> Contracts { get; set; }
+		public DbSet<ContractTarget> Targets { get; set; }
+		public DbSet<City> Cities { get; set; }
+
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
 			base.OnModelCreating(builder);
 
-			builder.Entity<City>().HasData(
-				new City() { Id = 1, Name = "Florence", IsPublic = true },
-				new City() { Id = 2, Name = "Rome", IsPublic = true },
-				new City() { Id = 3, Name = "Paris", IsPublic = true },
-				new City() { Id = 4, Name = "Venice", IsPublic = true },
-				new City() { Id = 5, Name = "Longueuil", IsPublic = false }
+			builder.Entity<Contract>().HasData(
+				new Contract()
+				{
+					Id = 1,
+					CityId = 5,
+					Codename = "Codename: LoneEagle",
+					IsPublic = true,
+					Briefing =
+					"The dastarly Haytham Kenway is disrupting peace and hindering freedom of the people of America. " +
+					"Bring him and his acolytes down and ensure justice is brought to the people."
+				},
+				new Contract() { Id = 2, CityId = 2, Codename = "Pope", IsPublic = true, Briefing = "The Pope is a threat to the people of Italy. Bring him down and ensure justice is brought to the people." },
+				new Contract() { Id = 3, CityId = 5, Codename = "Rogue", IsPublic = true, Briefing = "The dastarly Shay Cormac is disrupting peace and hindering freedom of the people of America. Bring him down and ensure justice is brought to the people." },
+				new Contract() { Id = 4, CityId = 5, Codename = "Dastardly", IsPublic = true, Briefing = "The dastarly Charles lee is disrupting peace and hindering freedom of the people of America. Bring him down and ensure justice is brought to the people." },
+				new Contract() { Id = 5, CityId = 3, Codename = "ViewModel", IsPublic = false, Briefing = "The dastarly Julie Pro is disrupting peace and hindering freedom of the people of America. Bring him down and ensure justice is brought to the people." }
 			);
 
-			builder.Entity<AssassinationTarget>().HasData(
-				new AssassinationTarget() { Id = 1, CityId = 5, FirstName = "Haytham", LastName = "Kenway", EmailAddress = "haytham.kenway@order.org" },
-				new AssassinationTarget() { Id = 2, CityId = 2, FirstName = "Rodrigo", LastName = "Borgia", EmailAddress = "rodrigo.borgia@vatican.va" },
-				new AssassinationTarget() { Id = 3, CityId = 5, FirstName = "Shay", LastName = "Cormac", EmailAddress = "shay.cormac@order.org" },
-				new AssassinationTarget() { Id = 4, CityId = 5, FirstName = "Charles", LastName = "Lee", EmailAddress = "charles.lee@order.org" },
-				new AssassinationTarget() { Id = 5, CityId = 3, FirstName = "Valerie", LastName = "Turgeon", EmailAddress = "valerie.turgeon@abstergo.org" }
+			builder.Entity<City>().HasData(
+				new City() { Id = 1, Name = "Florence", Country = "Italy" },
+				new City() { Id = 2, Name = "Rome", Country = "Italy" },
+				new City() { Id = 3, Name = "Paris", Country = "France" },
+				new City() { Id = 4, Name = "Venice", Country = "Italy" },
+				new City() { Id = 5, Name = "Longueuil", Country = "Canada" }
+			);
+
+			builder.Entity<ContractTarget>().HasData(
+				new ContractTarget() { Id = 1, ContractId = 5, FirstName = "Haytham", LastName = "Kenway" },
+				new ContractTarget() { Id = 2, ContractId = 2, FirstName = "Rodrigo", LastName = "Borgia" },
+				new ContractTarget() { Id = 3, ContractId = 5, FirstName = "Shay", LastName = "Cormac" },
+				new ContractTarget() { Id = 4, ContractId = 5, FirstName = "Charles", LastName = "Lee" },
+				new ContractTarget() { Id = 5, ContractId = 1, FirstName = "Valerie", LastName = "Turgeon" },
+				new ContractTarget() { Id = 6, ContractId = 1, FirstName = "Valerie", LastName = "Turgeon" },
+				new ContractTarget() { Id = 7, ContractId = 1, FirstName = "Valerie", LastName = "Turgeon" },
+				new ContractTarget() { Id = 8, ContractId = 1, FirstName = "Valerie", LastName = "Turgeon" }
 			);
 
 			// Arno
-			PasswordHasher<Assassin> hasher = new PasswordHasher<Assassin>();
-			Assassin arno = new Assassin()
+			PasswordHasher<Assassin> hasher = new();
+			Assassin arno = new()
 			{
 				Id = "69696969-6969-6969-6969-696969696969",
 				UserName = "Arno",
+				FirstName = "Arno",
+				LastName = "Dorian",
 				NormalizedUserName = "ARNO",
-				Email = "arno.dorian@brotherhood.org",
-				NormalizedEmail = "ARNO.DORIAN@BROTHERHOOD.ORG"
+				Email = "arno.dorian@brotherhood.fr",
+				NormalizedEmail = "ARNO.DORIAN@BROTHERHOOD.fr"
 			};
 			arno.PasswordHash = hasher.HashPassword(arno, "elise69");
 
 			// Theodore
-			Assassin erhion = new Assassin()
+			Assassin erhion = new()
 			{
 				Id = "96969696-9696-9696-9696-969696969696",
 				UserName = "Theodore",
+				FirstName = "Theodore",
+				LastName = "l'Heureux",
 				NormalizedUserName = "THEODORE",
 				Email = "theodore.lheureux@archlinux.net",
 				NormalizedEmail = "THEODORE.LHEUREUX@ARCHLINUX.NET"
 			};
 			erhion.PasswordHash = hasher.HashPassword(erhion, "dioxus420");
 
-			// Theodore
-			Assassin ezio = new Assassin()
+			// Ezio
+			Assassin ezio = new()
 			{
 				Id = "11111111-1111-1111-1111-111111111111",
 				UserName = "Ezio",
+				FirstName = "Ezio",
+				LastName = "Auditore",
 				NormalizedUserName = "EZIO",
 				Email = "ezio.auditore@firenze.it",
 				NormalizedEmail = "EZIO.AUDITORE@FIRENZE.IT"
 			};
 			ezio.PasswordHash = hasher.HashPassword(ezio, "requiescat in pace");
 
-			builder.Entity<Assassin>().HasData(ezio,	arno, erhion);
-			builder.Entity<City>()
+			builder.Entity<Assassin>().HasData(ezio, arno, erhion);
+			builder.Entity<Contract>()
 				.HasMany(c => c.Assassins)
-				.WithMany(a => a.Cities)
+				.WithMany(a => a.Contracts)
 				.UsingEntity(e => e.HasData(
-					new { CitiesId = 1, AssassinsId = ezio.Id },
-					new { CitiesId = 2, AssassinsId = ezio.Id },
-					new { CitiesId = 3, AssassinsId = arno.Id },
-					new { CitiesId = 4, AssassinsId = ezio.Id },
-					new { CitiesId = 5, AssassinsId = erhion.Id }
+					new { ContractsId = 1, AssassinsId = ezio.Id },
+					new { ContractsId = 2, AssassinsId = ezio.Id },
+					new { ContractsId = 3, AssassinsId = arno.Id },
+					new { ContractsId = 4, AssassinsId = ezio.Id },
+					new { ContractsId = 5, AssassinsId = erhion.Id }
 				));
 		}
-
-
-
-		public DbSet<City> City { get; set; }
-
-
-
-		public DbSet<Brotherhood_Server.Models.AssassinationTarget> AssassinationTarget { get; set; }
 	}
 }
