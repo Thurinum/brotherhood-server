@@ -29,7 +29,7 @@ namespace Brotherhood_Server.Controllers
 		[HttpGet]
 		[Route("contracts")]
 		[Route("contracts/public")]
-		public async Task<ActionResult<IEnumerable<Contract>>> GetPublicContracts()
+		public async Task<ActionResult<IEnumerable<Contract>>> GetPublic()
 		{
 			return await _context.Contracts.Where(c => c.IsPublic).ToListAsync();
 		}
@@ -37,14 +37,14 @@ namespace Brotherhood_Server.Controllers
 		[HttpGet]
 		[Authorize]
 		[Route("contracts/private")]
-		public async Task<ActionResult<IEnumerable<Contract>>> GetPrivateContracts()
+		public async Task<ActionResult<IEnumerable<Contract>>> GetPrivate()
 		{
 			return (await GetCurrentUser()).Contracts;
 		}
 
 		[HttpGet]
 		[Route("contract/{id}/targets")]
-		public async Task<ActionResult<IEnumerable<ContractTarget>>> GetContractTargets(int id)
+		public async Task<ActionResult<IEnumerable<ContractTarget>>> GetTargets(int id)
 		{
 			Contract contract = await _context.Contracts.FindAsync(id);
 
@@ -63,7 +63,7 @@ namespace Brotherhood_Server.Controllers
 		[Authorize]
 		[Route("contract/add")]
 		[Route("contract/create")]
-		public async Task<ActionResult<Contract>> CreateContract(Contract contract)
+		public async Task<ActionResult<Contract>> Create(Contract contract)
 		{
 			Assassin user = await GetCurrentUser();
 			contract.Assassins = new List<Assassin> { user };
@@ -76,16 +76,13 @@ namespace Brotherhood_Server.Controllers
 
 		[HttpPut]
 		[Authorize]
-		[Route("contract/share")]
-		public async Task<IActionResult> AssignAssassinToContract(ContractShareDTO dto)
+		[Route("contract/{id}/share")]
+		public async Task<IActionResult> Share(int id, string shareeName)
 		{
-			if (dto == null || dto.AssassinName == "")
-				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "No contract was provided to share." });
-
-			Contract contract = await _context.Contracts.FindAsync(dto.ContractId);
+			Contract contract = await _context.Contracts.FindAsync(id);
 
 			if (contract == null)
-				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"The contract provided with id '{dto.ContractId}' was not found." });
+				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"The contract provided with id '{id}' was not found." });
 
 			Assassin user = await GetCurrentUser();
 			if (contract.Assassins.SingleOrDefault(a => a.Id == user.Id) == null)
@@ -93,10 +90,10 @@ namespace Brotherhood_Server.Controllers
 					new { Message = "You must be assigned to this contract in order to request a partner." }
 				);
 
-			Assassin sharee = await _userManager.FindByNameAsync(dto.AssassinName);
+			Assassin sharee = await _userManager.FindByNameAsync(shareeName);
 
 			if (sharee == null)
-				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Assassin {dto.AssassinName} does not exist." });
+				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Assassin {shareeName} does not exist." });
 
 			if (contract.Assassins.SingleOrDefault(a => a.Id == sharee.Id) != null)
 				return StatusCode(StatusCodes.Status302Found, new { Message = $"Assassin {sharee.FirstName} {sharee.LastName} is already assigned to this contract." });
@@ -117,7 +114,7 @@ namespace Brotherhood_Server.Controllers
 		[HttpPut]
 		[Authorize]
 		[Route("contract/{id}/target/add")]
-		public async Task<IActionResult> AddTargetToContract(int id, ContractTarget target)
+		public async Task<IActionResult> AddTarget(int id, ContractTarget target)
 		{
 			Contract contract = await _context.Contracts.FindAsync(id);
 
@@ -143,7 +140,7 @@ namespace Brotherhood_Server.Controllers
 		[Authorize]
 		[Route("contract/{id}/nuke")]
 		[Route("contract/{id}/remove")]
-		public async Task<IActionResult> DeleteContract(int id)
+		public async Task<IActionResult> Delete(int id)
 		{
 			Contract contract = await _context.Contracts.FindAsync(id);
 
