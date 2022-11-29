@@ -140,7 +140,6 @@ namespace Brotherhood_Server.Controllers
 		[HttpDelete]
 		[Authorize]
 		[Route("contract/{id}/nuke")]
-		[Route("contract/{id}/remove")]
 		public async Task<IActionResult> DeleteContract(int id)
 		{
 			Contract contract = await _context.Contracts.FindAsync(id);

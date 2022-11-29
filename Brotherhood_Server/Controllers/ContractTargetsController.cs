@@ -28,15 +28,36 @@ namespace Brotherhood_Server.Controllers
 
 		[HttpPost]
 		[Authorize]
-		[Route("contracts/target/create")]
+		[Route("contract/target/create")]
 		public async Task<ActionResult<ContractTarget>> CreateContractTarget(ContractTarget target)
 		{
-			_context.Targets.Add(target);
+			_context.ContractTargets.Add(target);
 			await _context.SaveChangesAsync();
 
 			return CreatedAtAction("CreateContractTarget", new { id = target.Id }, target);
 		}
 
+		/*[HttpDelete]
+		[Authorize]
+		[Route("contract/target/{id}/nuke")]
+		public async Task<ActionResult<ContractTarget>> DeleteContractTarget(int id)
+		{
+			ContractTarget target = await _context.ContractTargets.FindAsync(id);
+
+			if (target == null)
+				return NotFound($"The city {id} doesn't exist.");
+
+			// TODO: Only admins may delete targets
+			Assassin user = await GetCurrentUser();
+			if (target.Contracts.Where(c => c.Assassins.Contains(user)).Count() == 0)
+				return StatusCode(StatusCodes.Status403Forbidden, new { Message = "You must have a contract involving this target in order to cancel it." });
+
+			_context.ContractTargets.Remove(target);
+			await _context.SaveChangesAsync();
+
+			return NoContent();
+		}
+*/
 		private async Task<Assassin> GetCurrentUser() => await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
 	}
 }

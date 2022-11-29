@@ -10,7 +10,7 @@ namespace Brotherhood_Server.Data
 		public BrotherhoodServerContext(DbContextOptions<BrotherhoodServerContext> options) : base(options) { }
 
 		public DbSet<Contract> Contracts { get; set; }
-		public DbSet<ContractTarget> Targets { get; set; }
+		public DbSet<ContractTarget> ContractTargets { get; set; }
 		public DbSet<City> Cities { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder builder)
@@ -42,14 +42,14 @@ namespace Brotherhood_Server.Data
 			);
 
 			builder.Entity<ContractTarget>().HasData(
-				new ContractTarget() { Id = 1, ContractId = 5, FirstName = "Haytham", LastName = "Kenway" },
-				new ContractTarget() { Id = 2, ContractId = 2, FirstName = "Rodrigo", LastName = "Borgia" },
-				new ContractTarget() { Id = 3, ContractId = 5, FirstName = "Shay", LastName = "Cormac" },
-				new ContractTarget() { Id = 4, ContractId = 5, FirstName = "Charles", LastName = "Lee" },
-				new ContractTarget() { Id = 5, ContractId = 1, FirstName = "Valerie", LastName = "Turgeon" },
-				new ContractTarget() { Id = 6, ContractId = 1, FirstName = "Valerie", LastName = "Turgeon" },
-				new ContractTarget() { Id = 7, ContractId = 1, FirstName = "Valerie", LastName = "Turgeon" },
-				new ContractTarget() { Id = 8, ContractId = 1, FirstName = "Valerie", LastName = "Turgeon" }
+				new ContractTarget() { Id = 1, FirstName = "Haytham", LastName = "Kenway" },
+				new ContractTarget() { Id = 2, FirstName = "Rodrigo", LastName = "Borgia" },
+				new ContractTarget() { Id = 3, FirstName = "Shay", LastName = "Cormac" },
+				new ContractTarget() { Id = 4, FirstName = "Charles", LastName = "Lee" },
+				new ContractTarget() { Id = 5, FirstName = "Valerie", LastName = "Turgeon" },
+				new ContractTarget() { Id = 6, FirstName = "Valerie", LastName = "Turgeon" },
+				new ContractTarget() { Id = 7, FirstName = "Valerie", LastName = "Turgeon" },
+				new ContractTarget() { Id = 8, FirstName = "Valerie", LastName = "Turgeon" }
 			);
 
 			// Arno
@@ -103,6 +103,17 @@ namespace Brotherhood_Server.Data
 					new { ContractsId = 4, AssassinsId = ezio.Id },
 					new { ContractsId = 5, AssassinsId = erhion.Id }
 				));
+
+			builder.Entity<Contract>()
+					.HasMany(c => c.Targets)
+					.WithMany(t => t.Contracts)
+					.UsingEntity(e => e.HasData(
+						new { ContractsId = 1, TargetId = 1 },
+						new { ContractsId = 2, TargetId = 1 },
+						new { ContractsId = 3, TargetId = 3 },
+						new { ContractsId = 4, TargetId = 3 },
+						new { ContractsId = 5, TargetId = 4 }
+					));
 		}
 	}
 }
