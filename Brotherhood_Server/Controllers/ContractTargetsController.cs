@@ -26,6 +26,14 @@ namespace Brotherhood_Server.Controllers
 			_userManager = userManager;
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("contract/targets")]
+		public async Task<ActionResult<IEnumerable<ContractTarget>>> GetContractTargets()
+		{
+			return await _context.ContractTargets.ToListAsync();
+		}
+
 		[HttpPost]
 		[Authorize]
 		[Route("contract/target/create")]
