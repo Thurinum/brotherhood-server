@@ -29,7 +29,7 @@ namespace Brotherhood_Server.Controllers
 		[HttpGet]
 		[Route("contracts")]
 		[Route("contracts/public")]
-		public async Task<ActionResult<IEnumerable<Contract>>> GetPublic()
+		public async Task<ActionResult<IEnumerable<Contract>>> GetPublicContracts()
 		{
 			return await _context.Contracts.Where(c => c.IsPublic).ToListAsync();
 		}
@@ -37,14 +37,14 @@ namespace Brotherhood_Server.Controllers
 		[HttpGet]
 		[Authorize]
 		[Route("contracts/private")]
-		public async Task<ActionResult<IEnumerable<Contract>>> GetPrivate()
+		public async Task<ActionResult<IEnumerable<Contract>>> GetPrivateContracts()
 		{
 			return (await GetCurrentUser()).Contracts;
 		}
 
 		[HttpGet]
 		[Route("contract/{id}/targets")]
-		public async Task<ActionResult<IEnumerable<ContractTarget>>> GetTargets(int id)
+		public async Task<ActionResult<IEnumerable<ContractTarget>>> GetContractTargets(int id)
 		{
 			Contract contract = await _context.Contracts.FindAsync(id);
 
@@ -59,11 +59,37 @@ namespace Brotherhood_Server.Controllers
 			return contract.Targets;
 		}
 
+		[HttpPut]
+		[Authorize]
+		[Route("contract/{id}/target/add")]
+		public async Task<IActionResult> AddContractTarget(int id, ContractTarget target)
+		{
+			Contract contract = await _context.Contracts.FindAsync(id);
+
+			if (contract == null)
+				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"Invalid contract id {id} provided." });
+
+			Assassin user = await GetCurrentUser();
+
+			if (!contract.Assassins.Contains(user))
+				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = $"You must be assigned to this contract in order to modify it." });
+
+			contract.Targets.Add(target);
+			_context.Entry(contract).State = EntityState.Modified;
+
+			try { await _context.SaveChangesAsync(); }
+			catch (Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError, new { Message = $"Something went wrong when adding target {target.FirstName} {target.LastName} to this contract." });
+			}
+
+			return NoContent();
+		}
+
 		[HttpPost]
 		[Authorize]
-		[Route("contract/add")]
 		[Route("contract/create")]
-		public async Task<ActionResult<Contract>> Create(Contract contract)
+		public async Task<ActionResult<Contract>> CreateContract(Contract contract)
 		{
 			Assassin user = await GetCurrentUser();
 			contract.Assassins = new List<Assassin> { user };
@@ -77,7 +103,7 @@ namespace Brotherhood_Server.Controllers
 		[HttpPut]
 		[Authorize]
 		[Route("contract/{id}/share")]
-		public async Task<IActionResult> Share(int id, string shareeName)
+		public async Task<IActionResult> ShareContract(int id, string shareeName)
 		{
 			Contract contract = await _context.Contracts.FindAsync(id);
 
@@ -111,36 +137,11 @@ namespace Brotherhood_Server.Controllers
 			return NoContent();
 		}
 
-		[HttpPut]
-		[Authorize]
-		[Route("contract/{id}/target/add")]
-		public async Task<IActionResult> AddTarget(int id, ContractTarget target)
-		{
-			Contract contract = await _context.Contracts.FindAsync(id);
-
-			if (contract == null)
-				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"Invalid contract id {id} provided." });
-
-			Assassin user = await GetCurrentUser();
-
-			if (!contract.Assassins.Contains(user))
-				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = $"You must be assigned to this contract in order to modify it." });
-
-			contract.Targets.Add(target);
-			_context.Entry(contract).State = EntityState.Modified;
-
-			try { await _context.SaveChangesAsync(); }
-			catch (Exception) { 
-				return StatusCode(StatusCodes.Status500InternalServerError, new { Message = $"Something went wrong when adding target {target.FirstName} {target.LastName} to this contract." });}
-
-			return NoContent();
-		}
-
 		[HttpDelete]
 		[Authorize]
 		[Route("contract/{id}/nuke")]
 		[Route("contract/{id}/remove")]
-		public async Task<IActionResult> Delete(int id)
+		public async Task<IActionResult> DeleteContract(int id)
 		{
 			Contract contract = await _context.Contracts.FindAsync(id);
 
