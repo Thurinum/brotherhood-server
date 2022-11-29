@@ -79,10 +79,8 @@ namespace Brotherhood_Server.Controllers
 		[Route("contract/share")]
 		public async Task<IActionResult> AssignAssassinToContract(ContractShareDTO dto)
 		{
-			if (dto == null)
+			if (dto == null || dto.AssassinName == "")
 				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "No contract was provided to share." });
-			if (dto.AssassinName == "" || dto.ContractId == null)
-				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "An empty contract was provided to share." });
 
 			Contract contract = await _context.Contracts.FindAsync(dto.ContractId);
 
@@ -112,6 +110,31 @@ namespace Brotherhood_Server.Controllers
 			{
 				return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "Something went wrong when adding {sharee.FirstName} {sharee.LastName} to this contract." });
 			}
+
+			return NoContent();
+		}
+
+		[HttpPut]
+		[Authorize]
+		[Route("contract/{id}/target/add")]
+		public async Task<IActionResult> AddTargetToContract(int id, ContractTarget target)
+		{
+			Contract contract = await _context.Contracts.FindAsync(id);
+
+			if (contract == null)
+				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"Invalid contract id {id} provided." });
+
+			Assassin user = await GetCurrentUser();
+
+			if (!contract.Assassins.Contains(user))
+				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = $"You must be assigned to this contract in order to modify it." });
+
+			contract.Targets.Add(target);
+			_context.Entry(contract).State = EntityState.Modified;
+
+			try { await _context.SaveChangesAsync(); }
+			catch (Exception) { 
+				return StatusCode(StatusCodes.Status500InternalServerError, new { Message = $"Something went wrong when adding target {target.FirstName} {target.LastName} to this contract." });}
 
 			return NoContent();
 		}
