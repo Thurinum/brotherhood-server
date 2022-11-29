@@ -17,6 +17,7 @@ namespace Brotherhood_Server.Models
 		[MaxLength(50)]
 		public string Codename { get; set; }
 
+		[Required]
 		[MaxLength(300)]
 		public string Briefing { get; set; }
 

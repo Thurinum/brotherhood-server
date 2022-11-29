@@ -24,8 +24,7 @@ namespace Brotherhood_Server.Data
 					CityId = 5,
 					Codename = "Codename: LoneEagle",
 					IsPublic = true,
-					Briefing =
-					"The dastarly Haytham Kenway is disrupting peace and hindering freedom of the people of America. " +
+					Briefing = "The dastarly Haytham Kenway is disrupting peace and hindering freedom of the people of America. " +
 					"Bring him and his acolytes down and ensure justice is brought to the people."
 				},
 				new Contract() { Id = 2, CityId = 2, Codename = "Pope", IsPublic = true, Briefing = "The Pope is a threat to the people of Italy. Bring him down and ensure justice is brought to the people." },
