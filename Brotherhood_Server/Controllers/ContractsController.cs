@@ -43,7 +43,6 @@ namespace Brotherhood_Server.Controllers
 		}
 
 		[HttpGet]
-		[Authorize]
 		[Route("contract/{id}/targets")]
 		public async Task<ActionResult<IEnumerable<ContractTarget>>> GetContractTargets(int id)
 		{
@@ -82,17 +81,16 @@ namespace Brotherhood_Server.Controllers
 		public async Task<IActionResult> AssignAssassinToContract(ContractShareDTO dto)
 		{
 			if (dto == null)
-				return BadRequest("The provided contract is invalid.");
+				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "No contract was provided to share." });
 
 			Contract contract = await _context.Contracts.FindAsync(dto.ContractId);
 
 			if (contract == null)
-				return BadRequest("The provided contract is invalid.");
+				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"The contract provided with id '{dto.ContractId}' was not found." });
 
 			Assassin user = await GetCurrentUser();
 			if (contract.Assassins.SingleOrDefault(a => a.Id == user.Id) == null)
-				return StatusCode(
-					StatusCodes.Status403Forbidden,
+				return StatusCode(StatusCodes.Status403Forbidden,
 					new { Message = "You must be assigned to this contract in order to request a partner." }
 				);
 
