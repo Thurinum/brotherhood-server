@@ -108,11 +108,11 @@ namespace Brotherhood_Server.Data
 					.HasMany(c => c.Targets)
 					.WithMany(t => t.Contracts)
 					.UsingEntity(e => e.HasData(
-						new { ContractsId = 1, TargetId = 1 },
-						new { ContractsId = 2, TargetId = 1 },
-						new { ContractsId = 3, TargetId = 3 },
-						new { ContractsId = 4, TargetId = 3 },
-						new { ContractsId = 5, TargetId = 4 }
+						new { ContractsId = 1, TargetsId = 1 },
+						new { ContractsId = 2, TargetsId = 1 },
+						new { ContractsId = 3, TargetsId = 3 },
+						new { ContractsId = 4, TargetsId = 3 },
+						new { ContractsId = 5, TargetsId = 4 }
 					));
 		}
 	}
