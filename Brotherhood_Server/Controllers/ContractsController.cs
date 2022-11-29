@@ -74,7 +74,6 @@ namespace Brotherhood_Server.Controllers
 			return CreatedAtAction("CreateContract", new { id = contract.Id }, contract);
 		}
 
-		// PUT: contract/69/share
 		[HttpPut]
 		[Authorize]
 		[Route("contract/share")]
@@ -82,6 +81,8 @@ namespace Brotherhood_Server.Controllers
 		{
 			if (dto == null)
 				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "No contract was provided to share." });
+			if (dto.AssassinName == "" || dto.ContractId == null)
+				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "An empty contract was provided to share." });
 
 			Contract contract = await _context.Contracts.FindAsync(dto.ContractId);
 
@@ -94,10 +95,10 @@ namespace Brotherhood_Server.Controllers
 					new { Message = "You must be assigned to this contract in order to request a partner." }
 				);
 
-			Assassin sharee = await _userManager.FindByNameAsync(dto.AssassinId);
+			Assassin sharee = await _userManager.FindByNameAsync(dto.AssassinName);
 
 			if (sharee == null)
-				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Assassin {dto.AssassinId} does not exist." });
+				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Assassin {dto.AssassinName} does not exist." });
 
 			if (contract.Assassins.SingleOrDefault(a => a.Id == sharee.Id) != null)
 				return StatusCode(StatusCodes.Status302Found, new { Message = $"Assassin {sharee.FirstName} {sharee.LastName} is already assigned to this contract." });
@@ -115,7 +116,6 @@ namespace Brotherhood_Server.Controllers
 			return NoContent();
 		}
 
-		// DELETE: contracts/69/remove
 		[HttpDelete]
 		[Authorize]
 		[Route("contract/{id}/nuke")]

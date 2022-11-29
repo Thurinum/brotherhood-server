@@ -6,7 +6,10 @@ namespace Brotherhood_Server.Models
 {
 	public class ContractShareDTO
 	{
-		public string AssassinId;
-		public string ContractId;
+		[Required]
+		public string AssassinName { get; set; }
+
+		[Required]
+		public int ContractId { get; set; }
 	}
 }
