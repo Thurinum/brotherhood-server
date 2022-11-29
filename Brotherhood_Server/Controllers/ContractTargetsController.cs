@@ -45,7 +45,7 @@ namespace Brotherhood_Server.Controllers
 			ContractTarget target = await _context.ContractTargets.FindAsync(id);
 
 			if (target == null)
-				return NotFound($"The city {id} doesn't exist.");
+				return NotFound($"Contract target {id} does not exist.");
 
 			// TODO: Only admins may delete targets
 			Assassin user = await GetCurrentUser();
