@@ -37,7 +37,7 @@ namespace Brotherhood_Server.Controllers
 			return CreatedAtAction("CreateContractTarget", new { id = target.Id }, target);
 		}
 
-		/*[HttpDelete]
+		[HttpDelete]
 		[Authorize]
 		[Route("contract/target/{id}/nuke")]
 		public async Task<ActionResult<ContractTarget>> DeleteContractTarget(int id)
@@ -57,7 +57,7 @@ namespace Brotherhood_Server.Controllers
 
 			return NoContent();
 		}
-*/
+
 		private async Task<Assassin> GetCurrentUser() => await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
 	}
 }
