@@ -27,7 +27,6 @@ namespace Brotherhood_Server.Controllers
 		}
 
 		[HttpGet]
-		[Authorize]
 		[Route("contract/targets")]
 		public async Task<ActionResult<IEnumerable<ContractTarget>>> GetContractTargets()
 		{
