@@ -13,7 +13,7 @@ using System.Security.Claims;
 
 namespace Brotherhood_Server.Controllers
 {
-    [Route("api")]
+	  [Route("api")]
     [ApiController]
     public class ContractTargetsController : ControllerBase
     {
@@ -31,6 +31,36 @@ namespace Brotherhood_Server.Controllers
 		public async Task<ActionResult<IEnumerable<ContractTarget>>> GetContractTargets()
 		{
 			return await _context.ContractTargets.ToListAsync();
+		}
+
+		[HttpPut]
+		[Authorize]
+		[Route("contract/target/{id}/edit")]
+		public async Task<ActionResult<IEnumerable<ContractTarget>>> UpdateContractTarget(int id, ContractTargetUpdateDTO dto)
+		{
+			ContractTarget target = await _context.ContractTargets.FindAsync(id);
+
+			if (target == null)
+				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"Invalid contract target id {id} provided." });
+
+			/*Assassin user = await GetCurrentUser();
+
+			if (!target.Contracts.Any(c => c.Assassins.Any(a => a.Id == user.Id)))
+				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = $"You must have a contract with this target in order to edit it." });*/
+
+			target.FirstName = dto.FirstName;
+			target.LastName = dto.LastName;
+			target.Contracts = dto.Contracts;
+			_context.ContractTargets.Update(target); // FIXME: fuck
+			_context.Entry(target).State = EntityState.Modified;
+
+			try { await _context.SaveChangesAsync(); }
+			catch (Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError, new { Message = $"Something went wrong when adding target {target.FirstName} {target.LastName} to this contract." });
+			}
+
+			return NoContent();
 		}
 
 		[HttpPost]
