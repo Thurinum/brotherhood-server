@@ -8,18 +8,18 @@ namespace Brotherhood_Server
 {
 	public class ImageHelper
 	{
-		public static string Upload(IFormFile file, string subFolder)
+		public static void Upload(IFormFile file, string subFolder, int entityId)
 		{
-			string imageId = Guid.NewGuid().ToString();
 			Image image = Image.Load(file.OpenReadStream());
 			string path = $"{Directory.GetCurrentDirectory()}/wwwroot/images/{subFolder}";
 
 			if (!Directory.Exists(path))
+			{
 				Directory.CreateDirectory(path);
+				Console.WriteLine($"Created directory '{path} for storing images.");
+			}
 
-			image.SaveAsWebp($"{path}/{imageId}.webp");
-
-			return imageId;
+			image.SaveAsWebp($"{path}/{entityId}.webp");
 		} 
 	}
 }

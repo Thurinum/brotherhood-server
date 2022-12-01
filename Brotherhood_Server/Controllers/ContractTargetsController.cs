@@ -66,8 +66,7 @@ namespace Brotherhood_Server.Controllers
 
 			if (file != null)
 			{
-				//ImageHelper.Delete(updatedTarget.ImageId, "targets");
-				updatedTarget.ImageId = ImageHelper.Upload(file, "targets");
+				ImageHelper.Upload(file, "targets", updatedTarget.Id);
 			}
 
 			_context.ChangeTracker.Clear();
