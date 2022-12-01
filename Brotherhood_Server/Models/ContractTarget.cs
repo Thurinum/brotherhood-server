@@ -18,6 +18,10 @@ namespace Brotherhood_Server.Models
 		[MaxLength(30)]
 		public string LastName { get; set; }
 
+		[Required]
+		[MaxLength(50)]
+		public string Title { get; set; }
+
 		[JsonIgnore]
 		public virtual List<Contract> Contracts { get; set; }
 	}

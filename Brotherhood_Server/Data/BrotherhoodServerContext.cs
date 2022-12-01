@@ -76,14 +76,14 @@ namespace Brotherhood_Server.Data
 			);
 
 			builder.Entity<ContractTarget>().HasData(
-				new ContractTarget() { Id = 1, FirstName = "Julie", LastName = "Proulx"},
-				new ContractTarget() { Id = 2, FirstName = "Valory", LastName = "Sturgeon" },
-				new ContractTarget() { Id = 3, FirstName = "Nazeem", LastName = "Barhoumeter" },
-				new ContractTarget() { Id = 4, FirstName = "Crawford", LastName = "Starrick" },
-				new ContractTarget() { Id = 5, FirstName = "Charles", LastName = "Lee" },
-				new ContractTarget() { Id = 6, FirstName = "Joseph", LastName = "de Beloeil" },
-				new ContractTarget() { Id = 7, FirstName = "Geralt", LastName = "of Rivia" },
-				new ContractTarget() { Id = 8, FirstName = "Mikael", LastName = "F. Ouhwou" }
+				new ContractTarget() { Id = 1, FirstName = "Julie", LastName = "Proulx", Title = "Entrepreneur" },
+				new ContractTarget() { Id = 2, FirstName = "Valory", LastName = "Sturgeon", Title = "Cult Leader" },
+				new ContractTarget() { Id = 3, FirstName = "Nazeem", LastName = "Barhoumeter", Title = "Arrant Knave" },
+				new ContractTarget() { Id = 4, FirstName = "Crawford", LastName = "Starrick", Title = "Grandmaster of the Templar Order" },
+				new ContractTarget() { Id = 5, FirstName = "Charles", LastName = "Lee", Title = "Knight of the Templar Order" },
+				new ContractTarget() { Id = 6, FirstName = "Joseph", LastName = "de Beloeil", Title = "French Aristocrat" },
+				new ContractTarget() { Id = 7, FirstName = "Geralt", LastName = "of Rivia", Title = "Monster Hunter" },
+				new ContractTarget() { Id = 8, FirstName = "Mikael", LastName = "F. Ouhwou", Title = "Furry" }
 			);
 
 			builder.Entity<City>().HasData(
