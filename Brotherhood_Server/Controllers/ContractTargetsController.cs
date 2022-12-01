@@ -10,13 +10,16 @@ using Brotherhood_Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using SixLabors.ImageSharp;
+using System.IO;
+using System.Text.Json;
 
 namespace Brotherhood_Server.Controllers
 {
-	  [Route("api")]
-    [ApiController]
-    public class ContractTargetsController : ControllerBase
-    {
+	[Route("api")]
+	[ApiController]
+	public class ContractTargetsController : ControllerBase
+	{
 		private readonly BrotherhoodServerContext _context;
 		private readonly UserManager<Assassin> _userManager;
 
@@ -36,21 +39,31 @@ namespace Brotherhood_Server.Controllers
 		[HttpPut]
 		[Authorize]
 		[Route("contract/target/{id}/edit")]
-		public async Task<ActionResult<IEnumerable<ContractTarget>>> UpdateContractTarget(int id, ContractTargetUpdateDTO dto)
+		public async Task<ActionResult<IEnumerable<ContractTarget>>> UpdateContractTarget(int id)
 		{
 			ContractTarget target = await _context.ContractTargets.FindAsync(id);
 
 			if (target == null)
-				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"Invalid contract target id {id} provided." });
+				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"The entity to update with id {id} does not exist." });
+
+			IFormCollection form = await Request.ReadFormAsync();
+			IFormFile model = form.Files.GetFile("model");
+			Stream stream = model.OpenReadStream();
+			byte[] buf = new byte[stream.Length];
+			stream.Read(buf, 0, (int)stream.Length);
+
+			Console.WriteLine(buf);
+
+			ContractTarget updatedTarget = JsonSerializer.Deserialize<ContractTarget>(buf);
 
 			/*Assassin user = await GetCurrentUser();
 
 			if (!target.Contracts.Any(c => c.Assassins.Any(a => a.Id == user.Id)))
 				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = $"You must have a contract with this target in order to edit it." });*/
 
-			target.FirstName = dto.FirstName;
-			target.LastName = dto.LastName;
-			target.Contracts = dto.Contracts;
+			IFormFile file = form.Files.GetFile("file");
+			ImageHelper.Upload(file, "targets");
+
 			_context.ContractTargets.Update(target); // FIXME: fuck
 			_context.Entry(target).State = EntityState.Modified;
 
@@ -86,7 +99,7 @@ namespace Brotherhood_Server.Controllers
 
 			// TODO: Only admins may delete targets
 			Assassin user = await GetCurrentUser();
-			if (target.Contracts.Where(c => c.Assassins.Contains(user)).Count() == 0)
+			if (!target.Contracts.Where(c => c.Assassins.Contains(user)).Any())
 				return StatusCode(StatusCodes.Status403Forbidden, new { Message = "You must have a contract involving this target in order to cancel it." });
 
 			_context.ContractTargets.Remove(target);
