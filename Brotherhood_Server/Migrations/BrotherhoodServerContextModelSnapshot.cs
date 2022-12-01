@@ -136,7 +136,7 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "25a3edbc-7782-4fca-9409-b68d98c28933",
+                            ConcurrencyStamp = "3602c70d-789e-4320-8943-d60fedf8e681",
                             Email = "ezio.auditore@firenze.it",
                             EmailConfirmed = false,
                             FirstName = "Ezio",
@@ -144,9 +144,9 @@ namespace Brotherhood_Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "EZIO.AUDITORE@FIRENZE.IT",
                             NormalizedUserName = "EZIO",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHqyCqvFR485cj/loKhsa/uQDghseiEk5ixdSK9fYSNO8ZL8HifGjrdVDDlkICEfeA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEICIwsOaUFHDnLVVPfw3DwbShicdLtHE6z5s8qAEAHID085LmrToqTjAsMbnlUXGmg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "805647e1-9bb5-453b-9250-f79438f41edf",
+                            SecurityStamp = "0bc28f6d-6931-4f63-9d1f-573040d6e60e",
                             TwoFactorEnabled = false,
                             UserName = "Ezio"
                         },
@@ -154,7 +154,7 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "69696969-6969-6969-6969-696969696969",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b3f6ee4b-7bfe-45c8-b102-68249f9ef64b",
+                            ConcurrencyStamp = "3f181c07-c172-49c5-bd76-e6506dec1181",
                             Email = "arno.dorian@brotherhood.fr",
                             EmailConfirmed = false,
                             FirstName = "Arno",
@@ -162,9 +162,9 @@ namespace Brotherhood_Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ARNO.DORIAN@BROTHERHOOD.fr",
                             NormalizedUserName = "ARNO",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBe2spaoLXDhfWP35a9jWpMk0Koh7ACF97MYDYeznwlbPH/+ELbI+GGOZAy5a1m6RQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOL2pSPKwvzDwhvA1OJdUm1zvyL4wWiPIymg+kQXdgNPKCdTw0xUNGhDDr13YhsQNw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5cb6cd0e-bd41-4a08-9016-3e4d658c6414",
+                            SecurityStamp = "095e7db6-3c14-47e1-a9db-8f33ae978c41",
                             TwoFactorEnabled = false,
                             UserName = "Arno"
                         },
@@ -172,7 +172,7 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "96969696-9696-9696-9696-969696969696",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2084d6fb-1c78-482f-9f0f-58de6a99436f",
+                            ConcurrencyStamp = "aad760e8-be21-4bd3-9a54-34792fd1dc53",
                             Email = "theodore.lheureux@archlinux.net",
                             EmailConfirmed = false,
                             FirstName = "Theodore",
@@ -180,9 +180,9 @@ namespace Brotherhood_Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "THEODORE.LHEUREUX@ARCHLINUX.NET",
                             NormalizedUserName = "THEODORE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDEmjI7IfVUBkN+PftD2ClWnvRD+wBTjZgwTaQwmaL7hG/sXew5Lo+N0hqz3MrpwEQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBE7WryTd2x/JfCPwWqNB7BDZfqwK0EqJR6NQqaPLqH5B0KLJGAI+Jql43rA8uhG5g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7f6bffb7-ccbc-4068-91e5-891676d6d48a",
+                            SecurityStamp = "726b03bd-dcc9-46da-a9ef-60e7f6acc4fa",
                             TwoFactorEnabled = false,
                             UserName = "Theodore"
                         });
@@ -335,13 +335,15 @@ namespace Brotherhood_Server.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<string>("ImageId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -352,49 +354,57 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = 1,
                             FirstName = "Julie",
-                            LastName = "Proulx"
+                            LastName = "Proulx",
+                            Title = "Entrepreneur"
                         },
                         new
                         {
                             Id = 2,
                             FirstName = "Valory",
-                            LastName = "Sturgeon"
+                            LastName = "Sturgeon",
+                            Title = "Cult Leader"
                         },
                         new
                         {
                             Id = 3,
                             FirstName = "Nazeem",
-                            LastName = "Barhoumeter"
+                            LastName = "Barhoumeter",
+                            Title = "Arrant Knave"
                         },
                         new
                         {
                             Id = 4,
                             FirstName = "Crawford",
-                            LastName = "Starrick"
+                            LastName = "Starrick",
+                            Title = "Grandmaster of the Templar Order"
                         },
                         new
                         {
                             Id = 5,
                             FirstName = "Charles",
-                            LastName = "Lee"
+                            LastName = "Lee",
+                            Title = "Knight of the Templar Order"
                         },
                         new
                         {
                             Id = 6,
                             FirstName = "Joseph",
-                            LastName = "de Beloeil"
+                            LastName = "de Beloeil",
+                            Title = "French Aristocrat"
                         },
                         new
                         {
                             Id = 7,
                             FirstName = "Geralt",
-                            LastName = "of Rivia"
+                            LastName = "of Rivia",
+                            Title = "Monster Hunter"
                         },
                         new
                         {
                             Id = 8,
                             FirstName = "Mikael",
-                            LastName = "F. Ouhwou"
+                            LastName = "F. Ouhwou",
+                            Title = "Furry"
                         });
                 });
 
