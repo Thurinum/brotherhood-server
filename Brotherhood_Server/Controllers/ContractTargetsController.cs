@@ -13,6 +13,7 @@ using System.Security.Claims;
 using SixLabors.ImageSharp;
 using System.IO;
 using System.Text.Json;
+using Microsoft.Extensions.Primitives;
 
 namespace Brotherhood_Server.Controllers
 {
@@ -47,14 +48,14 @@ namespace Brotherhood_Server.Controllers
 				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"The entity to update with id {id} does not exist." });
 
 			IFormCollection form = await Request.ReadFormAsync();
-			IFormFile model = form.Files.GetFile("model");
-			Stream stream = model.OpenReadStream();
-			byte[] buf = new byte[stream.Length];
-			stream.Read(buf, 0, (int)stream.Length);
+			StringValues json = new();
 
-			Console.WriteLine(buf);
+			form.TryGetValue("model", out json);
 
-			ContractTarget updatedTarget = JsonSerializer.Deserialize<ContractTarget>(buf);
+			ContractTarget updatedTarget = JsonSerializer.Deserialize<ContractTarget>(json.ToString(), new JsonSerializerOptions
+			{
+				PropertyNameCaseInsensitive = true
+			});
 
 			/*Assassin user = await GetCurrentUser();
 
@@ -62,10 +63,12 @@ namespace Brotherhood_Server.Controllers
 				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = $"You must have a contract with this target in order to edit it." });*/
 
 			IFormFile file = form.Files.GetFile("file");
-			ImageHelper.Upload(file, "targets");
 
-			_context.ContractTargets.Update(target); // FIXME: fuck
-			_context.Entry(target).State = EntityState.Modified;
+			if (file != null)
+				updatedTarget.ImageId = ImageHelper.Upload(file, "targets");
+
+			_context.ChangeTracker.Clear();
+			_context.ContractTargets.Update(updatedTarget);
 
 			try { await _context.SaveChangesAsync(); }
 			catch (Exception)

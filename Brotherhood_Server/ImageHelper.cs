@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using SixLabors.ImageSharp;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Brotherhood_Server
@@ -11,8 +12,12 @@ namespace Brotherhood_Server
 		{
 			string imageId = Guid.NewGuid().ToString();
 			Image image = Image.Load(file.OpenReadStream());
+			string path = $"{Directory.GetCurrentDirectory()}/wwwroot/images/{subFolder}";
 
-			image.SaveAsWebp($"/wwwroot/images/{subFolder}/{imageId}.webp");
+			if (!Directory.Exists(path))
+				Directory.CreateDirectory(path);
+
+			image.SaveAsWebp($"{path}/{imageId}.webp");
 
 			return imageId;
 		}
