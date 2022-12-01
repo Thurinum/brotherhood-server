@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Brotherhood_Server.Migrations
 {
     [DbContext(typeof(BrotherhoodServerContext))]
-    [Migration("20221201043022_owo")]
+    [Migration("20221201194957_owo")]
     partial class owo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,12 +38,12 @@ namespace Brotherhood_Server.Migrations
                     b.HasData(
                         new
                         {
-                            AssassinsId = "11111111-1111-1111-1111-111111111111",
+                            AssassinsId = "96969696-9696-9696-9696-969696969696",
                             ContractsId = 1
                         },
                         new
                         {
-                            AssassinsId = "11111111-1111-1111-1111-111111111111",
+                            AssassinsId = "69696969-6969-6969-6969-696969696969",
                             ContractsId = 2
                         },
                         new
@@ -138,7 +138,7 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e488af95-655c-4f92-b06c-bbed70eb2755",
+                            ConcurrencyStamp = "25a3edbc-7782-4fca-9409-b68d98c28933",
                             Email = "ezio.auditore@firenze.it",
                             EmailConfirmed = false,
                             FirstName = "Ezio",
@@ -146,9 +146,9 @@ namespace Brotherhood_Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "EZIO.AUDITORE@FIRENZE.IT",
                             NormalizedUserName = "EZIO",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPWhKOBQFNLozD9XBGswzIrg2yWCocQU0+josEVqV41YwgUk+Y8lCrTgB7qeC+gm9Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHqyCqvFR485cj/loKhsa/uQDghseiEk5ixdSK9fYSNO8ZL8HifGjrdVDDlkICEfeA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3ef31b48-9ba7-45ee-bd10-ea2e1d163999",
+                            SecurityStamp = "805647e1-9bb5-453b-9250-f79438f41edf",
                             TwoFactorEnabled = false,
                             UserName = "Ezio"
                         },
@@ -156,7 +156,7 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "69696969-6969-6969-6969-696969696969",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "07f69b60-71c9-434b-9fe9-c0fea010d33f",
+                            ConcurrencyStamp = "b3f6ee4b-7bfe-45c8-b102-68249f9ef64b",
                             Email = "arno.dorian@brotherhood.fr",
                             EmailConfirmed = false,
                             FirstName = "Arno",
@@ -164,9 +164,9 @@ namespace Brotherhood_Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ARNO.DORIAN@BROTHERHOOD.fr",
                             NormalizedUserName = "ARNO",
-                            PasswordHash = "AQAAAAEAACcQAAAAEF5WKTW7k2nv6az7mh4C3LYzFujMv3kCz+OVb++HC6JELxofUViIjL6MRbyrGCv2Vw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBe2spaoLXDhfWP35a9jWpMk0Koh7ACF97MYDYeznwlbPH/+ELbI+GGOZAy5a1m6RQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a817ae75-3d0a-476c-82b4-436285d1884d",
+                            SecurityStamp = "5cb6cd0e-bd41-4a08-9016-3e4d658c6414",
                             TwoFactorEnabled = false,
                             UserName = "Arno"
                         },
@@ -174,7 +174,7 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "96969696-9696-9696-9696-969696969696",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b73a6d07-1242-46f3-a7ed-6b29f4c3d3b8",
+                            ConcurrencyStamp = "2084d6fb-1c78-482f-9f0f-58de6a99436f",
                             Email = "theodore.lheureux@archlinux.net",
                             EmailConfirmed = false,
                             FirstName = "Theodore",
@@ -182,9 +182,9 @@ namespace Brotherhood_Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "THEODORE.LHEUREUX@ARCHLINUX.NET",
                             NormalizedUserName = "THEODORE",
-                            PasswordHash = "AQAAAAEAACcQAAAAELib1Q9IIbOyC9ujzRy8OEfrPsl/rcHCekWzuCwP9mKXsxXFpcxmgHdlUc8Q4GKAUQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDEmjI7IfVUBkN+PftD2ClWnvRD+wBTjZgwTaQwmaL7hG/sXew5Lo+N0hqz3MrpwEQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "000ce693-143b-4de3-a6aa-74da39855601",
+                            SecurityStamp = "7f6bffb7-ccbc-4068-91e5-891676d6d48a",
                             TwoFactorEnabled = false,
                             UserName = "Theodore"
                         });
@@ -215,32 +215,38 @@ namespace Brotherhood_Server.Migrations
                         new
                         {
                             Id = 1,
-                            Country = "Italy",
-                            Name = "Florence"
+                            Country = "Canada",
+                            Name = "Longueuil"
                         },
                         new
                         {
                             Id = 2,
-                            Country = "Italy",
-                            Name = "Rome"
+                            Country = "USA",
+                            Name = "New York"
                         },
                         new
                         {
                             Id = 3,
+                            Country = "China",
+                            Name = "Fujiang"
+                        },
+                        new
+                        {
+                            Id = 4,
                             Country = "France",
                             Name = "Paris"
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 5,
                             Country = "Italy",
-                            Name = "Venice"
+                            Name = "Rome"
                         },
                         new
                         {
-                            Id = 5,
-                            Country = "Canada",
-                            Name = "Longueuil"
+                            Id = 6,
+                            Country = "Italy",
+                            Name = "Venice"
                         });
                 });
 
@@ -253,8 +259,8 @@ namespace Brotherhood_Server.Migrations
 
                     b.Property<string>("Briefing")
                         .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<int>("CityId")
                         .HasColumnType("int");
@@ -264,7 +270,7 @@ namespace Brotherhood_Server.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("FeaturedContractId")
+                    b.Property<int?>("FeaturedTargetId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsPublic")
@@ -278,41 +284,43 @@ namespace Brotherhood_Server.Migrations
                         new
                         {
                             Id = 1,
-                            Briefing = "The dastarly Haytham Kenway is disrupting peace and hindering freedom of the people of America. Bring him and his acolytes down and ensure justice is brought to the people.",
-                            CityId = 5,
-                            Codename = "Codename: LoneEagle",
+                            Briefing = "Julie Proulx is using her weight loss program to gain leverage over obese people all over America.Put an end to her manipulative scheme before she uses her customers' money against the Brotherhood.",
+                            CityId = 1,
+                            Codename = "A Fat Fraud",
+                            FeaturedTargetId = 1,
                             IsPublic = true
                         },
                         new
                         {
                             Id = 2,
-                            Briefing = "The Pope is a threat to the people of Italy. Bring him down and ensure justice is brought to the people.",
-                            CityId = 2,
-                            Codename = "Pope",
+                            Briefing = "Students in colleges all around the world have begun to worship the dangerous cult of JavaScript.We believe our long-time enemy Valory Sturgeon is behind this ploy to muster allies against our order.Our intelligence suspects she may be using an ancient artifact known as the Aspnet Core to aid her in her quest for absolute control. Find Sturgeon and make this dastardly plan her last. If possible, recover the artifact.",
+                            CityId = 1,
+                            Codename = "Sturgeon's Last Stand",
+                            FeaturedTargetId = 2,
                             IsPublic = true
                         },
                         new
                         {
                             Id = 3,
-                            Briefing = "The dastarly Shay Cormac is disrupting peace and hindering freedom of the people of America. Bring him down and ensure justice is brought to the people.",
-                            CityId = 5,
-                            Codename = "Rogue",
+                            Briefing = "Our long-time collaborator, Paul Clayton, is being kept hostage by the Holy American Inquisition inside their headquarters of the Empire State Building. He is accused of being part of the Furry Fandom. Three men are set to witness against him in the coming days before the Inquisition's Tribunal. Paul is a valuable asset to the Brotherhood, as his status of legend amongst furries grants us a constant stream of fluffy recruits.Eliminate the three witnesses and show the furry community the support our order bestows upon its most loyal supporters.",
+                            CityId = 2,
+                            Codename = "When Fluff Isn't Enough",
                             IsPublic = true
                         },
                         new
                         {
                             Id = 4,
-                            Briefing = "The dastarly Charles lee is disrupting peace and hindering freedom of the people of America. Bring him down and ensure justice is brought to the people.",
-                            CityId = 5,
-                            Codename = "Dastardly",
-                            IsPublic = true
+                            Briefing = "Our contacts in Orient report that ancient and dangerous knowledge from a past civilization has been unearthed in a remote area of rural China. Indeed, traces of a forgotten language known as the Visual Basic have mysteriously emerged after centuries of being removed from this world. Most suspiciously, Valory Sturgeon's closest minion, Joseph de Beloeil, is in charge of analysing the discovered samples. Eliminate De Beloeil and destroy the samples before the world comes to know Visual Basic again.",
+                            CityId = 3,
+                            Codename = "Bury Evil",
+                            IsPublic = false
                         },
                         new
                         {
                             Id = 5,
-                            Briefing = "The dastarly Julie Pro is disrupting peace and hindering freedom of the people of America. Bring him down and ensure justice is brought to the people.",
-                            CityId = 3,
-                            Codename = "ViewModel",
+                            Briefing = "Reports indicate that Didier Paton, loyal member of the Brotherhood, has been captured by Geralt of Rivia, a notorious bounty hunter.While De Rivia's motives for the kidnapping are beyond our knowledge, it cannot but bode ill for Paton. Eliminate de Rivia and make sure his victim comes home safely.",
+                            CityId = 4,
+                            Codename = "Not the First Time",
                             IsPublic = false
                         });
                 });
@@ -345,50 +353,50 @@ namespace Brotherhood_Server.Migrations
                         new
                         {
                             Id = 1,
-                            FirstName = "Haytham",
-                            LastName = "Kenway"
+                            FirstName = "Julie",
+                            LastName = "Proulx"
                         },
                         new
                         {
                             Id = 2,
-                            FirstName = "Rodrigo",
-                            LastName = "Borgia"
+                            FirstName = "Valory",
+                            LastName = "Sturgeon"
                         },
                         new
                         {
                             Id = 3,
-                            FirstName = "Shay",
-                            LastName = "Cormac"
+                            FirstName = "Nazeem",
+                            LastName = "Barhoumeter"
                         },
                         new
                         {
                             Id = 4,
+                            FirstName = "Crawford",
+                            LastName = "Starrick"
+                        },
+                        new
+                        {
+                            Id = 5,
                             FirstName = "Charles",
                             LastName = "Lee"
                         },
                         new
                         {
-                            Id = 5,
-                            FirstName = "Valerie",
-                            LastName = "Turgeon"
-                        },
-                        new
-                        {
                             Id = 6,
-                            FirstName = "Valerie",
-                            LastName = "Turgeon"
+                            FirstName = "Joseph",
+                            LastName = "de Beloeil"
                         },
                         new
                         {
                             Id = 7,
-                            FirstName = "Valerie",
-                            LastName = "Turgeon"
+                            FirstName = "Geralt",
+                            LastName = "of Rivia"
                         },
                         new
                         {
                             Id = 8,
-                            FirstName = "Valerie",
-                            LastName = "Turgeon"
+                            FirstName = "Mikael",
+                            LastName = "F. Ouhwou"
                         });
                 });
 
@@ -415,7 +423,7 @@ namespace Brotherhood_Server.Migrations
                         new
                         {
                             ContractsId = 2,
-                            TargetsId = 1
+                            TargetsId = 2
                         },
                         new
                         {
@@ -424,13 +432,23 @@ namespace Brotherhood_Server.Migrations
                         },
                         new
                         {
+                            ContractsId = 3,
+                            TargetsId = 4
+                        },
+                        new
+                        {
+                            ContractsId = 3,
+                            TargetsId = 5
+                        },
+                        new
+                        {
                             ContractsId = 4,
-                            TargetsId = 3
+                            TargetsId = 6
                         },
                         new
                         {
                             ContractsId = 5,
-                            TargetsId = 4
+                            TargetsId = 7
                         });
                 });
 

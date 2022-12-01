@@ -68,10 +68,10 @@ namespace Brotherhood_Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FeaturedContractId = table.Column<int>(type: "int", nullable: true),
+                    FeaturedTargetId = table.Column<int>(type: "int", nullable: true),
                     CityId = table.Column<int>(type: "int", nullable: false),
                     Codename = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Briefing = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    Briefing = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     IsPublic = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -253,9 +253,9 @@ namespace Brotherhood_Server.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "11111111-1111-1111-1111-111111111111", 0, "e488af95-655c-4f92-b06c-bbed70eb2755", "ezio.auditore@firenze.it", false, "Ezio", "Auditore", false, null, "EZIO.AUDITORE@FIRENZE.IT", "EZIO", "AQAAAAEAACcQAAAAEPWhKOBQFNLozD9XBGswzIrg2yWCocQU0+josEVqV41YwgUk+Y8lCrTgB7qeC+gm9Q==", null, false, "3ef31b48-9ba7-45ee-bd10-ea2e1d163999", false, "Ezio" },
-                    { "69696969-6969-6969-6969-696969696969", 0, "07f69b60-71c9-434b-9fe9-c0fea010d33f", "arno.dorian@brotherhood.fr", false, "Arno", "Dorian", false, null, "ARNO.DORIAN@BROTHERHOOD.fr", "ARNO", "AQAAAAEAACcQAAAAEF5WKTW7k2nv6az7mh4C3LYzFujMv3kCz+OVb++HC6JELxofUViIjL6MRbyrGCv2Vw==", null, false, "a817ae75-3d0a-476c-82b4-436285d1884d", false, "Arno" },
-                    { "96969696-9696-9696-9696-969696969696", 0, "b73a6d07-1242-46f3-a7ed-6b29f4c3d3b8", "theodore.lheureux@archlinux.net", false, "Theodore", "l'Heureux", false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAELib1Q9IIbOyC9ujzRy8OEfrPsl/rcHCekWzuCwP9mKXsxXFpcxmgHdlUc8Q4GKAUQ==", null, false, "000ce693-143b-4de3-a6aa-74da39855601", false, "Theodore" }
+                    { "11111111-1111-1111-1111-111111111111", 0, "25a3edbc-7782-4fca-9409-b68d98c28933", "ezio.auditore@firenze.it", false, "Ezio", "Auditore", false, null, "EZIO.AUDITORE@FIRENZE.IT", "EZIO", "AQAAAAEAACcQAAAAEHqyCqvFR485cj/loKhsa/uQDghseiEk5ixdSK9fYSNO8ZL8HifGjrdVDDlkICEfeA==", null, false, "805647e1-9bb5-453b-9250-f79438f41edf", false, "Ezio" },
+                    { "69696969-6969-6969-6969-696969696969", 0, "b3f6ee4b-7bfe-45c8-b102-68249f9ef64b", "arno.dorian@brotherhood.fr", false, "Arno", "Dorian", false, null, "ARNO.DORIAN@BROTHERHOOD.fr", "ARNO", "AQAAAAEAACcQAAAAEBe2spaoLXDhfWP35a9jWpMk0Koh7ACF97MYDYeznwlbPH/+ELbI+GGOZAy5a1m6RQ==", null, false, "5cb6cd0e-bd41-4a08-9016-3e4d658c6414", false, "Arno" },
+                    { "96969696-9696-9696-9696-969696969696", 0, "2084d6fb-1c78-482f-9f0f-58de6a99436f", "theodore.lheureux@archlinux.net", false, "Theodore", "l'Heureux", false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAEDEmjI7IfVUBkN+PftD2ClWnvRD+wBTjZgwTaQwmaL7hG/sXew5Lo+N0hqz3MrpwEQ==", null, false, "7f6bffb7-ccbc-4068-91e5-891676d6d48a", false, "Theodore" }
                 });
 
             migrationBuilder.InsertData(
@@ -263,11 +263,12 @@ namespace Brotherhood_Server.Migrations
                 columns: new[] { "Id", "Country", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Italy", "Florence" },
-                    { 2, "Italy", "Rome" },
-                    { 3, "France", "Paris" },
-                    { 4, "Italy", "Venice" },
-                    { 5, "Canada", "Longueuil" }
+                    { 1, "Canada", "Longueuil" },
+                    { 2, "USA", "New York" },
+                    { 3, "China", "Fujiang" },
+                    { 4, "France", "Paris" },
+                    { 5, "Italy", "Rome" },
+                    { 6, "Italy", "Venice" }
                 });
 
             migrationBuilder.InsertData(
@@ -275,26 +276,26 @@ namespace Brotherhood_Server.Migrations
                 columns: new[] { "Id", "FirstName", "ImageId", "LastName" },
                 values: new object[,]
                 {
-                    { 6, "Valerie", null, "Turgeon" },
-                    { 5, "Valerie", null, "Turgeon" },
-                    { 4, "Charles", null, "Lee" },
-                    { 3, "Shay", null, "Cormac" },
-                    { 2, "Rodrigo", null, "Borgia" },
-                    { 8, "Valerie", null, "Turgeon" },
-                    { 7, "Valerie", null, "Turgeon" },
-                    { 1, "Haytham", null, "Kenway" }
+                    { 6, "Joseph", null, "de Beloeil" },
+                    { 5, "Charles", null, "Lee" },
+                    { 4, "Crawford", null, "Starrick" },
+                    { 3, "Nazeem", null, "Barhoumeter" },
+                    { 2, "Valory", null, "Sturgeon" },
+                    { 8, "Mikael", null, "F. Ouhwou" },
+                    { 7, "Geralt", null, "of Rivia" },
+                    { 1, "Julie", null, "Proulx" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Contracts",
-                columns: new[] { "Id", "Briefing", "CityId", "Codename", "FeaturedContractId", "IsPublic" },
+                columns: new[] { "Id", "Briefing", "CityId", "Codename", "FeaturedTargetId", "IsPublic" },
                 values: new object[,]
                 {
-                    { 5, "The dastarly Julie Pro is disrupting peace and hindering freedom of the people of America. Bring him down and ensure justice is brought to the people.", 3, "ViewModel", null, false },
-                    { 4, "The dastarly Charles lee is disrupting peace and hindering freedom of the people of America. Bring him down and ensure justice is brought to the people.", 5, "Dastardly", null, true },
-                    { 2, "The Pope is a threat to the people of Italy. Bring him down and ensure justice is brought to the people.", 2, "Pope", null, true },
-                    { 1, "The dastarly Haytham Kenway is disrupting peace and hindering freedom of the people of America. Bring him and his acolytes down and ensure justice is brought to the people.", 5, "Codename: LoneEagle", null, true },
-                    { 3, "The dastarly Shay Cormac is disrupting peace and hindering freedom of the people of America. Bring him down and ensure justice is brought to the people.", 5, "Rogue", null, true }
+                    { 5, "Reports indicate that Didier Paton, loyal member of the Brotherhood, has been captured by Geralt of Rivia, a notorious bounty hunter.While De Rivia's motives for the kidnapping are beyond our knowledge, it cannot but bode ill for Paton. Eliminate de Rivia and make sure his victim comes home safely.", 4, "Not the First Time", null, false },
+                    { 4, "Our contacts in Orient report that ancient and dangerous knowledge from a past civilization has been unearthed in a remote area of rural China. Indeed, traces of a forgotten language known as the Visual Basic have mysteriously emerged after centuries of being removed from this world. Most suspiciously, Valory Sturgeon's closest minion, Joseph de Beloeil, is in charge of analysing the discovered samples. Eliminate De Beloeil and destroy the samples before the world comes to know Visual Basic again.", 3, "Bury Evil", null, false },
+                    { 3, "Our long-time collaborator, Paul Clayton, is being kept hostage by the Holy American Inquisition inside their headquarters of the Empire State Building. He is accused of being part of the Furry Fandom. Three men are set to witness against him in the coming days before the Inquisition's Tribunal. Paul is a valuable asset to the Brotherhood, as his status of legend amongst furries grants us a constant stream of fluffy recruits.Eliminate the three witnesses and show the furry community the support our order bestows upon its most loyal supporters.", 2, "When Fluff Isn't Enough", null, true },
+                    { 1, "Julie Proulx is using her weight loss program to gain leverage over obese people all over America.Put an end to her manipulative scheme before she uses her customers' money against the Brotherhood.", 1, "A Fat Fraud", 1, true },
+                    { 2, "Students in colleges all around the world have begun to worship the dangerous cult of JavaScript.We believe our long-time enemy Valory Sturgeon is behind this ploy to muster allies against our order.Our intelligence suspects she may be using an ancient artifact known as the Aspnet Core to aid her in her quest for absolute control. Find Sturgeon and make this dastardly plan her last. If possible, recover the artifact.", 1, "Sturgeon's Last Stand", 2, true }
                 });
 
             migrationBuilder.InsertData(
@@ -302,8 +303,8 @@ namespace Brotherhood_Server.Migrations
                 columns: new[] { "AssassinsId", "ContractsId" },
                 values: new object[,]
                 {
-                    { "11111111-1111-1111-1111-111111111111", 1 },
-                    { "11111111-1111-1111-1111-111111111111", 2 },
+                    { "96969696-9696-9696-9696-969696969696", 1 },
+                    { "69696969-6969-6969-6969-696969696969", 2 },
                     { "69696969-6969-6969-6969-696969696969", 3 },
                     { "11111111-1111-1111-1111-111111111111", 4 },
                     { "96969696-9696-9696-9696-969696969696", 5 }
@@ -315,10 +316,12 @@ namespace Brotherhood_Server.Migrations
                 values: new object[,]
                 {
                     { 1, 1 },
-                    { 2, 1 },
+                    { 2, 2 },
                     { 3, 3 },
-                    { 4, 3 },
-                    { 5, 4 }
+                    { 3, 4 },
+                    { 3, 5 },
+                    { 4, 6 },
+                    { 5, 7 }
                 });
 
             migrationBuilder.CreateIndex(

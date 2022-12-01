@@ -8,7 +8,7 @@ namespace Brotherhood_Server.Models
 	public class Contract
 	{
 		public int Id { get; set; }
-		public int? FeaturedContractId { get; set; }
+		public int? FeaturedTargetId { get; set; }
 
 		[Required]
 		public int CityId { get; set; }
@@ -18,7 +18,7 @@ namespace Brotherhood_Server.Models
 		public string Codename { get; set; }
 
 		[Required]
-		[MaxLength(300)]
+		[MaxLength(1000)]
 		public string Briefing { get; set; }
 
 		[Required]

@@ -65,7 +65,10 @@ namespace Brotherhood_Server.Controllers
 			IFormFile file = form.Files.GetFile("file");
 
 			if (file != null)
+			{
+				//ImageHelper.Delete(updatedTarget.ImageId, "targets");
 				updatedTarget.ImageId = ImageHelper.Upload(file, "targets");
+			}
 
 			_context.ChangeTracker.Clear();
 			_context.ContractTargets.Update(updatedTarget);

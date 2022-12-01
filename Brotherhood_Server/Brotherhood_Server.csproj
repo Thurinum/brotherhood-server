@@ -22,14 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EditorConfigFiles Remove="C:\Users\2156153\source\repos\Brotherhood_Server\Brotherhood_Server\.editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="C:\Users\2156153\source\repos\Brotherhood_Server\Brotherhood_Server\.editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="wwwroot\images\targets\" />
   </ItemGroup>
 

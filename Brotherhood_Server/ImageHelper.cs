@@ -20,6 +20,6 @@ namespace Brotherhood_Server
 			image.SaveAsWebp($"{path}/{imageId}.webp");
 
 			return imageId;
-		}
+		} 
 	}
 }
