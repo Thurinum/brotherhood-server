@@ -8,10 +8,32 @@ namespace Brotherhood_Server
 {
 	public class ImageHelper
 	{
-		public static void Upload(IFormFile file, string subFolder, int entityId)
+		public enum Size
 		{
-			Image image = Image.Load(file.OpenReadStream());
-			string path = $"{Directory.GetCurrentDirectory()}/wwwroot/images/{subFolder}";
+			sm = 256,
+			lg = 1024
+		}
+
+		public enum Status
+		{
+			TooSmall,
+			Invalid,
+			Success
+		}
+
+		public static Status Upload(IFormFile file, string subFolder, int entityId, Size size)
+		{
+			Image image;
+
+			try   { image = Image.Load(file.OpenReadStream()); }
+			catch { return Status.Invalid; }
+
+			// refuse if image is too small or too large
+			int width = (int)size;
+			if (image.Width < width * 0.5 || image.Width > width)
+				return Status.TooSmall;
+
+			string path = $"{Directory.GetCurrentDirectory()}/wwwroot/images/{subFolder}/{Enum.GetName(size)}";
 
 			if (!Directory.Exists(path))
 			{
@@ -20,6 +42,8 @@ namespace Brotherhood_Server
 			}
 
 			image.SaveAsWebp($"{path}/{entityId}.webp");
-		} 
+
+			return Status.Success;
+		}
 	}
 }

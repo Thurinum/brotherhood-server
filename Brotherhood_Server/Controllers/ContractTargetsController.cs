@@ -47,6 +47,7 @@ namespace Brotherhood_Server.Controllers
 			if (target == null)
 				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"The entity to update with id {id} does not exist." });
 
+			// deserialize model from json
 			IFormCollection form = await Request.ReadFormAsync();
 			StringValues json = new();
 
@@ -57,18 +58,7 @@ namespace Brotherhood_Server.Controllers
 				PropertyNameCaseInsensitive = true
 			});
 
-			/*Assassin user = await GetCurrentUser();
-
-			if (!target.Contracts.Any(c => c.Assassins.Any(a => a.Id == user.Id)))
-				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = $"You must have a contract with this target in order to edit it." });*/
-
-			IFormFile file = form.Files.GetFile("file");
-
-			if (file != null)
-			{
-				ImageHelper.Upload(file, "targets", updatedTarget.Id);
-			}
-
+			// save changes to model
 			_context.ChangeTracker.Clear();
 			_context.ContractTargets.Update(updatedTarget);
 
@@ -76,6 +66,29 @@ namespace Brotherhood_Server.Controllers
 			catch (Exception)
 			{
 				return StatusCode(StatusCodes.Status500InternalServerError, new { Message = $"Something went wrong when adding target {target.FirstName} {target.LastName} to this contract." });
+			}
+
+			// upload new image if applicable
+			IFormFile smImage = form.Files.GetFile("image-sm");
+			IFormFile lgImage = form.Files.GetFile("image-lg");
+
+			if (smImage == null || lgImage == null)
+				return NoContent();
+
+			switch (ImageHelper.Upload(smImage, "targets", updatedTarget.Id, ImageHelper.Size.sm))
+			{
+				case ImageHelper.Status.TooSmall:
+					return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is too small. Please upload an image that is at least 128x128 pixels." });
+				case ImageHelper.Status.Invalid:
+					return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is invalid. Please upload a valid image." });
+			}
+
+			switch (ImageHelper.Upload(lgImage, "targets", updatedTarget.Id, ImageHelper.Size.lg))
+			{
+				case ImageHelper.Status.TooSmall:
+					return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is too small. Please upload an image that is at least 1024x1024 pixels." });
+				case ImageHelper.Status.Invalid:
+					return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is invalid. Please upload a valid image." });
 			}
 
 			return NoContent();
