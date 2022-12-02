@@ -136,7 +136,7 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9f45c6bc-c240-4394-aad8-daa7ff7456de",
+                            ConcurrencyStamp = "252326a2-4b7a-4fb2-831a-dc0cee144903",
                             Email = "ezio.auditore@firenze.it",
                             EmailConfirmed = false,
                             FirstName = "Ezio",
@@ -144,9 +144,9 @@ namespace Brotherhood_Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "EZIO.AUDITORE@FIRENZE.IT",
                             NormalizedUserName = "EZIO",
-                            PasswordHash = "AQAAAAEAACcQAAAAEL6zonTWhbVUtF0bodNgj12L3SbgIK97X366bpferHsVMmEN2FJxlxKQOQqeW1lrEQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENfius7BVbZuj45wURa/icDjgLuZbP0aXXcYvj0c7nBOV+FWUbzh6bdIFxLeurbnwg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "aa959012-9ed7-4e88-93bb-742565de01f1",
+                            SecurityStamp = "2bf38622-8c31-45b2-9c9e-86d1eb969dfd",
                             TwoFactorEnabled = false,
                             UserName = "Ezio"
                         },
@@ -154,7 +154,7 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "69696969-6969-6969-6969-696969696969",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5d67ddf7-6541-40e7-b145-1ffacd4889a3",
+                            ConcurrencyStamp = "c9e257cd-8dfe-4e8e-82dd-4a9527cd1ea4",
                             Email = "arno.dorian@brotherhood.fr",
                             EmailConfirmed = false,
                             FirstName = "Arno",
@@ -162,9 +162,9 @@ namespace Brotherhood_Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ARNO.DORIAN@BROTHERHOOD.fr",
                             NormalizedUserName = "ARNO",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHqTpCunAifl+EVPiKAHg8lBzq9KVQ8nPDglXPHkd68LCzmqMel8MJWv86hOr6wkAA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAk0HBV26r3uiTIm55F5S1rtsNiTQehih4od53UMEG4h7kH88Omj9mWV/mDcpBP8uw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "87fa4fd8-8c7a-4ab7-a319-34a57f2de2da",
+                            SecurityStamp = "db1dfa45-d2e1-4ded-9b6e-1fa76fcae91f",
                             TwoFactorEnabled = false,
                             UserName = "Arno"
                         },
@@ -172,7 +172,7 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "96969696-9696-9696-9696-969696969696",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2b8c19f7-656d-463c-a3bc-db84bf4aac8f",
+                            ConcurrencyStamp = "d01f9a8b-88c4-4c62-a046-c18298314e3e",
                             Email = "theodore.lheureux@archlinux.net",
                             EmailConfirmed = false,
                             FirstName = "Theodore",
@@ -180,9 +180,9 @@ namespace Brotherhood_Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "THEODORE.LHEUREUX@ARCHLINUX.NET",
                             NormalizedUserName = "THEODORE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEI4z611Arw/IoxtZomeksSX8cPYW4yU0I9uYJkWDtyz7qZ/w8P5J97+8LagLzeUGng==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMyJ9Vc9HcEVH6k3lJhKiQxNanrNm1/jh9UqgeY1R6zgpUqilkgmOyh0cEWCwUg6SA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "60c8e25c-7f15-4285-8e74-0b2d31deaaaf",
+                            SecurityStamp = "6bdbbc86-fb54-4aab-9964-626376b0d371",
                             TwoFactorEnabled = false,
                             UserName = "Theodore"
                         });
@@ -268,7 +268,7 @@ namespace Brotherhood_Server.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("FeaturedTargetId")
+                    b.Property<int>("CoverTargetId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsPublic")
@@ -285,7 +285,7 @@ namespace Brotherhood_Server.Migrations
                             Briefing = "Julie Proulx is using her weight loss program to gain leverage over obese people all over America.Put an end to her manipulative scheme before she uses her customers' money against the Brotherhood.",
                             CityId = 1,
                             Codename = "A Fat Fraud",
-                            FeaturedTargetId = 1,
+                            CoverTargetId = 1,
                             IsPublic = true
                         },
                         new
@@ -294,7 +294,7 @@ namespace Brotherhood_Server.Migrations
                             Briefing = "Students in colleges all around the world have begun to worship the dangerous cult of JavaScript.We believe our long-time enemy Valory Sturgeon is behind this ploy to muster allies against our order.Our intelligence suspects she may be using an ancient artifact known as the Aspnet Core to aid her in her quest for absolute control. Find Sturgeon and make this dastardly plan her last. If possible, recover the artifact.",
                             CityId = 1,
                             Codename = "Sturgeon's Last Stand",
-                            FeaturedTargetId = 2,
+                            CoverTargetId = 2,
                             IsPublic = true
                         },
                         new
@@ -303,6 +303,7 @@ namespace Brotherhood_Server.Migrations
                             Briefing = "Our long-time collaborator, Paul Clayton, is being kept hostage by the Holy American Inquisition inside their headquarters of the Empire State Building. He is accused of being part of the Furry Fandom. Three men are set to witness against him in the coming days before the Inquisition's Tribunal. Paul is a valuable asset to the Brotherhood, as his status of legend amongst furries grants us a constant stream of fluffy recruits.Eliminate the three witnesses and show the furry community the support our order bestows upon its most loyal supporters.",
                             CityId = 2,
                             Codename = "When Fluff Isn't Enough",
+                            CoverTargetId = 0,
                             IsPublic = true
                         },
                         new
@@ -311,6 +312,7 @@ namespace Brotherhood_Server.Migrations
                             Briefing = "Our contacts in Orient report that ancient and dangerous knowledge from a past civilization has been unearthed in a remote area of rural China. Indeed, traces of a forgotten language known as the Visual Basic have mysteriously emerged after centuries of being removed from this world. Most suspiciously, Valory Sturgeon's closest minion, Joseph de Beloeil, is in charge of analysing the discovered samples. Eliminate De Beloeil and destroy the samples before the world comes to know Visual Basic again.",
                             CityId = 3,
                             Codename = "Bury Evil",
+                            CoverTargetId = 0,
                             IsPublic = false
                         },
                         new
@@ -319,6 +321,7 @@ namespace Brotherhood_Server.Migrations
                             Briefing = "Reports indicate that Didier Paton, loyal member of the Brotherhood, has been captured by Geralt of Rivia, a notorious bounty hunter.While De Rivia's motives for the kidnapping are beyond our knowledge, it cannot but bode ill for Paton. Eliminate de Rivia and make sure his victim comes home safely.",
                             CityId = 4,
                             Codename = "Not the First Time",
+                            CoverTargetId = 0,
                             IsPublic = false
                         });
                 });

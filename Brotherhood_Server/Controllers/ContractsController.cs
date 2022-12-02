@@ -88,6 +88,38 @@ namespace Brotherhood_Server.Controllers
 
 			[HttpPut]
 			[Authorize]
+			[Route("contract/{id}/setcover")]
+			public async Task<IActionResult> SetContractCover(int id, ContractTarget dto)
+			{
+				Contract contract = await _context.Contracts.FindAsync(id);
+
+				if (contract == null)
+					return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"Invalid contract id {id} provided." });
+
+				Assassin user = await GetCurrentUser();
+
+				if (!contract.Assassins.Contains(user))
+					return StatusCode(StatusCodes.Status401Unauthorized, new { Message = $"You must be assigned to this contract in order to modify it." });
+
+				ContractTarget target = await _context.ContractTargets.FindAsync(dto.Id);
+
+				if (target == null)
+					return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Invalid contract target id {dto.Id} provided." });
+
+				contract.CoverTargetId = dto.Id;
+				_context.Entry(contract).State = EntityState.Modified;
+
+				try { await _context.SaveChangesAsync(); }
+				catch (Exception)
+				{
+					return StatusCode(StatusCodes.Status500InternalServerError, new { Message = $"Something went wrong when adding setting {target.FirstName} {target.LastName} as cover for this contract." });
+				}
+
+				return NoContent();
+			}
+
+		[HttpPut]
+			[Authorize]
 			[Route("contract/{id}/target/{targetId}/remove")]
 			public async Task<IActionResult> RemoveContractTarget(int id, int targetId)
 			{

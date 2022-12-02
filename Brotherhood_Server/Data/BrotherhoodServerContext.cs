@@ -21,7 +21,7 @@ namespace Brotherhood_Server.Data
 				new Contract()
 				{
 					Id = 1,
-					FeaturedTargetId = 1,
+					CoverTargetId = 1,
 					CityId = 1,
 					Codename = "A Fat Fraud",
 					IsPublic = true,
@@ -31,7 +31,7 @@ namespace Brotherhood_Server.Data
 				new Contract()
 				{
 					Id = 2,
-					FeaturedTargetId = 2,
+					CoverTargetId = 2,
 					CityId = 1,
 					Codename = "Sturgeon's Last Stand",
 					IsPublic = true,

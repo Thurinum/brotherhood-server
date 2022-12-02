@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Brotherhood_Server.Migrations
 {
-    public partial class owo : Migration
+    public partial class OWO : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,7 +68,7 @@ namespace Brotherhood_Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FeaturedTargetId = table.Column<int>(type: "int", nullable: true),
+                    CoverTargetId = table.Column<int>(type: "int", nullable: false),
                     CityId = table.Column<int>(type: "int", nullable: false),
                     Codename = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Briefing = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
@@ -254,9 +254,9 @@ namespace Brotherhood_Server.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "11111111-1111-1111-1111-111111111111", 0, "9f45c6bc-c240-4394-aad8-daa7ff7456de", "ezio.auditore@firenze.it", false, "Ezio", "Auditore", false, null, "EZIO.AUDITORE@FIRENZE.IT", "EZIO", "AQAAAAEAACcQAAAAEL6zonTWhbVUtF0bodNgj12L3SbgIK97X366bpferHsVMmEN2FJxlxKQOQqeW1lrEQ==", null, false, "aa959012-9ed7-4e88-93bb-742565de01f1", false, "Ezio" },
-                    { "69696969-6969-6969-6969-696969696969", 0, "5d67ddf7-6541-40e7-b145-1ffacd4889a3", "arno.dorian@brotherhood.fr", false, "Arno", "Dorian", false, null, "ARNO.DORIAN@BROTHERHOOD.fr", "ARNO", "AQAAAAEAACcQAAAAEHqTpCunAifl+EVPiKAHg8lBzq9KVQ8nPDglXPHkd68LCzmqMel8MJWv86hOr6wkAA==", null, false, "87fa4fd8-8c7a-4ab7-a319-34a57f2de2da", false, "Arno" },
-                    { "96969696-9696-9696-9696-969696969696", 0, "2b8c19f7-656d-463c-a3bc-db84bf4aac8f", "theodore.lheureux@archlinux.net", false, "Theodore", "l'Heureux", false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAEI4z611Arw/IoxtZomeksSX8cPYW4yU0I9uYJkWDtyz7qZ/w8P5J97+8LagLzeUGng==", null, false, "60c8e25c-7f15-4285-8e74-0b2d31deaaaf", false, "Theodore" }
+                    { "11111111-1111-1111-1111-111111111111", 0, "252326a2-4b7a-4fb2-831a-dc0cee144903", "ezio.auditore@firenze.it", false, "Ezio", "Auditore", false, null, "EZIO.AUDITORE@FIRENZE.IT", "EZIO", "AQAAAAEAACcQAAAAENfius7BVbZuj45wURa/icDjgLuZbP0aXXcYvj0c7nBOV+FWUbzh6bdIFxLeurbnwg==", null, false, "2bf38622-8c31-45b2-9c9e-86d1eb969dfd", false, "Ezio" },
+                    { "69696969-6969-6969-6969-696969696969", 0, "c9e257cd-8dfe-4e8e-82dd-4a9527cd1ea4", "arno.dorian@brotherhood.fr", false, "Arno", "Dorian", false, null, "ARNO.DORIAN@BROTHERHOOD.fr", "ARNO", "AQAAAAEAACcQAAAAEAk0HBV26r3uiTIm55F5S1rtsNiTQehih4od53UMEG4h7kH88Omj9mWV/mDcpBP8uw==", null, false, "db1dfa45-d2e1-4ded-9b6e-1fa76fcae91f", false, "Arno" },
+                    { "96969696-9696-9696-9696-969696969696", 0, "d01f9a8b-88c4-4c62-a046-c18298314e3e", "theodore.lheureux@archlinux.net", false, "Theodore", "l'Heureux", false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAEMyJ9Vc9HcEVH6k3lJhKiQxNanrNm1/jh9UqgeY1R6zgpUqilkgmOyh0cEWCwUg6SA==", null, false, "6bdbbc86-fb54-4aab-9964-626376b0d371", false, "Theodore" }
                 });
 
             migrationBuilder.InsertData(
@@ -289,12 +289,12 @@ namespace Brotherhood_Server.Migrations
 
             migrationBuilder.InsertData(
                 table: "Contracts",
-                columns: new[] { "Id", "Briefing", "CityId", "Codename", "FeaturedTargetId", "IsPublic" },
+                columns: new[] { "Id", "Briefing", "CityId", "Codename", "CoverTargetId", "IsPublic" },
                 values: new object[,]
                 {
-                    { 5, "Reports indicate that Didier Paton, loyal member of the Brotherhood, has been captured by Geralt of Rivia, a notorious bounty hunter.While De Rivia's motives for the kidnapping are beyond our knowledge, it cannot but bode ill for Paton. Eliminate de Rivia and make sure his victim comes home safely.", 4, "Not the First Time", null, false },
-                    { 4, "Our contacts in Orient report that ancient and dangerous knowledge from a past civilization has been unearthed in a remote area of rural China. Indeed, traces of a forgotten language known as the Visual Basic have mysteriously emerged after centuries of being removed from this world. Most suspiciously, Valory Sturgeon's closest minion, Joseph de Beloeil, is in charge of analysing the discovered samples. Eliminate De Beloeil and destroy the samples before the world comes to know Visual Basic again.", 3, "Bury Evil", null, false },
-                    { 3, "Our long-time collaborator, Paul Clayton, is being kept hostage by the Holy American Inquisition inside their headquarters of the Empire State Building. He is accused of being part of the Furry Fandom. Three men are set to witness against him in the coming days before the Inquisition's Tribunal. Paul is a valuable asset to the Brotherhood, as his status of legend amongst furries grants us a constant stream of fluffy recruits.Eliminate the three witnesses and show the furry community the support our order bestows upon its most loyal supporters.", 2, "When Fluff Isn't Enough", null, true },
+                    { 5, "Reports indicate that Didier Paton, loyal member of the Brotherhood, has been captured by Geralt of Rivia, a notorious bounty hunter.While De Rivia's motives for the kidnapping are beyond our knowledge, it cannot but bode ill for Paton. Eliminate de Rivia and make sure his victim comes home safely.", 4, "Not the First Time", 0, false },
+                    { 4, "Our contacts in Orient report that ancient and dangerous knowledge from a past civilization has been unearthed in a remote area of rural China. Indeed, traces of a forgotten language known as the Visual Basic have mysteriously emerged after centuries of being removed from this world. Most suspiciously, Valory Sturgeon's closest minion, Joseph de Beloeil, is in charge of analysing the discovered samples. Eliminate De Beloeil and destroy the samples before the world comes to know Visual Basic again.", 3, "Bury Evil", 0, false },
+                    { 3, "Our long-time collaborator, Paul Clayton, is being kept hostage by the Holy American Inquisition inside their headquarters of the Empire State Building. He is accused of being part of the Furry Fandom. Three men are set to witness against him in the coming days before the Inquisition's Tribunal. Paul is a valuable asset to the Brotherhood, as his status of legend amongst furries grants us a constant stream of fluffy recruits.Eliminate the three witnesses and show the furry community the support our order bestows upon its most loyal supporters.", 2, "When Fluff Isn't Enough", 0, true },
                     { 1, "Julie Proulx is using her weight loss program to gain leverage over obese people all over America.Put an end to her manipulative scheme before she uses her customers' money against the Brotherhood.", 1, "A Fat Fraud", 1, true },
                     { 2, "Students in colleges all around the world have begun to worship the dangerous cult of JavaScript.We believe our long-time enemy Valory Sturgeon is behind this ploy to muster allies against our order.Our intelligence suspects she may be using an ancient artifact known as the Aspnet Core to aid her in her quest for absolute control. Find Sturgeon and make this dastardly plan her last. If possible, recover the artifact.", 1, "Sturgeon's Last Stand", 2, true }
                 });
