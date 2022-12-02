@@ -87,7 +87,8 @@ namespace Brotherhood_Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ImageCacheId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -253,9 +254,9 @@ namespace Brotherhood_Server.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "11111111-1111-1111-1111-111111111111", 0, "3602c70d-789e-4320-8943-d60fedf8e681", "ezio.auditore@firenze.it", false, "Ezio", "Auditore", false, null, "EZIO.AUDITORE@FIRENZE.IT", "EZIO", "AQAAAAEAACcQAAAAEICIwsOaUFHDnLVVPfw3DwbShicdLtHE6z5s8qAEAHID085LmrToqTjAsMbnlUXGmg==", null, false, "0bc28f6d-6931-4f63-9d1f-573040d6e60e", false, "Ezio" },
-                    { "69696969-6969-6969-6969-696969696969", 0, "3f181c07-c172-49c5-bd76-e6506dec1181", "arno.dorian@brotherhood.fr", false, "Arno", "Dorian", false, null, "ARNO.DORIAN@BROTHERHOOD.fr", "ARNO", "AQAAAAEAACcQAAAAEOL2pSPKwvzDwhvA1OJdUm1zvyL4wWiPIymg+kQXdgNPKCdTw0xUNGhDDr13YhsQNw==", null, false, "095e7db6-3c14-47e1-a9db-8f33ae978c41", false, "Arno" },
-                    { "96969696-9696-9696-9696-969696969696", 0, "aad760e8-be21-4bd3-9a54-34792fd1dc53", "theodore.lheureux@archlinux.net", false, "Theodore", "l'Heureux", false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAEBE7WryTd2x/JfCPwWqNB7BDZfqwK0EqJR6NQqaPLqH5B0KLJGAI+Jql43rA8uhG5g==", null, false, "726b03bd-dcc9-46da-a9ef-60e7f6acc4fa", false, "Theodore" }
+                    { "11111111-1111-1111-1111-111111111111", 0, "9f45c6bc-c240-4394-aad8-daa7ff7456de", "ezio.auditore@firenze.it", false, "Ezio", "Auditore", false, null, "EZIO.AUDITORE@FIRENZE.IT", "EZIO", "AQAAAAEAACcQAAAAEL6zonTWhbVUtF0bodNgj12L3SbgIK97X366bpferHsVMmEN2FJxlxKQOQqeW1lrEQ==", null, false, "aa959012-9ed7-4e88-93bb-742565de01f1", false, "Ezio" },
+                    { "69696969-6969-6969-6969-696969696969", 0, "5d67ddf7-6541-40e7-b145-1ffacd4889a3", "arno.dorian@brotherhood.fr", false, "Arno", "Dorian", false, null, "ARNO.DORIAN@BROTHERHOOD.fr", "ARNO", "AQAAAAEAACcQAAAAEHqTpCunAifl+EVPiKAHg8lBzq9KVQ8nPDglXPHkd68LCzmqMel8MJWv86hOr6wkAA==", null, false, "87fa4fd8-8c7a-4ab7-a319-34a57f2de2da", false, "Arno" },
+                    { "96969696-9696-9696-9696-969696969696", 0, "2b8c19f7-656d-463c-a3bc-db84bf4aac8f", "theodore.lheureux@archlinux.net", false, "Theodore", "l'Heureux", false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAEI4z611Arw/IoxtZomeksSX8cPYW4yU0I9uYJkWDtyz7qZ/w8P5J97+8LagLzeUGng==", null, false, "60c8e25c-7f15-4285-8e74-0b2d31deaaaf", false, "Theodore" }
                 });
 
             migrationBuilder.InsertData(
@@ -273,17 +274,17 @@ namespace Brotherhood_Server.Migrations
 
             migrationBuilder.InsertData(
                 table: "ContractTargets",
-                columns: new[] { "Id", "FirstName", "LastName", "Title" },
+                columns: new[] { "Id", "FirstName", "ImageCacheId", "LastName", "Title" },
                 values: new object[,]
                 {
-                    { 6, "Joseph", "de Beloeil", "French Aristocrat" },
-                    { 5, "Charles", "Lee", "Knight of the Templar Order" },
-                    { 4, "Crawford", "Starrick", "Grandmaster of the Templar Order" },
-                    { 3, "Nazeem", "Barhoumeter", "Arrant Knave" },
-                    { 2, "Valory", "Sturgeon", "Cult Leader" },
-                    { 8, "Mikael", "F. Ouhwou", "Furry" },
-                    { 7, "Geralt", "of Rivia", "Monster Hunter" },
-                    { 1, "Julie", "Proulx", "Entrepreneur" }
+                    { 6, "Joseph", null, "de Beloeil", "French Aristocrat" },
+                    { 5, "Charles", null, "Lee", "Knight of the Templar Order" },
+                    { 4, "Crawford", null, "Starrick", "Grandmaster of the Templar Order" },
+                    { 3, "Nazeem", null, "Barhoumeter", "Arrant Knave" },
+                    { 2, "Valory", null, "Sturgeon", "Cult Leader" },
+                    { 8, "Mikael", null, "F. Ouhwou", "Furry" },
+                    { 7, "Geralt", null, "of Rivia", "Monster Hunter" },
+                    { 1, "Julie", null, "Proulx", "Entrepreneur" }
                 });
 
             migrationBuilder.InsertData(

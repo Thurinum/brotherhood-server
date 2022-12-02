@@ -136,7 +136,7 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3602c70d-789e-4320-8943-d60fedf8e681",
+                            ConcurrencyStamp = "9f45c6bc-c240-4394-aad8-daa7ff7456de",
                             Email = "ezio.auditore@firenze.it",
                             EmailConfirmed = false,
                             FirstName = "Ezio",
@@ -144,9 +144,9 @@ namespace Brotherhood_Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "EZIO.AUDITORE@FIRENZE.IT",
                             NormalizedUserName = "EZIO",
-                            PasswordHash = "AQAAAAEAACcQAAAAEICIwsOaUFHDnLVVPfw3DwbShicdLtHE6z5s8qAEAHID085LmrToqTjAsMbnlUXGmg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEL6zonTWhbVUtF0bodNgj12L3SbgIK97X366bpferHsVMmEN2FJxlxKQOQqeW1lrEQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0bc28f6d-6931-4f63-9d1f-573040d6e60e",
+                            SecurityStamp = "aa959012-9ed7-4e88-93bb-742565de01f1",
                             TwoFactorEnabled = false,
                             UserName = "Ezio"
                         },
@@ -154,7 +154,7 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "69696969-6969-6969-6969-696969696969",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3f181c07-c172-49c5-bd76-e6506dec1181",
+                            ConcurrencyStamp = "5d67ddf7-6541-40e7-b145-1ffacd4889a3",
                             Email = "arno.dorian@brotherhood.fr",
                             EmailConfirmed = false,
                             FirstName = "Arno",
@@ -162,9 +162,9 @@ namespace Brotherhood_Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ARNO.DORIAN@BROTHERHOOD.fr",
                             NormalizedUserName = "ARNO",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOL2pSPKwvzDwhvA1OJdUm1zvyL4wWiPIymg+kQXdgNPKCdTw0xUNGhDDr13YhsQNw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHqTpCunAifl+EVPiKAHg8lBzq9KVQ8nPDglXPHkd68LCzmqMel8MJWv86hOr6wkAA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "095e7db6-3c14-47e1-a9db-8f33ae978c41",
+                            SecurityStamp = "87fa4fd8-8c7a-4ab7-a319-34a57f2de2da",
                             TwoFactorEnabled = false,
                             UserName = "Arno"
                         },
@@ -172,7 +172,7 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "96969696-9696-9696-9696-969696969696",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "aad760e8-be21-4bd3-9a54-34792fd1dc53",
+                            ConcurrencyStamp = "2b8c19f7-656d-463c-a3bc-db84bf4aac8f",
                             Email = "theodore.lheureux@archlinux.net",
                             EmailConfirmed = false,
                             FirstName = "Theodore",
@@ -180,9 +180,9 @@ namespace Brotherhood_Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "THEODORE.LHEUREUX@ARCHLINUX.NET",
                             NormalizedUserName = "THEODORE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBE7WryTd2x/JfCPwWqNB7BDZfqwK0EqJR6NQqaPLqH5B0KLJGAI+Jql43rA8uhG5g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEI4z611Arw/IoxtZomeksSX8cPYW4yU0I9uYJkWDtyz7qZ/w8P5J97+8LagLzeUGng==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "726b03bd-dcc9-46da-a9ef-60e7f6acc4fa",
+                            SecurityStamp = "60c8e25c-7f15-4285-8e74-0b2d31deaaaf",
                             TwoFactorEnabled = false,
                             UserName = "Theodore"
                         });
@@ -334,6 +334,9 @@ namespace Brotherhood_Server.Migrations
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("ImageCacheId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()

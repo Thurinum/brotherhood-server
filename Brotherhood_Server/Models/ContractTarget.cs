@@ -22,6 +22,8 @@ namespace Brotherhood_Server.Models
 		[MaxLength(50)]
 		public string Title { get; set; }
 
+		public string ImageCacheId { get; set; }
+
 		[JsonIgnore]
 		public virtual List<Contract> Contracts { get; set; }
 	}

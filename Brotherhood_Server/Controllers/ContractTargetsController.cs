@@ -58,16 +58,6 @@ namespace Brotherhood_Server.Controllers
 				PropertyNameCaseInsensitive = true
 			});
 
-			// save changes to model
-			_context.ChangeTracker.Clear();
-			_context.ContractTargets.Update(updatedTarget);
-
-			try { await _context.SaveChangesAsync(); }
-			catch (Exception)
-			{
-				return StatusCode(StatusCodes.Status500InternalServerError, new { Message = $"Something went wrong when adding target {target.FirstName} {target.LastName} to this contract." });
-			}
-
 			// upload new image if applicable
 			IFormFile smImage = form.Files.GetFile("image-sm");
 			IFormFile lgImage = form.Files.GetFile("image-lg");
@@ -90,6 +80,19 @@ namespace Brotherhood_Server.Controllers
 				case ImageHelper.Status.Invalid:
 					return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is invalid. Please upload a valid image." });
 			}
+
+			updatedTarget.ImageCacheId = new Guid().ToString();
+
+			// save changes to model
+			_context.ChangeTracker.Clear();
+			_context.ContractTargets.Update(updatedTarget);
+
+			try { await _context.SaveChangesAsync(); }
+			catch (Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError, new { Message = $"Something went wrong when adding target {target.FirstName} {target.LastName} to this contract." });
+			}
+
 
 			return NoContent();
 		}
