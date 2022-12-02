@@ -63,12 +63,19 @@ namespace Brotherhood_Server.Controllers
 				return StatusCode(StatusCodes.Status422UnprocessableEntity, new { Message = $"Failed to process contract target data. Please try again." });
 			}
 
+			_context.ContractTargets.Add(target);
+			await _context.SaveChangesAsync();
+
+			target = await _context.ContractTargets.OrderBy(c => c.Id).LastAsync();
+
 			IFormFile smImage = form.Files.GetFile("image-sm");
 			IFormFile lgImage = form.Files.GetFile("image-lg");
 
+			Console.WriteLine(target.Id);
+
 			if (smImage == null || lgImage == null)
 				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "You must upload an image at least 1024x1024 pixels." });
-
+			Console.WriteLine(target.Id);
 			switch (ImageHelper.Upload(smImage, "targets", target.Id, ImageHelper.Size.sm))
 			{
 				case ImageHelper.Status.TooSmall:
@@ -87,13 +94,8 @@ namespace Brotherhood_Server.Controllers
 
 			target.ImageCacheId = Guid.NewGuid().ToString();
 
-			_context.ContractTargets.Add(target);
-
-			try { await _context.SaveChangesAsync(); }
-			catch (Exception)
-			{
-				return StatusCode(StatusCodes.Status500InternalServerError, new { Message = $"Something went wrong when adding target {target.FirstName} {target.LastName} to this contract." });
-			}
+			_context.ContractTargets.Update(target);
+			await _context.SaveChangesAsync();
 
 			return CreatedAtAction("CreateContractTarget", new { id = target.Id }, target);
 		}
