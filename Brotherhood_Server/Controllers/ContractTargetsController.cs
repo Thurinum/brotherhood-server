@@ -37,6 +37,67 @@ namespace Brotherhood_Server.Controllers
 			return await _context.ContractTargets.ToListAsync();
 		}
 
+		[HttpPost]
+		[Authorize]
+		[Route("contract/target/create")]
+		public async Task<ActionResult<IEnumerable<ContractTarget>>> CreateContractTarget()
+		{
+			IFormCollection form = await Request.ReadFormAsync();
+			StringValues json = new();
+
+			if (!form.TryGetValue("model", out json))
+			{
+				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"New contract target data was not sent to the server. Please try again." });
+			}
+
+			ContractTarget target;
+
+			try
+			{
+				target = JsonSerializer.Deserialize<ContractTarget>(json.ToString(), new JsonSerializerOptions
+				{
+					PropertyNameCaseInsensitive = true
+				});
+			} catch (JsonException)
+			{
+				return StatusCode(StatusCodes.Status422UnprocessableEntity, new { Message = $"Failed to process contract target data. Please try again." });
+			}
+
+			IFormFile smImage = form.Files.GetFile("image-sm");
+			IFormFile lgImage = form.Files.GetFile("image-lg");
+
+			if (smImage == null || lgImage == null)
+				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "You must upload an image at least 1024x1024 pixels." });
+
+			switch (ImageHelper.Upload(smImage, "targets", target.Id, ImageHelper.Size.sm))
+			{
+				case ImageHelper.Status.TooSmall:
+					return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is too small. Please upload an image that is at least 1024x1024 pixels." });
+				case ImageHelper.Status.Invalid:
+					return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is invalid. Please upload a valid image." });
+			}
+
+			switch (ImageHelper.Upload(lgImage, "targets", target.Id, ImageHelper.Size.lg))
+			{
+				case ImageHelper.Status.TooSmall:
+					return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is too small. Please upload an image that is at least 1024x1024 pixels." });
+				case ImageHelper.Status.Invalid:
+					return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is invalid. Please upload a valid image." });
+			}
+
+			target.ImageCacheId = Guid.NewGuid().ToString();
+
+			_context.ContractTargets.Add(target);
+
+			try { await _context.SaveChangesAsync(); }
+			catch (Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError, new { Message = $"Something went wrong when adding target {target.FirstName} {target.LastName} to this contract." });
+			}
+
+			return CreatedAtAction("CreateContractTarget", new { id = target.Id }, target);
+		}
+
 		[HttpPut]
 		[Authorize]
 		[Route("contract/target/{id}/edit")]
@@ -62,26 +123,26 @@ namespace Brotherhood_Server.Controllers
 			IFormFile smImage = form.Files.GetFile("image-sm");
 			IFormFile lgImage = form.Files.GetFile("image-lg");
 
-			if (smImage == null || lgImage == null)
-				return NoContent();
-
-			switch (ImageHelper.Upload(smImage, "targets", updatedTarget.Id, ImageHelper.Size.sm))
+			if (smImage != null && lgImage != null)
 			{
-				case ImageHelper.Status.TooSmall:
-					return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is too small. Please upload an image that is at least 128x128 pixels." });
-				case ImageHelper.Status.Invalid:
-					return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is invalid. Please upload a valid image." });
-			}
+				switch (ImageHelper.Upload(smImage, "targets", updatedTarget.Id, ImageHelper.Size.sm))
+				{
+					case ImageHelper.Status.TooSmall:
+						return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is too small. Please upload an image that is at least 1024x1024 pixels." });
+					case ImageHelper.Status.Invalid:
+						return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is invalid. Please upload a valid image." });
+				}
 
-			switch (ImageHelper.Upload(lgImage, "targets", updatedTarget.Id, ImageHelper.Size.lg))
-			{
-				case ImageHelper.Status.TooSmall:
-					return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is too small. Please upload an image that is at least 1024x1024 pixels." });
-				case ImageHelper.Status.Invalid:
-					return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is invalid. Please upload a valid image." });
-			}
+				switch (ImageHelper.Upload(lgImage, "targets", updatedTarget.Id, ImageHelper.Size.lg))
+				{
+					case ImageHelper.Status.TooSmall:
+						return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is too small. Please upload an image that is at least 1024x1024 pixels." });
+					case ImageHelper.Status.Invalid:
+						return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is invalid. Please upload a valid image." });
+				}
 
-			updatedTarget.ImageCacheId = Guid.NewGuid().ToString();
+				updatedTarget.ImageCacheId = Guid.NewGuid().ToString();
+			}
 
 			// save changes to model
 			_context.ChangeTracker.Clear();
@@ -93,19 +154,7 @@ namespace Brotherhood_Server.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError, new { Message = $"Something went wrong when adding target {target.FirstName} {target.LastName} to this contract." });
 			}
 
-
 			return NoContent();
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("contract/target/create")]
-		public async Task<ActionResult<ContractTarget>> CreateContractTarget(ContractTarget target)
-		{
-			_context.ContractTargets.Add(target);
-			await _context.SaveChangesAsync();
-
-			return CreatedAtAction("CreateContractTarget", new { id = target.Id }, target);
 		}
 
 		[HttpDelete]
