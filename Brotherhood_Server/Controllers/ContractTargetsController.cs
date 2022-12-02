@@ -81,7 +81,7 @@ namespace Brotherhood_Server.Controllers
 					return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is invalid. Please upload a valid image." });
 			}
 
-			updatedTarget.ImageCacheId = new Guid().ToString();
+			updatedTarget.ImageCacheId = Guid.NewGuid().ToString();
 
 			// save changes to model
 			_context.ChangeTracker.Clear();
