@@ -171,7 +171,13 @@ namespace Brotherhood_Server.Controllers
 				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Requested contract target was not found. Please make sure a target is selected and try again." });
 
 			// remove from all contracts
-			target.Contracts.ForEach(c => c.Targets.Remove(target));
+			target.Contracts.ForEach(c =>
+			{
+				if (c.CoverTargetId == target.Id)
+					c.CoverTargetId = 0;
+
+				c.Targets.Remove(target);
+			});
 			_context.ContractTargets.Update(target);
 			await _context.SaveChangesAsync();
 
