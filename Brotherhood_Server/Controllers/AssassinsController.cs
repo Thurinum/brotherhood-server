@@ -77,7 +77,8 @@ namespace Brotherhood_Server.Controllers
 			return Ok(new
 			{
 				token = new JwtSecurityTokenHandler().WriteToken(token),
-				validTo = token.ValidTo
+				validTo = token.ValidTo,
+				username = $"{assassin.FirstName} {assassin.LastName}"
 			});
 		}
 	}
