@@ -193,11 +193,12 @@ namespace Brotherhood_Server.Controllers
 
 			if (target == null)
 				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Requested contract target was not found. Please make sure a target is selected and try again."});
-			
-			// prevent removal if resource is in use
-			if (target.Contracts.Any())
-				return StatusCode(StatusCodes.Status409Conflict, new { Message = $"{target.FirstName} {target.LastName} is currently being targeted by one or more contracts. Please unassign him/her from all contracts or mark him/her as eliminated and and try again." });
 
+			target.Contracts.ForEach(c =>
+			{
+				if (c.CoverTargetId == target.Id)
+					c.CoverTargetId = 0;
+			});
 			_context.ContractTargets.Remove(target);
 			await _context.SaveChangesAsync();
 
