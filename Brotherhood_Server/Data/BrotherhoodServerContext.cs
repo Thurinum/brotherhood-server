@@ -56,6 +56,19 @@ namespace Brotherhood_Server.Data
 				{
 					Id = 4,
 					CityId = 3,
+					CoverTargetId = 6,
+					Codename = "Being Faster than the Other Guy",
+					IsPublic = true,
+					Briefing = "The vile Crawford Starrick is a notorious plague to the citizens of London. His meddling with currency counterfeiting " +
+							"and illegal trading of pocket monsters has left thousands in the streets and many struggling with financial security. He and his left-hand Roger Smith " +
+							"are using the stock market to gain control over all of London's industries. Make sure to give them a share of what the Brotherhood is " +
+							"capable of when provoked. Eliminate Starrick and his associate."
+
+				},
+				new Contract()
+				{
+					Id = 5,
+					CityId = 4,
 					Codename = "Bury Evil",
 					IsPublic = false,
 					Briefing = "Our contacts in Orient report that ancient and dangerous knowledge from a past civilization has been unearthed in a remote area of rural China. " +
@@ -65,45 +78,35 @@ namespace Brotherhood_Server.Data
 				},
 				new Contract()
 				{
-					Id = 5,
-					CityId = 4,
+					Id = 6,
+					CityId = 5,
 					Codename = "Not the First Time",
 					IsPublic = false,
 					Briefing = "Reports indicate that Didier Paton, loyal member of the Brotherhood, has been captured by Geralt of Rivia, a notorious bounty hunter. " +
 							   "While De Rivia's motives for the kidnapping are beyond our knowledge, it cannot but bode ill for Paton. Eliminate de Rivia and make sure " +
 							   "his victim comes home safely."
-				},
-				new Contract()
-				{
-					Id = 6,
-					CityId = 6,
-					Codename = "Being Faster than the Other Guy",
-					IsPublic = true,
-					Briefing = "The vile Nazeem Barhoumeter is a notorious plague to the citizens of Venice. His meddling with currency counterfeiting " +
-							"and illegal trading of pocket monsters has made him a target of the Brotherhood. Eliminate Barhoumeter and his associates " +
-							"before he can cause any more trouble."
-
 				}
 			);
 
 			builder.Entity<ContractTarget>().HasData(
 				new ContractTarget() { Id = 1, FirstName = "Julie", LastName = "Proulx", Title = "Entrepreneur" },
-				new ContractTarget() { Id = 2, FirstName = "Valory", LastName = "Sturgeon", Title = "Cult Leader" },
-				new ContractTarget() { Id = 3, FirstName = "Nazeem", LastName = "Barhoumeter", Title = "Arrant Knave" },
-				new ContractTarget() { Id = 4, FirstName = "Crawford", LastName = "Starrick", Title = "Grandmaster of the Templar Order" },
-				new ContractTarget() { Id = 5, FirstName = "Charles", LastName = "Lee", Title = "Knight of the Templar Order" },
-				new ContractTarget() { Id = 6, FirstName = "Joseph", LastName = "de Beloeil", Title = "French Aristocrat" },
-				new ContractTarget() { Id = 7, FirstName = "Geralt", LastName = "of Rivia", Title = "Monster Hunter" },
-				new ContractTarget() { Id = 8, FirstName = "Anonymous", LastName = "Traitor", Title = "Dastardly Betrayer" }
+				new ContractTarget() { Id = 2, FirstName = "Valory", LastName = "Sturgeon", Title = "Leader of the Cult of the Asp" },
+				new ContractTarget() { Id = 3, FirstName = "Haytham", LastName = "Kenway", Title = "Grandmaster of the Templar Order" },
+				new ContractTarget() { Id = 4, FirstName = "Charles", LastName = "Lee", Title = "Knight of the Templar Order" },
+				new ContractTarget() { Id = 5, FirstName = "Shay", LastName = "Cormac", Title = "Knight of the Templar Order" },
+				new ContractTarget() { Id = 6, FirstName = "Crawford", LastName = "Starrick", Title = "Grandmaster of the Templar Order" },
+				new ContractTarget() { Id = 7, FirstName = "Roger", LastName = "Y. Smith", Title = "Industrial Magnate and Entrepreneur" },
+				new ContractTarget() { Id = 8, FirstName = "Joseph", LastName = "de Beloeil", Title = "Corrupt Aristocrat" },
+				new ContractTarget() { Id = 9, FirstName = "Geralt", LastName = "of Rivia", Title = "Renowned Monster Hunter" }
 			);
 
 			builder.Entity<City>().HasData(
 				new City() { Id = 1, Name = "Longueuil", Country = "Canada" },
 				new City() { Id = 2, Name = "New York", Country = "USA" },
-				new City() { Id = 3, Name = "Fujiang", Country = "China" },
-				new City() { Id = 4, Name = "Paris", Country = "France" },
-				new City() { Id = 5, Name = "Rome", Country = "Italy" },
-				new City() { Id = 6, Name = "Venice", Country = "Italy" }
+				new City() { Id = 3, Name = "London", Country = "England" },
+				new City() { Id = 4, Name = "Fujiang", Country = "China" },
+				new City() { Id = 5, Name = "Paris", Country = "France" },
+				new City() { Id = 6, Name = "Rome", Country = "Italy" }
 			);
 
 			builder.Entity<Contract>()
@@ -117,7 +120,10 @@ namespace Brotherhood_Server.Data
 					new { ContractsId = 3, TargetsId = 5 },
 					new { ContractsId = 3, TargetsId = 8 },
 					new { ContractsId = 4, TargetsId = 6 },
-					new { ContractsId = 5, TargetsId = 7 }
+					new { ContractsId = 4, TargetsId = 7 },
+					new { ContractsId = 5, TargetsId = 2 },
+					new { ContractsId = 5, TargetsId = 8 },
+					new { ContractsId = 6, TargetsId = 9 }
 				));
 
 			// Arno

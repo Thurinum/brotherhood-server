@@ -254,9 +254,9 @@ namespace Brotherhood_Server.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "11111111-1111-1111-1111-111111111111", 0, "1b1fb0f9-ae39-4fda-9dc5-99723108752d", "ezio.auditore@firenze.it", false, "Ezio", "Auditore", false, null, "EZIO.AUDITORE@FIRENZE.IT", "EZIO", "AQAAAAEAACcQAAAAEMlr45wQ959y5XO0P1kHvB8GFjz7fiIG6SgrYzxMwoBCkvBu7Nom+ArlLC5wMqhsCg==", null, false, "6494b8b1-11e9-4707-aaaa-24e9050e2232", false, "Ezio" },
-                    { "69696969-6969-6969-6969-696969696969", 0, "e09469a0-070c-43df-8489-cebfff734da8", "arno.dorian@brotherhood.fr", false, "Arno", "Dorian", false, null, "ARNO.DORIAN@BROTHERHOOD.fr", "ARNO", "AQAAAAEAACcQAAAAELN7DiaLb3u0sATOrUUlbZhz/FI/YYiRtf1ZUhjA0c2WtHiJtX/iz5xZ9LS83h8Myg==", null, false, "1867718d-3604-40d6-92bf-2b04ac818876", false, "Arno" },
-                    { "96969696-9696-9696-9696-969696969696", 0, "abb4f662-3da8-42bd-ac7a-b4d07661dce6", "theodore.lheureux@archlinux.net", false, "Theodore", "l'Heureux", false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAEEt0j8TBo2AoLZcPpw5sljjc5qIduC0FzGA8hkVUEYCaiB2irXMz980pdYWg/HR+aA==", null, false, "f40d7acd-810f-4494-b3ca-15d6e84f86f5", false, "Theodore" }
+                    { "11111111-1111-1111-1111-111111111111", 0, "93fdaea3-0d0e-42f7-9dfe-ae48fe288f1e", "ezio.auditore@firenze.it", false, "Ezio", "Auditore", false, null, "EZIO.AUDITORE@FIRENZE.IT", "EZIO", "AQAAAAEAACcQAAAAEFk6DB6v/1DtBLdaa5khMlffzIolUakKx3hS9DoZO34UPY8wMQ99Fbq0Hr4lirRlgA==", null, false, "6c57304b-8eaa-4725-b1ca-53bc5a51c99a", false, "Ezio" },
+                    { "69696969-6969-6969-6969-696969696969", 0, "4ad71eae-3906-4c06-b50f-4cdb1d2be36d", "arno.dorian@brotherhood.fr", false, "Arno", "Dorian", false, null, "ARNO.DORIAN@BROTHERHOOD.fr", "ARNO", "AQAAAAEAACcQAAAAELIwci+k8Sun1d3JSI1HiWUwh31mH9zYr6170wYptSVRRWaNm72Zbp3W+0cDIoby1Q==", null, false, "f32be217-1337-4459-9ba1-839fd20a1a17", false, "Arno" },
+                    { "96969696-9696-9696-9696-969696969696", 0, "5e0289b5-9681-4da6-96b7-b2f59529d017", "theodore.lheureux@archlinux.net", false, "Theodore", "l'Heureux", false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAEDuHAI4YEkZR64O1DXiMe93CbGESfQx7dX6KzMWLLqQiDGdAI+AWcDqrq3sJ0pRpzg==", null, false, "2455e2b2-bfeb-4ba2-ad83-4c48fe62d379", false, "Theodore" }
                 });
 
             migrationBuilder.InsertData(
@@ -266,10 +266,10 @@ namespace Brotherhood_Server.Migrations
                 {
                     { 1, "Canada", "Longueuil" },
                     { 2, "USA", "New York" },
-                    { 3, "China", "Fujiang" },
-                    { 4, "France", "Paris" },
-                    { 5, "Italy", "Rome" },
-                    { 6, "Italy", "Venice" }
+                    { 3, "England", "London" },
+                    { 4, "China", "Fujiang" },
+                    { 5, "France", "Paris" },
+                    { 6, "Italy", "Rome" }
                 });
 
             migrationBuilder.InsertData(
@@ -277,14 +277,15 @@ namespace Brotherhood_Server.Migrations
                 columns: new[] { "Id", "FirstName", "ImageCacheId", "LastName", "Title" },
                 values: new object[,]
                 {
-                    { 6, "Joseph", null, "de Beloeil", "French Aristocrat" },
-                    { 5, "Charles", null, "Lee", "Knight of the Templar Order" },
-                    { 4, "Crawford", null, "Starrick", "Grandmaster of the Templar Order" },
-                    { 3, "Nazeem", null, "Barhoumeter", "Arrant Knave" },
-                    { 2, "Valory", null, "Sturgeon", "Cult Leader" },
-                    { 1, "Julie", null, "Proulx", "Entrepreneur" },
-                    { 8, "Anonymous", null, "Traitor", "Dastardly Betrayer" },
-                    { 7, "Geralt", null, "of Rivia", "Monster Hunter" }
+                    { 7, "Roger", null, "Y. Smith", "Industrial Magnate and Entrepreneur" },
+                    { 6, "Crawford", null, "Starrick", "Grandmaster of the Templar Order" },
+                    { 5, "Shay", null, "Cormac", "Knight of the Templar Order" },
+                    { 4, "Charles", null, "Lee", "Knight of the Templar Order" },
+                    { 3, "Haytham", null, "Kenway", "Grandmaster of the Templar Order" },
+                    { 2, "Valory", null, "Sturgeon", "Leader of the Cult of the Asp" },
+                    { 9, "Geralt", null, "of Rivia", "Renowned Monster Hunter" },
+                    { 8, "Joseph", null, "de Beloeil", "Corrupt Aristocrat" },
+                    { 1, "Julie", null, "Proulx", "Entrepreneur" }
                 });
 
             migrationBuilder.InsertData(
@@ -292,11 +293,11 @@ namespace Brotherhood_Server.Migrations
                 columns: new[] { "Id", "Briefing", "CityId", "Codename", "CoverTargetId", "IsPublic" },
                 values: new object[,]
                 {
-                    { 5, "Reports indicate that Didier Paton, loyal member of the Brotherhood, has been captured by Geralt of Rivia, a notorious bounty hunter. While De Rivia's motives for the kidnapping are beyond our knowledge, it cannot but bode ill for Paton. Eliminate de Rivia and make sure his victim comes home safely.", 4, "Not the First Time", 0, false },
-                    { 4, "Our contacts in Orient report that ancient and dangerous knowledge from a past civilization has been unearthed in a remote area of rural China. Indeed, traces of a forgotten language known as the Visual Basic have mysteriously emerged after centuries of being removed from this world. Most suspiciously, Valory Sturgeon's closest minion, Joseph de Beloeil, is in charge of analysing the discovered samples. Eliminate De Beloeil and destroy the samples before the world comes to know Visual Basic again.", 3, "Bury Evil", 0, false },
+                    { 6, "Reports indicate that Didier Paton, loyal member of the Brotherhood, has been captured by Geralt of Rivia, a notorious bounty hunter. While De Rivia's motives for the kidnapping are beyond our knowledge, it cannot but bode ill for Paton. Eliminate de Rivia and make sure his victim comes home safely.", 5, "Not the First Time", 0, false },
+                    { 5, "Our contacts in Orient report that ancient and dangerous knowledge from a past civilization has been unearthed in a remote area of rural China. Indeed, traces of a forgotten language known as the Visual Basic have mysteriously emerged after centuries of being removed from this world. Most suspiciously, Valory Sturgeon's closest minion, Joseph de Beloeil, is in charge of analysing the discovered samples. Eliminate De Beloeil and destroy the samples before the world comes to know Visual Basic again.", 4, "Bury Evil", 0, false },
+                    { 4, "The vile Crawford Starrick is a notorious plague to the citizens of London. His meddling with currency counterfeiting and illegal trading of pocket monsters has left thousands in the streets and many struggling with financial security. He and his left-hand Roger Smith are using the stock market to gain control over all of London's industries. Make sure to give them a share of what the Brotherhood is capable of when provoked. Eliminate Starrick and his associate.", 3, "Being Faster than the Other Guy", 6, true },
                     { 2, "Students in colleges all around the world have begun to worship the dangerous cult of JavaScript. We believe our long-time enemy Valory Sturgeon is behind this ploy to muster allies against our order. Our intelligence suspects she may be using an ancient artifact known as the Aspnet Core to aid her in her quest for absolute control. Find Sturgeon and make this dastardly plan her last. If possible, recover the artifact.", 1, "Sturgeon's Last Stand", 2, true },
                     { 1, "Julie Proulx is using her weight loss program to gain leverage over obese people all over America. Put an end to her manipulative scheme before she uses her customers' money against the Brotherhood.", 1, "A Fat Fraud", 1, true },
-                    { 6, "The vile Nazeem Barhoumeter is a notorious plague to the citizens of Venice. His meddling with currency counterfeiting and illegal trading of pocket monsters has made him a target of the Brotherhood. Eliminate Barhoumeter and his associates before he can cause any more trouble.", 6, "Being Faster than the Other Guy", 0, true },
                     { 3, "Our long-time collaborator, Paul Clayton, is being kept hostage by the Holy American Inquisition inside their headquarters of the Empire State Building. He is accused of being part of the Furry Fandom. Four men are set to witness against him in the coming days before the Inquisition's Tribunal. Paul is a valuable asset to the Brotherhood, as his status of legend amongst furries grants us a constant stream of fluffy recruits. Eliminate the three witnesses and show the furry community the support our order bestows upon its most loyal supporters.", 2, "When Fluff Isn't Enough", 0, true }
                 });
 
@@ -319,12 +320,15 @@ namespace Brotherhood_Server.Migrations
                 {
                     { 1, 1 },
                     { 2, 2 },
+                    { 5, 2 },
                     { 3, 3 },
                     { 3, 4 },
                     { 3, 5 },
                     { 4, 6 },
-                    { 5, 7 },
-                    { 3, 8 }
+                    { 4, 7 },
+                    { 3, 8 },
+                    { 5, 8 },
+                    { 6, 9 }
                 });
 
             migrationBuilder.CreateIndex(

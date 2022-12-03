@@ -136,7 +136,7 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1b1fb0f9-ae39-4fda-9dc5-99723108752d",
+                            ConcurrencyStamp = "93fdaea3-0d0e-42f7-9dfe-ae48fe288f1e",
                             Email = "ezio.auditore@firenze.it",
                             EmailConfirmed = false,
                             FirstName = "Ezio",
@@ -144,9 +144,9 @@ namespace Brotherhood_Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "EZIO.AUDITORE@FIRENZE.IT",
                             NormalizedUserName = "EZIO",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMlr45wQ959y5XO0P1kHvB8GFjz7fiIG6SgrYzxMwoBCkvBu7Nom+ArlLC5wMqhsCg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFk6DB6v/1DtBLdaa5khMlffzIolUakKx3hS9DoZO34UPY8wMQ99Fbq0Hr4lirRlgA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6494b8b1-11e9-4707-aaaa-24e9050e2232",
+                            SecurityStamp = "6c57304b-8eaa-4725-b1ca-53bc5a51c99a",
                             TwoFactorEnabled = false,
                             UserName = "Ezio"
                         },
@@ -154,7 +154,7 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "69696969-6969-6969-6969-696969696969",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e09469a0-070c-43df-8489-cebfff734da8",
+                            ConcurrencyStamp = "4ad71eae-3906-4c06-b50f-4cdb1d2be36d",
                             Email = "arno.dorian@brotherhood.fr",
                             EmailConfirmed = false,
                             FirstName = "Arno",
@@ -162,9 +162,9 @@ namespace Brotherhood_Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ARNO.DORIAN@BROTHERHOOD.fr",
                             NormalizedUserName = "ARNO",
-                            PasswordHash = "AQAAAAEAACcQAAAAELN7DiaLb3u0sATOrUUlbZhz/FI/YYiRtf1ZUhjA0c2WtHiJtX/iz5xZ9LS83h8Myg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELIwci+k8Sun1d3JSI1HiWUwh31mH9zYr6170wYptSVRRWaNm72Zbp3W+0cDIoby1Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1867718d-3604-40d6-92bf-2b04ac818876",
+                            SecurityStamp = "f32be217-1337-4459-9ba1-839fd20a1a17",
                             TwoFactorEnabled = false,
                             UserName = "Arno"
                         },
@@ -172,7 +172,7 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "96969696-9696-9696-9696-969696969696",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "abb4f662-3da8-42bd-ac7a-b4d07661dce6",
+                            ConcurrencyStamp = "5e0289b5-9681-4da6-96b7-b2f59529d017",
                             Email = "theodore.lheureux@archlinux.net",
                             EmailConfirmed = false,
                             FirstName = "Theodore",
@@ -180,9 +180,9 @@ namespace Brotherhood_Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "THEODORE.LHEUREUX@ARCHLINUX.NET",
                             NormalizedUserName = "THEODORE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEt0j8TBo2AoLZcPpw5sljjc5qIduC0FzGA8hkVUEYCaiB2irXMz980pdYWg/HR+aA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDuHAI4YEkZR64O1DXiMe93CbGESfQx7dX6KzMWLLqQiDGdAI+AWcDqrq3sJ0pRpzg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f40d7acd-810f-4494-b3ca-15d6e84f86f5",
+                            SecurityStamp = "2455e2b2-bfeb-4ba2-ad83-4c48fe62d379",
                             TwoFactorEnabled = false,
                             UserName = "Theodore"
                         });
@@ -225,26 +225,26 @@ namespace Brotherhood_Server.Migrations
                         new
                         {
                             Id = 3,
+                            Country = "England",
+                            Name = "London"
+                        },
+                        new
+                        {
+                            Id = 4,
                             Country = "China",
                             Name = "Fujiang"
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 5,
                             Country = "France",
                             Name = "Paris"
                         },
                         new
                         {
-                            Id = 5,
-                            Country = "Italy",
-                            Name = "Rome"
-                        },
-                        new
-                        {
                             Id = 6,
                             Country = "Italy",
-                            Name = "Venice"
+                            Name = "Rome"
                         });
                 });
 
@@ -309,29 +309,29 @@ namespace Brotherhood_Server.Migrations
                         new
                         {
                             Id = 4,
-                            Briefing = "Our contacts in Orient report that ancient and dangerous knowledge from a past civilization has been unearthed in a remote area of rural China. Indeed, traces of a forgotten language known as the Visual Basic have mysteriously emerged after centuries of being removed from this world. Most suspiciously, Valory Sturgeon's closest minion, Joseph de Beloeil, is in charge of analysing the discovered samples. Eliminate De Beloeil and destroy the samples before the world comes to know Visual Basic again.",
+                            Briefing = "The vile Crawford Starrick is a notorious plague to the citizens of London. His meddling with currency counterfeiting and illegal trading of pocket monsters has left thousands in the streets and many struggling with financial security. He and his left-hand Roger Smith are using the stock market to gain control over all of London's industries. Make sure to give them a share of what the Brotherhood is capable of when provoked. Eliminate Starrick and his associate.",
                             CityId = 3,
+                            Codename = "Being Faster than the Other Guy",
+                            CoverTargetId = 6,
+                            IsPublic = true
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Briefing = "Our contacts in Orient report that ancient and dangerous knowledge from a past civilization has been unearthed in a remote area of rural China. Indeed, traces of a forgotten language known as the Visual Basic have mysteriously emerged after centuries of being removed from this world. Most suspiciously, Valory Sturgeon's closest minion, Joseph de Beloeil, is in charge of analysing the discovered samples. Eliminate De Beloeil and destroy the samples before the world comes to know Visual Basic again.",
+                            CityId = 4,
                             Codename = "Bury Evil",
                             CoverTargetId = 0,
                             IsPublic = false
                         },
                         new
                         {
-                            Id = 5,
+                            Id = 6,
                             Briefing = "Reports indicate that Didier Paton, loyal member of the Brotherhood, has been captured by Geralt of Rivia, a notorious bounty hunter. While De Rivia's motives for the kidnapping are beyond our knowledge, it cannot but bode ill for Paton. Eliminate de Rivia and make sure his victim comes home safely.",
-                            CityId = 4,
+                            CityId = 5,
                             Codename = "Not the First Time",
                             CoverTargetId = 0,
                             IsPublic = false
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Briefing = "The vile Nazeem Barhoumeter is a notorious plague to the citizens of Venice. His meddling with currency counterfeiting and illegal trading of pocket monsters has made him a target of the Brotherhood. Eliminate Barhoumeter and his associates before he can cause any more trouble.",
-                            CityId = 6,
-                            Codename = "Being Faster than the Other Guy",
-                            CoverTargetId = 0,
-                            IsPublic = true
                         });
                 });
 
@@ -377,49 +377,56 @@ namespace Brotherhood_Server.Migrations
                             Id = 2,
                             FirstName = "Valory",
                             LastName = "Sturgeon",
-                            Title = "Cult Leader"
+                            Title = "Leader of the Cult of the Asp"
                         },
                         new
                         {
                             Id = 3,
-                            FirstName = "Nazeem",
-                            LastName = "Barhoumeter",
-                            Title = "Arrant Knave"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            FirstName = "Crawford",
-                            LastName = "Starrick",
+                            FirstName = "Haytham",
+                            LastName = "Kenway",
                             Title = "Grandmaster of the Templar Order"
                         },
                         new
                         {
-                            Id = 5,
+                            Id = 4,
                             FirstName = "Charles",
                             LastName = "Lee",
                             Title = "Knight of the Templar Order"
                         },
                         new
                         {
+                            Id = 5,
+                            FirstName = "Shay",
+                            LastName = "Cormac",
+                            Title = "Knight of the Templar Order"
+                        },
+                        new
+                        {
                             Id = 6,
-                            FirstName = "Joseph",
-                            LastName = "de Beloeil",
-                            Title = "French Aristocrat"
+                            FirstName = "Crawford",
+                            LastName = "Starrick",
+                            Title = "Grandmaster of the Templar Order"
                         },
                         new
                         {
                             Id = 7,
-                            FirstName = "Geralt",
-                            LastName = "of Rivia",
-                            Title = "Monster Hunter"
+                            FirstName = "Roger",
+                            LastName = "Y. Smith",
+                            Title = "Industrial Magnate and Entrepreneur"
                         },
                         new
                         {
                             Id = 8,
-                            FirstName = "Anonymous",
-                            LastName = "Traitor",
-                            Title = "Dastardly Betrayer"
+                            FirstName = "Joseph",
+                            LastName = "de Beloeil",
+                            Title = "Corrupt Aristocrat"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            FirstName = "Geralt",
+                            LastName = "of Rivia",
+                            Title = "Renowned Monster Hunter"
                         });
                 });
 
@@ -475,8 +482,23 @@ namespace Brotherhood_Server.Migrations
                         },
                         new
                         {
-                            ContractsId = 5,
+                            ContractsId = 4,
                             TargetsId = 7
+                        },
+                        new
+                        {
+                            ContractsId = 5,
+                            TargetsId = 2
+                        },
+                        new
+                        {
+                            ContractsId = 5,
+                            TargetsId = 8
+                        },
+                        new
+                        {
+                            ContractsId = 6,
+                            TargetsId = 9
                         });
                 });
 

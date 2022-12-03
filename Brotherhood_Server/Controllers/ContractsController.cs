@@ -42,6 +42,20 @@ namespace Brotherhood_Server.Controllers
 			return (await GetCurrentUser()).Contracts;
 		}
 
+		[HttpPost]
+		[Authorize]
+		[Route("contract/create")]
+		public async Task<ActionResult<Contract>> CreateContract(Contract contract)
+		{
+			Assassin user = await GetCurrentUser();
+			contract.Assassins = new List<Assassin> { user };
+
+			_context.Contracts.Add(contract);
+			await _context.SaveChangesAsync();
+
+			return CreatedAtAction("CreateContract", new { id = contract.Id }, contract);
+		}
+
 		[HttpGet]
 		[Route("contract/{id}/targets")]
 		public async Task<ActionResult<IEnumerable<ContractTarget>>> GetContractTargets(int id)
@@ -92,6 +106,37 @@ namespace Brotherhood_Server.Controllers
 
 		[HttpPut]
 		[Authorize]
+		[Route("contract/{id}/target/{targetId}/remove")]
+		public async Task<IActionResult> RemoveContractTarget(int id, int targetId)
+		{
+			Contract contract = await _context.Contracts.FindAsync(id);
+			ContractTarget target = await _context.ContractTargets.FindAsync(targetId);
+
+			if (contract == null)
+				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"Contract {id} does not exist." });
+			if (target == null)
+				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"Contract target {targetId} does not exist." });
+
+			Assassin user = await GetCurrentUser();
+			if (!contract.Assassins.Contains(user))
+				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = "You must be assigned to this contract in order to edit its targets." });
+			if (!contract.Targets.Contains(target))
+				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = $"Cannot remove target '{target.FirstName} {target.LastName}' from contract '{contract.Codename}' because it is not a target in the latter." });
+
+			contract.Targets.Remove(target);
+			_context.Entry(contract).State = EntityState.Modified;
+
+			try { await _context.SaveChangesAsync(); }
+			catch (Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError, new { Message = $"Something went wrong when removing target {target.FirstName} {target.LastName} from contract '{contract.Codename}'." });
+			}
+
+			return NoContent();
+		}
+
+		[HttpPut]
+		[Authorize]
 		[Route("contract/{id}/setcover")]
 		public async Task<IActionResult> SetContractCover(int id, ContractTarget dto)
 		{
@@ -110,8 +155,11 @@ namespace Brotherhood_Server.Controllers
 			if (target == null)
 				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Invalid contract target id {dto.Id} provided." });
 
-			contract.CoverTargetId = dto.Id;
+			contract.CoverTargetId = contract.Id;
 			_context.Entry(contract).State = EntityState.Modified;
+
+			target.ImageCacheId = Guid.NewGuid().ToString();
+			_context.ContractTargets.Update(target);
 
 			try { await _context.SaveChangesAsync(); }
 			catch (Exception)
@@ -148,51 +196,6 @@ namespace Brotherhood_Server.Controllers
 			}
 
 			return NoContent();
-		}
-
-		[HttpPut]
-		[Authorize]
-		[Route("contract/{id}/target/{targetId}/remove")]
-		public async Task<IActionResult> RemoveContractTarget(int id, int targetId)
-		{
-			Contract contract = await _context.Contracts.FindAsync(id);
-			ContractTarget target = await _context.ContractTargets.FindAsync(targetId);
-
-			if (contract == null)
-				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"Contract {id} does not exist." });
-			if (target == null)
-				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"Contract target {targetId} does not exist." });
-
-			Assassin user = await GetCurrentUser();
-			if (!contract.Assassins.Contains(user))
-				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = "You must be assigned to this contract in order to edit its targets." });
-			if (!contract.Targets.Contains(target))
-				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = $"Cannot remove target '{target.FirstName} {target.LastName}' from contract '{contract.Codename}' because it is not a target in the latter." });
-
-			contract.Targets.Remove(target);
-			_context.Entry(contract).State = EntityState.Modified;
-
-			try { await _context.SaveChangesAsync(); }
-			catch (Exception)
-			{
-				return StatusCode(StatusCodes.Status500InternalServerError, new { Message = $"Something went wrong when removing target {target.FirstName} {target.LastName} from contract '{contract.Codename}'." });
-			}
-
-			return NoContent();
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("contract/create")]
-		public async Task<ActionResult<Contract>> CreateContract(Contract contract)
-		{
-			Assassin user = await GetCurrentUser();
-			contract.Assassins = new List<Assassin> { user };
-
-			_context.Contracts.Add(contract);
-			await _context.SaveChangesAsync();
-
-			return CreatedAtAction("CreateContract", new { id = contract.Id }, contract);
 		}
 
 		[HttpPut]
