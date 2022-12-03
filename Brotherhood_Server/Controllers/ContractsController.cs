@@ -106,16 +106,16 @@ namespace Brotherhood_Server.Controllers
 
 		[HttpPut]
 		[Authorize]
-		[Route("contract/{id}/target/{targetId}/remove")]
-		public async Task<IActionResult> RemoveContractTarget(int id, int targetId)
+		[Route("contract/{id}/target/remove")]
+		public async Task<IActionResult> RemoveContractTarget(int id, ContractTarget dto)
 		{
 			Contract contract = await _context.Contracts.FindAsync(id);
-			ContractTarget target = await _context.ContractTargets.FindAsync(targetId);
+			ContractTarget target = await _context.ContractTargets.FindAsync(dto.Id);
 
 			if (contract == null)
 				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"Contract {id} does not exist." });
 			if (target == null)
-				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"Contract target {targetId} does not exist." });
+				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"Contract target {dto.Id} does not exist." });
 
 			Assassin user = await GetCurrentUser();
 			if (!contract.Assassins.Contains(user))
@@ -158,7 +158,7 @@ namespace Brotherhood_Server.Controllers
 			contract.CoverTargetId = contract.Id;
 			_context.Entry(contract).State = EntityState.Modified;
 
-			target.ImageCacheId = Guid.NewGuid().ToString();
+			target.ImageCacheId = Guid.NewGuid().ToString(); // not working?
 			_context.ContractTargets.Update(target);
 
 			try { await _context.SaveChangesAsync(); }
