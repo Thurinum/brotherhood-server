@@ -64,26 +64,30 @@ namespace Brotherhood_Server.Controllers
 			[Route("contract/{id}/target/add")]
 			public async Task<IActionResult> AddContractTarget(int id, ContractTarget target)
 			{
-				  Contract contract = await _context.Contracts.FindAsync(id);
+				Contract contract = await _context.Contracts.FindAsync(id);
 
-				  if (contract == null)
-						return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"Invalid contract id {id} provided." });
+				if (contract == null)
+					return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"Invalid contract id {id} provided." });
 
-				  Assassin user = await GetCurrentUser();
+				// refuse is user isn't assigned to contract
+				Assassin user = await GetCurrentUser();
+				if (!contract.Assassins.Contains(user))
+					return StatusCode(StatusCodes.Status401Unauthorized, new { Message = $"You must be assigned to this contract in order to modify it." });
 
-				  if (!contract.Assassins.Contains(user))
-						return StatusCode(StatusCodes.Status401Unauthorized, new { Message = $"You must be assigned to this contract in order to modify it." });
+				// refuse if contract already contains target
+				if (contract.Targets.Any(c => c.Id == target.Id))
+					return StatusCode(StatusCodes.Status409Conflict, new { Message = $"Target {target.FirstName} {target.LastName} is already assigned to this contract." });
 
-				  contract.Targets.Add(target);
-				  _context.Entry(contract).State = EntityState.Modified;
+				contract.Targets.Add(target);
+				_context.Entry(contract).State = EntityState.Modified;
 
-				  try { await _context.SaveChangesAsync(); }
-				  catch (Exception)
-				  {
-						return StatusCode(StatusCodes.Status500InternalServerError, new { Message = $"Something went wrong when adding target {target.FirstName} {target.LastName} to this contract." });
-				  }
+				try { await _context.SaveChangesAsync(); }
+				catch (Exception)
+				{
+					return StatusCode(StatusCodes.Status500InternalServerError, new { Message = $"Something went wrong when adding target {target.FirstName} {target.LastName} to this contract." });
+				}
 
-				  return NoContent();
+				return NoContent();
 			}
 
 			[HttpPut]
