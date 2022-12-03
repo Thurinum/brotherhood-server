@@ -162,8 +162,26 @@ namespace Brotherhood_Server.Controllers
 
 		[HttpDelete]
 		[Authorize]
-		[Route("contract/target/{id}/nuke")]
-		public async Task<ActionResult<ContractTarget>> DeleteContractTarget(int id)
+		[Route("contract/target/{id}/delete/soft")]
+		public async Task<ActionResult<ContractTarget>> SoftDeleteContractTarget(int id)
+		{
+			ContractTarget target = await _context.ContractTargets.FindAsync(id);
+
+			if (target == null)
+				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Requested contract target was not found. Please make sure a target is selected and try again." });
+
+			// remove from all contracts
+			target.Contracts.ForEach(c => c.Targets.Remove(target));
+			_context.ContractTargets.Update(target);
+			await _context.SaveChangesAsync();
+
+			return NoContent();
+		}
+		
+		[HttpDelete]
+		[Authorize]
+		[Route("contract/target/{id}/delete/hard")]
+		public async Task<ActionResult<ContractTarget>> HardDeleteContractTarget(int id)
 		{
 			ContractTarget target = await _context.ContractTargets.FindAsync(id);
 
@@ -172,7 +190,7 @@ namespace Brotherhood_Server.Controllers
 			
 			// prevent removal if resource is in use
 			if (target.Contracts.Any())
-				return StatusCode(StatusCodes.Status409Conflict, new { Message = $"{target.FirstName} {target.LastName} is currently targeted by one or more contracts. Please unassign it to all contracts and try again." });
+				return StatusCode(StatusCodes.Status409Conflict, new { Message = $"{target.FirstName} {target.LastName} is currently being targeted by one or more contracts. Please unassign him/her from all contracts or mark him/her as eliminated and and try again." });
 
 			_context.ContractTargets.Remove(target);
 			await _context.SaveChangesAsync();
