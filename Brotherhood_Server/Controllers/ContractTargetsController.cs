@@ -63,19 +63,19 @@ namespace Brotherhood_Server.Controllers
 				return StatusCode(StatusCodes.Status422UnprocessableEntity, new { Message = $"Failed to process contract target data. Please try again." });
 			}
 
+			// add entity
 			_context.ContractTargets.Add(target);
 			await _context.SaveChangesAsync();
 
 			target = await _context.ContractTargets.OrderBy(c => c.Id).LastAsync();
 
+			// save image file
 			IFormFile smImage = form.Files.GetFile("image-sm");
 			IFormFile lgImage = form.Files.GetFile("image-lg");
 
-			Console.WriteLine(target.Id);
-
 			if (smImage == null || lgImage == null)
 				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "You must upload an image at least 1024x1024 pixels." });
-			Console.WriteLine(target.Id);
+
 			switch (ImageHelper.Upload(smImage, "targets", target.Id, ImageHelper.Size.sm))
 			{
 				case ImageHelper.Status.TooSmall:
@@ -94,6 +94,7 @@ namespace Brotherhood_Server.Controllers
 
 			target.ImageCacheId = Guid.NewGuid().ToString();
 
+			// update entity with image
 			_context.ContractTargets.Update(target);
 			await _context.SaveChangesAsync();
 
@@ -167,12 +168,12 @@ namespace Brotherhood_Server.Controllers
 			ContractTarget target = await _context.ContractTargets.FindAsync(id);
 
 			if (target == null)
-				return NotFound($"Contract target {id} does not exist.");
+				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"The requested contract target was not found. Please make sure a target is selected and try again."});
 
 			// TODO: Only admins may delete targets
 			Assassin user = await GetCurrentUser();
-			if (!target.Contracts.Where(c => c.Assassins.Contains(user)).Any())
-				return StatusCode(StatusCodes.Status403Forbidden, new { Message = "You must have a contract involving this target in order to cancel it." });
+			if (!target.Contracts.Where(c => c.Assassins.Any(a => a.Id == user.Id)).Any())
+				return StatusCode(StatusCodes.Status403Forbidden, new { Message = $"You must have a contract involving this target in order to cancel it." });
 
 			_context.ContractTargets.Remove(target);
 			await _context.SaveChangesAsync();
