@@ -50,8 +50,15 @@ namespace Brotherhood_Server.Controllers
 				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"New contract target data was not sent to the server. Please try again." });
 			}
 
-			ContractTarget target;
+			// check for image file
+			IFormFile smImage = form.Files.GetFile("image-sm");
+			IFormFile lgImage = form.Files.GetFile("image-lg");
 
+			if (smImage == null || lgImage == null)
+				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "You must upload an image at least 1024x1024 pixels." });
+
+			// parse model json
+			ContractTarget target;
 			try
 			{
 				target = JsonSerializer.Deserialize<ContractTarget>(json.ToString(), new JsonSerializerOptions
@@ -70,12 +77,6 @@ namespace Brotherhood_Server.Controllers
 			target = await _context.ContractTargets.OrderBy(c => c.Id).LastAsync();
 
 			// save image file
-			IFormFile smImage = form.Files.GetFile("image-sm");
-			IFormFile lgImage = form.Files.GetFile("image-lg");
-
-			if (smImage == null || lgImage == null)
-				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "You must upload an image at least 1024x1024 pixels." });
-
 			switch (ImageHelper.Upload(smImage, "targets", target.Id, ImageHelper.Size.sm))
 			{
 				case ImageHelper.Status.TooSmall:
