@@ -137,7 +137,6 @@ namespace Brotherhood_Server.Controllers
 			if (!contract.Assassins.Contains(user))
 				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = $"You must be assigned to this contract in order to modify it." });
 
-
 			_context.ChangeTracker.Clear();
 			_context.Contracts.Update(dto);
 			_context.Entry(dto).State = EntityState.Modified;
