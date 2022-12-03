@@ -168,12 +168,11 @@ namespace Brotherhood_Server.Controllers
 			ContractTarget target = await _context.ContractTargets.FindAsync(id);
 
 			if (target == null)
-				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"The requested contract target was not found. Please make sure a target is selected and try again."});
-
-			// TODO: Only admins may delete targets
-			Assassin user = await GetCurrentUser();
-			if (!target.Contracts.Where(c => c.Assassins.Any(a => a.Id == user.Id)).Any())
-				return StatusCode(StatusCodes.Status403Forbidden, new { Message = $"You must have a contract involving this target in order to cancel it." });
+				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Requested contract target was not found. Please make sure a target is selected and try again."});
+			
+			// prevent removal if resource is in use
+			if (target.Contracts.Any())
+				return StatusCode(StatusCodes.Status409Conflict, new { Message = $"{target.FirstName} {target.LastName} is currently targeted by one or more contracts. Please unassign it to all contracts and try again." });
 
 			_context.ContractTargets.Remove(target);
 			await _context.SaveChangesAsync();
