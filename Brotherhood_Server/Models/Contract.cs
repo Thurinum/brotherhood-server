@@ -14,10 +14,12 @@ namespace Brotherhood_Server.Models
 		public int CityId { get; set; }
 
 		[Required]
+		[MinLength(1)]
 		[MaxLength(50)]
 		public string Codename { get; set; }
 
 		[Required]
+		[MinLength(1)]
 		[MaxLength(1000)]
 		public string Briefing { get; set; }
 

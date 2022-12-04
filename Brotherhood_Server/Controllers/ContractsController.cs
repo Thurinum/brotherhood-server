@@ -1,5 +1,6 @@
 ﻿using Brotherhood_Server.Data;
 using Brotherhood_Server.Models;
+using Brotherhood_Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -11,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using static Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace Brotherhood_Server.Controllers
 {
@@ -20,11 +22,13 @@ namespace Brotherhood_Server.Controllers
 	{
 		private readonly BrotherhoodServerContext _context;
 		private readonly UserManager<Assassin> _userManager;
+		private readonly IErrorService _error;
 
-		public ContractsController(BrotherhoodServerContext context, UserManager<Assassin> userManager)
+		public ContractsController(BrotherhoodServerContext context, UserManager<Assassin> userManager, IErrorService errorService)
 		{
 			_context = context;
 			_userManager = userManager;
+			_error = errorService;
 		}
 
 		[HttpGet]
