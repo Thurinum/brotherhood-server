@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,20 +55,20 @@ namespace Brotherhood_Server.Controllers
 		[Route("login")]
 		public async Task<ActionResult> Login(LoginDTO login)
 		{
-			User assassin = login.Email == null 
+			User user = login.Email == null 
 				? await _userManager.FindByNameAsync(login.UserName) 
 				: await _userManager.FindByEmailAsync(login.Email);
 
-			if (assassin == null || !(await _userManager.CheckPasswordAsync(assassin, login.Password)))
+			if (user == null || !(await _userManager.CheckPasswordAsync(user, login.Password)))
 				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "Invalid identifier or password." });
 
-			IList<string> roles = await _userManager.GetRolesAsync(assassin);
+			IList<string> userRoles = await _userManager.GetRolesAsync(user);
 			List<Claim> authClaims = new();
 
-			foreach (string role in roles)
+			foreach (string role in userRoles)
 				authClaims.Add(new Claim(ClaimTypes.Role, role));
 
-			authClaims.Add(new Claim(ClaimTypes.NameIdentifier, assassin.Id));
+			authClaims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
 
 			SymmetricSecurityKey key = new(Encoding.UTF8.GetBytes(_Configuration["JWT:Secret"]));
 			JwtSecurityToken token = new(
@@ -82,7 +83,8 @@ namespace Brotherhood_Server.Controllers
 			{
 				token = new JwtSecurityTokenHandler().WriteToken(token),
 				validTo = token.ValidTo,
-				username = $"{assassin.FirstName} {assassin.LastName}"
+				username = $"{user.FirstName} {user.LastName}",
+				role = userRoles.FirstOrDefault() // only one role per user
 			});
 		}
 	}

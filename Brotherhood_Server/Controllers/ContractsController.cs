@@ -161,7 +161,7 @@ namespace Brotherhood_Server.Controllers
 			if (target == null)
 				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Invalid contract target id {dto.Id} provided." });
 
-			contract.CoverTargetId = contract.Id;
+			contract.CoverTargetId = target.Id;
 			_context.Entry(contract).State = EntityState.Modified;
 
 			target.ImageCacheId = Guid.NewGuid().ToString(); // not working?
@@ -173,7 +173,7 @@ namespace Brotherhood_Server.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError, new { Message = $"Something went wrong when adding setting {target.FirstName} {target.LastName} as cover for this contract." });
 			}
 
-			return NoContent();
+			return AcceptedAtAction("SetContractCover", new { id = contract.Id }, contract);
 		}
 
 		[HttpPut]
