@@ -48,6 +48,7 @@ namespace Brotherhood_Server.Controllers
 		}
 
 		[HttpGet]
+		[AllowAnonymous]
 		[Route("statistics")]
 		public async Task<ActionResult<object>> GetStatistics()
 		{
