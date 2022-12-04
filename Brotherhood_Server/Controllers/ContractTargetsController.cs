@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Brotherhood_Server.Data;
+﻿using Brotherhood_Server.Data;
 using Brotherhood_Server.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
-using SixLabors.ImageSharp;
-using System.IO;
-using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Security.Claims;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Brotherhood_Server.Controllers
 {
@@ -22,12 +21,10 @@ namespace Brotherhood_Server.Controllers
 	public class ContractTargetsController : ControllerBase
 	{
 		private readonly BrotherhoodServerContext _context;
-		private readonly UserManager<User> _userManager;
 
-		public ContractTargetsController(BrotherhoodServerContext context, UserManager<User> userManager)
+		public ContractTargetsController(BrotherhoodServerContext context)
 		{
 			_context = context;
-			_userManager = userManager;
 		}
 
 		[HttpGet]
@@ -55,7 +52,9 @@ namespace Brotherhood_Server.Controllers
 			IFormFile lgImage = form.Files.GetFile("image-lg");
 
 			if (smImage == null || lgImage == null)
+			{
 				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "You must upload an image at least 1024x1024 pixels." });
+			}
 
 			// parse model json
 			ContractTarget target;
@@ -65,7 +64,8 @@ namespace Brotherhood_Server.Controllers
 				{
 					PropertyNameCaseInsensitive = true
 				});
-			} catch (JsonException)
+			}
+			catch (JsonException)
 			{
 				return StatusCode(StatusCodes.Status422UnprocessableEntity, new { Message = $"Failed to process contract target data. Please try again." });
 			}
@@ -109,8 +109,9 @@ namespace Brotherhood_Server.Controllers
 		{
 			ContractTarget target = await _context.ContractTargets.FindAsync(id);
 
-			if (target == null)
+			if (target == null)			
 				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"The entity to update with id {id} does not exist." });
+			
 
 			// deserialize model from json
 			IFormCollection form = await Request.ReadFormAsync();
@@ -122,6 +123,13 @@ namespace Brotherhood_Server.Controllers
 			{
 				PropertyNameCaseInsensitive = true
 			});
+
+			// validate model
+			ValidationContext context = new(updatedTarget, null, null);
+			List<ValidationResult> validationResults = new();
+
+			if (!Validator.TryValidateObject(updatedTarget, context, validationResults, true))
+				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "Some fields aren't filled. You know what they are. Go fill em'." });
 
 			// upload new image if applicable
 			IFormFile smImage = form.Files.GetFile("image-sm");
@@ -169,13 +177,17 @@ namespace Brotherhood_Server.Controllers
 			ContractTarget target = await _context.ContractTargets.FindAsync(id);
 
 			if (target == null)
+			{
 				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Requested contract target was not found. Please make sure a target is selected and try again." });
+			}
 
 			// remove from all contracts
 			target.Contracts.ForEach(c =>
 			{
 				if (c.CoverTargetId == target.Id)
+				{
 					c.CoverTargetId = 0;
+				}
 
 				c.Targets.Remove(target);
 			});
@@ -184,7 +196,7 @@ namespace Brotherhood_Server.Controllers
 
 			return NoContent();
 		}
-		
+
 		[HttpDelete]
 		[Authorize(Roles = "Mentor")]
 		[Route("contract/target/{id}/delete/hard")]
@@ -193,19 +205,21 @@ namespace Brotherhood_Server.Controllers
 			ContractTarget target = await _context.ContractTargets.FindAsync(id);
 
 			if (target == null)
-				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Requested contract target was not found. Please make sure a target is selected and try again."});
+			{
+				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Requested contract target was not found. Please make sure a target is selected and try again." });
+			}
 
 			target.Contracts.ForEach(c =>
 			{
 				if (c.CoverTargetId == target.Id)
+				{
 					c.CoverTargetId = 0;
+				}
 			});
 			_context.ContractTargets.Remove(target);
 			await _context.SaveChangesAsync();
 
 			return NoContent();
 		}
-
-		private async Task<User> GetCurrentUser() => await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
 	}
 }
