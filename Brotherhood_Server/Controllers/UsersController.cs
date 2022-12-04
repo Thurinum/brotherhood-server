@@ -73,7 +73,7 @@ namespace Brotherhood_Server.Controllers
 		public async Task<IActionResult> GetPublicUsers()
 		{
 			IList<User> assassins = await _userManager.GetUsersInRoleAsync("Assassin");
-			return Ok(assassins.Select(a => new { Id = a.Id, username = a.UserName, Role = "Assassin" }).ToList());
+			return Ok(assassins.Select(a => new { Id = a.Id, username = a.UserName, email = a.Email, Role = "Assassin" }).ToList());
 		}
 
 		[HttpGet]
@@ -82,7 +82,7 @@ namespace Brotherhood_Server.Controllers
 		public async Task<IActionResult> GetAllUsers()
 		{
 			IList<User> mentors = await _userManager.GetUsersInRoleAsync("Mentor");
-			return Ok(_userManager.Users.Select(a => new { Id = a.Id, username = a.UserName, Role = mentors.Contains(a) ? "Mentor" : "Assassin" }).ToList());
+			return Ok(_userManager.Users.Select(a => new { Id = a.Id, username = a.UserName, email = a.Email, Role = mentors.Contains(a) ? "Mentor" : "Assassin" }).ToList());
 		}
 
 		[HttpPost]
@@ -110,10 +110,10 @@ namespace Brotherhood_Server.Controllers
 
 		[HttpDelete]
 		[Authorize(Roles = "Mentor")]
-		[Route("user/delete/{id}")]
-		public async Task<ActionResult> DeleteUser(string id)
+		[Route("user/{id:Guid}/delete")]
+		public async Task<ActionResult> DeleteUser(Guid id)
 		{
-			User user = await _userManager.FindByIdAsync(id);
+			User user = await _userManager.FindByIdAsync(id.ToString());
 
 			if (user == null)
 				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Cannot delete user {id} because it does not exist." });
