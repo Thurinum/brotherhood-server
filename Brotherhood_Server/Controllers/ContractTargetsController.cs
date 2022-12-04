@@ -17,14 +17,17 @@ using System.Threading.Tasks;
 namespace Brotherhood_Server.Controllers
 {
 	[Route("api")]
+	[Authorize]
 	[ApiController]
 	public class ContractTargetsController : ControllerBase
 	{
 		private readonly BrotherhoodServerContext _context;
+		private readonly UserManager<User> _userManager;
 
-		public ContractTargetsController(BrotherhoodServerContext context)
+		public ContractTargetsController(BrotherhoodServerContext context, UserManager<User> userManager)
 		{
 			_context = context;
+			_userManager = userManager;
 		}
 
 		[HttpGet]
@@ -111,7 +114,13 @@ namespace Brotherhood_Server.Controllers
 
 			if (target == null)			
 				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"The entity to update with id {id} does not exist." });
-			
+
+			// refuse if user has no contract with that target
+			User user = await GetCurrentUser();
+			IList<User> mentors = await _userManager.GetUsersInRoleAsync("Mentor");
+
+			if (user.Contracts.Any(c => c.Targets.Contains(target)) && !mentors.Contains(user))
+				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = $"You must have at least one contract targeting {target.FirstName} {target.LastName} in order to modify him/her." });
 
 			// deserialize model from json
 			IFormCollection form = await Request.ReadFormAsync();
@@ -124,7 +133,7 @@ namespace Brotherhood_Server.Controllers
 				PropertyNameCaseInsensitive = true
 			});
 
-			// validate model
+			// refuse if model invalid
 			ValidationContext context = new(updatedTarget, null, null);
 			List<ValidationResult> validationResults = new();
 
@@ -221,5 +230,7 @@ namespace Brotherhood_Server.Controllers
 
 			return NoContent();
 		}
+
+		private async Task<User> GetCurrentUser() => await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
 	}
 }

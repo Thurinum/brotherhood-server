@@ -10,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 namespace Brotherhood_Server.Controllers
 {
 	[ApiController]
-	[Authorize]
 	[Route("api")]
 	public class CitiesController : ControllerBase
 	{
