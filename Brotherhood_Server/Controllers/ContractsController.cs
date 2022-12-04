@@ -47,7 +47,21 @@ namespace Brotherhood_Server.Controllers
 			return (await GetCurrentUser()).Contracts;
 		}
 
-		[HttpPost]
+		[HttpGet]
+		[Route("statistics")]
+		public async Task<ActionResult<object>> GetStatistics()
+		{
+			return Ok(new
+			{
+				NbContracts = _context.Contracts.Count(),
+				NbPublicContracts = _context.Contracts.Where(c => c.IsPublic).Count(),
+				NbTargets = _context.ContractTargets.Count(),
+				NbAssassins = _userManager.Users.Count(),
+				NbCities = _context.Cities.Count()
+			});
+		}
+
+			[HttpPost]
 		[Route("contract/create")]
 		public async Task<ActionResult<Contract>> CreateContract(Contract contract)
 		{
