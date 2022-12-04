@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace Brotherhood_Server.Controllers
 {
 	[ApiController]
+	[Authorize]
 	[Route("api")]
 	public class UsersController : ControllerBase
 	{
@@ -29,29 +30,7 @@ namespace Brotherhood_Server.Controllers
 		}
 
 		[HttpPost]
-		[Authorize(Roles = "Mentor")]
-		[Route("register")]
-		public async Task<IActionResult> Register(RegisterDTO register)
-		{
-			if (register.Password != register.PasswordConfirm)
-				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "Passwords don't match." });
-
-			User user = new()
-			{
-				UserName = register.UserName,
-				Email = register.Email
-			};
-
-			IdentityResult result = await _userManager.CreateAsync(user, register.Password);
-			if (!result.Succeeded)
-				return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "Could not register assassin." });
-
-			await _userManager.AddToRoleAsync(user, "assassin");
-
-			return Ok();
-		}
-
-		[HttpPost]
+		[AllowAnonymous]
 		[Route("login")]
 		public async Task<ActionResult> Login(LoginDTO login)
 		{
@@ -86,6 +65,62 @@ namespace Brotherhood_Server.Controllers
 				username = $"{user.FirstName} {user.LastName}",
 				role = userRoles.FirstOrDefault() // only one role per user
 			});
+		}
+
+		[HttpGet]
+		[AllowAnonymous]
+		[Route("users/public")]
+		public async Task<IActionResult> GetPublicUsers()
+		{
+			IList<User> assassins = await _userManager.GetUsersInRoleAsync("Assassin");
+			return Ok(assassins.Select(a => new { Id = a.Id, username = a.UserName, Role = "Assassin" }).ToList());
+		}
+
+		[HttpGet]
+		[Authorize(Roles = "Mentor")]
+		[Route("users/private")]
+		public async Task<IActionResult> GetAllUsers()
+		{
+			IList<User> mentors = await _userManager.GetUsersInRoleAsync("Mentor");
+			return Ok(_userManager.Users.Select(a => new { Id = a.Id, username = a.UserName, Role = mentors.Contains(a) ? "Mentor" : "Assassin" }).ToList());
+		}
+
+		[HttpPost]
+		[Authorize(Roles = "Mentor")]
+		[Route("user/create")]
+		public async Task<IActionResult> CreateUser(RegisterDTO register)
+		{
+			if (register.Password != register.PasswordConfirm)
+				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "Passwords don't match." });
+
+			User user = new()
+			{
+				UserName = register.UserName,
+				Email = register.Email
+			};
+
+			IdentityResult result = await _userManager.CreateAsync(user, register.Password);
+			if (!result.Succeeded)
+				return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "Could not register assassin." });
+
+			await _userManager.AddToRoleAsync(user, "assassin");
+
+			return Ok();
+		}
+
+		[HttpDelete]
+		[Authorize(Roles = "Mentor")]
+		[Route("user/delete/{id}")]
+		public async Task<ActionResult> DeleteUser(string id)
+		{
+			User user = await _userManager.FindByIdAsync(id);
+
+			if (user == null)
+				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Cannot delete user {id} because it does not exist." });
+
+			await _userManager.DeleteAsync(user);
+
+			return Ok();
 		}
 	}
 }
