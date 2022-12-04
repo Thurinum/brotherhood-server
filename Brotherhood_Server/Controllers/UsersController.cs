@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Brotherhood_Server.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,31 +18,34 @@ namespace Brotherhood_Server.Controllers
 	[Route("api")]
 	public class UsersController : ControllerBase
 	{
-		private readonly UserManager<User> _UserManager;
+		private readonly UserManager<User> _userManager;
 		private readonly IConfiguration _Configuration;
 
 		public UsersController(UserManager<User> userManager, IConfiguration configuration)
 		{
-			_UserManager = userManager;
+			_userManager = userManager;
 			_Configuration = configuration;
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Mentor")]
 		[Route("register")]
 		public async Task<IActionResult> Register(RegisterDTO register)
 		{
 			if (register.Password != register.PasswordConfirm)
 				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "Passwords don't match." });
 
-			User assassin = new()
+			User user = new()
 			{
 				UserName = register.UserName,
 				Email = register.Email
 			};
 
-			IdentityResult result = await _UserManager.CreateAsync(assassin, register.Password);
+			IdentityResult result = await _userManager.CreateAsync(user, register.Password);
 			if (!result.Succeeded)
 				return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "Could not register assassin." });
+
+			await _userManager.AddToRoleAsync(user, "assassin");
 
 			return Ok();
 		}
@@ -51,13 +55,13 @@ namespace Brotherhood_Server.Controllers
 		public async Task<ActionResult> Login(LoginDTO login)
 		{
 			User assassin = login.Email == null 
-				? await _UserManager.FindByNameAsync(login.UserName) 
-				: await _UserManager.FindByEmailAsync(login.Email);
+				? await _userManager.FindByNameAsync(login.UserName) 
+				: await _userManager.FindByEmailAsync(login.Email);
 
-			if (assassin == null || !(await _UserManager.CheckPasswordAsync(assassin, login.Password)))
+			if (assassin == null || !(await _userManager.CheckPasswordAsync(assassin, login.Password)))
 				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "Invalid identifier or password." });
 
-			IList<string> roles = await _UserManager.GetRolesAsync(assassin);
+			IList<string> roles = await _userManager.GetRolesAsync(assassin);
 			List<Claim> authClaims = new();
 
 			foreach (string role in roles)

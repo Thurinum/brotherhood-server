@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -17,6 +16,7 @@ using static Microsoft.AspNetCore.Http.StatusCodes;
 namespace Brotherhood_Server.Controllers
 {
 	[ApiController]
+	[Authorize(Roles = "Mentor, Assassin")]
 	[Route("api")]
 	public class ContractsController : ControllerBase
 	{
@@ -32,6 +32,7 @@ namespace Brotherhood_Server.Controllers
 		}
 
 		[HttpGet]
+		[AllowAnonymous]
 		[Route("contracts")]
 		[Route("contracts/public")]
 		public async Task<ActionResult<IEnumerable<Contract>>> GetPublicContracts()
@@ -40,7 +41,6 @@ namespace Brotherhood_Server.Controllers
 		}
 
 		[HttpGet]
-		[Authorize]
 		[Route("contracts/private")]
 		public async Task<ActionResult<IEnumerable<Contract>>> GetPrivateContracts()
 		{
@@ -48,7 +48,6 @@ namespace Brotherhood_Server.Controllers
 		}
 
 		[HttpPost]
-		[Authorize]
 		[Route("contract/create")]
 		public async Task<ActionResult<Contract>> CreateContract(Contract contract)
 		{
@@ -79,7 +78,6 @@ namespace Brotherhood_Server.Controllers
 		}
 
 		[HttpPut]
-		[Authorize]
 		[Route("contract/{id}/target/add")]
 		public async Task<IActionResult> AddContractTarget(int id, ContractTarget target)
 		{
@@ -110,7 +108,6 @@ namespace Brotherhood_Server.Controllers
 		}
 
 		[HttpPut]
-		[Authorize]
 		[Route("contract/{id}/target/remove")]
 		public async Task<IActionResult> RemoveContractTarget(int id, ContractTarget dto)
 		{
@@ -141,7 +138,6 @@ namespace Brotherhood_Server.Controllers
 		}
 
 		[HttpPut]
-		[Authorize]
 		[Route("contract/{id}/setcover")]
 		public async Task<IActionResult> SetContractCover(int id, ContractTarget dto)
 		{
@@ -176,7 +172,6 @@ namespace Brotherhood_Server.Controllers
 		}
 
 		[HttpPut]
-		[Authorize]
 		[Route("contract/{id}/edit")]
 		public async Task<IActionResult> UpdateContract(int id, Contract dto)
 		{
@@ -204,7 +199,6 @@ namespace Brotherhood_Server.Controllers
 		}
 
 		[HttpPut]
-		[Authorize]
 		[Route("contract/{id}/share")]
 		public async Task<IActionResult> ShareContract(int id, string shareeName)
 		{
@@ -241,7 +235,6 @@ namespace Brotherhood_Server.Controllers
 		}
 
 		[HttpDelete]
-		[Authorize]
 		[Route("contract/{id}/nuke")]
 		public async Task<IActionResult> DeleteContract(int id)
 		{

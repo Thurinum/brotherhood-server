@@ -162,7 +162,7 @@ namespace Brotherhood_Server.Controllers
 		}
 
 		[HttpDelete]
-		[Authorize]
+		[Authorize(Roles = "Mentor")]
 		[Route("contract/target/{id}/delete/soft")]
 		public async Task<ActionResult<ContractTarget>> SoftDeleteContractTarget(int id)
 		{
@@ -186,7 +186,7 @@ namespace Brotherhood_Server.Controllers
 		}
 		
 		[HttpDelete]
-		[Authorize]
+		[Authorize(Roles = "Mentor")]
 		[Route("contract/target/{id}/delete/hard")]
 		public async Task<ActionResult<ContractTarget>> HardDeleteContractTarget(int id)
 		{

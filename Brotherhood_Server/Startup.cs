@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Brotherhood_Server.Services;
+using System;
+using System.Threading.Tasks;
 
 namespace Brotherhood_Server
 {
@@ -40,7 +42,9 @@ namespace Brotherhood_Server
 				options.UseSqlServer(Configuration.GetConnectionString("BrotherhoodServerContext"));
 			});
 
-			services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<BrotherhoodServerContext>();
+			services.AddIdentity<User, IdentityRole>()
+				  .AddRoles<IdentityRole>()
+				  .AddEntityFrameworkStores<BrotherhoodServerContext>();
 
 			services.AddCors(options =>
 			{
@@ -79,11 +83,10 @@ namespace Brotherhood_Server
 					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.Configuration["JWT:Secret"]))
 				};
 			});
-
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider svc)
 		{
 			if (env.IsDevelopment())
 			{

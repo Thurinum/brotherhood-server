@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Brotherhood_Server.Data
 {
@@ -125,10 +127,7 @@ namespace Brotherhood_Server.Data
 					new { ContractsId = 5, TargetsId = 8 },
 					new { ContractsId = 6, TargetsId = 9 }
 				));
-
-			// Arno
-			PasswordHasher<User> hasher = new();
-			// Theodore
+			
 			User erhion = new()
 			{
 				Id = "96969696-9696-9696-9696-969696969696",
@@ -139,8 +138,6 @@ namespace Brotherhood_Server.Data
 				Email = "theodore.lheureux@archlinux.net",
 				NormalizedEmail = "THEODORE.LHEUREUX@ARCHLINUX.NET"
 			};
-			erhion.PasswordHash = hasher.HashPassword(erhion, "dioxus420");
-
 			User arno = new()
 			{
 				Id = "69696969-6969-6969-6969-696969696969",
@@ -151,9 +148,6 @@ namespace Brotherhood_Server.Data
 				Email = "arno.dorian@brotherhood.fr",
 				NormalizedEmail = "ARNO.DORIAN@BROTHERHOOD.fr"
 			};
-			arno.PasswordHash = hasher.HashPassword(arno, "elise69");
-
-			// Ezio
 			User ezio = new()
 			{
 				Id = "11111111-1111-1111-1111-111111111111",
@@ -164,6 +158,10 @@ namespace Brotherhood_Server.Data
 				Email = "ezio.auditore@firenze.it",
 				NormalizedEmail = "EZIO.AUDITORE@FIRENZE.IT"
 			};
+
+			PasswordHasher<User> hasher = new();
+			erhion.PasswordHash = hasher.HashPassword(erhion, "dioxus420");
+			arno.PasswordHash = hasher.HashPassword(arno, "elise69");
 			ezio.PasswordHash = hasher.HashPassword(ezio, "requiescat in pace");
 
 			builder.Entity<User>().HasData(ezio, arno, erhion);
@@ -177,6 +175,18 @@ namespace Brotherhood_Server.Data
 					new { ContractsId = 4, AssassinsId = ezio.Id },
 					new { ContractsId = 5, AssassinsId = erhion.Id }
 				));
+
+			IdentityRole mentor = new() { Id = "1", Name = "Mentor", NormalizedName = "MENTOR" };
+			IdentityRole assassin = new() { Id = "2", Name = "Assassin", NormalizedName = "ASSASSIN" };
+		
+			builder.Entity<IdentityRole>().HasData(mentor, assassin);
+
+			builder.Entity<IdentityUserRole<string>>().HasData(new List<IdentityUserRole<string>>()
+			{
+				new IdentityUserRole<string> { UserId = erhion.Id, RoleId = "2" },
+				new IdentityUserRole<string> { UserId = arno.Id, RoleId = "2" },
+				new IdentityUserRole<string> { UserId = ezio.Id, RoleId = "1" }
+			});
 		}
 	}
 }

@@ -202,7 +202,7 @@ namespace Brotherhood_Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AssassinContract",
+                name: "ContractUser",
                 columns: table => new
                 {
                     AssassinsId = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -210,15 +210,15 @@ namespace Brotherhood_Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AssassinContract", x => new { x.AssassinsId, x.ContractsId });
+                    table.PrimaryKey("PK_ContractUser", x => new { x.AssassinsId, x.ContractsId });
                     table.ForeignKey(
-                        name: "FK_AssassinContract_AspNetUsers_AssassinsId",
+                        name: "FK_ContractUser_AspNetUsers_AssassinsId",
                         column: x => x.AssassinsId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AssassinContract_Contracts_ContractsId",
+                        name: "FK_ContractUser_Contracts_ContractsId",
                         column: x => x.ContractsId,
                         principalTable: "Contracts",
                         principalColumn: "Id",
@@ -250,13 +250,22 @@ namespace Brotherhood_Server.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "2", "2d174790-3ed0-40da-84ca-9c70424f09ef", "Assassin", "ASSASSIN" },
+                    { "1", "9742c4ed-2f5b-40a5-9c74-f6cd429e1e68", "Mentor", "MENTOR" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "11111111-1111-1111-1111-111111111111", 0, "93fdaea3-0d0e-42f7-9dfe-ae48fe288f1e", "ezio.auditore@firenze.it", false, "Ezio", "Auditore", false, null, "EZIO.AUDITORE@FIRENZE.IT", "EZIO", "AQAAAAEAACcQAAAAEFk6DB6v/1DtBLdaa5khMlffzIolUakKx3hS9DoZO34UPY8wMQ99Fbq0Hr4lirRlgA==", null, false, "6c57304b-8eaa-4725-b1ca-53bc5a51c99a", false, "Ezio" },
-                    { "69696969-6969-6969-6969-696969696969", 0, "4ad71eae-3906-4c06-b50f-4cdb1d2be36d", "arno.dorian@brotherhood.fr", false, "Arno", "Dorian", false, null, "ARNO.DORIAN@BROTHERHOOD.fr", "ARNO", "AQAAAAEAACcQAAAAELIwci+k8Sun1d3JSI1HiWUwh31mH9zYr6170wYptSVRRWaNm72Zbp3W+0cDIoby1Q==", null, false, "f32be217-1337-4459-9ba1-839fd20a1a17", false, "Arno" },
-                    { "96969696-9696-9696-9696-969696969696", 0, "5e0289b5-9681-4da6-96b7-b2f59529d017", "theodore.lheureux@archlinux.net", false, "Theodore", "l'Heureux", false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAEDuHAI4YEkZR64O1DXiMe93CbGESfQx7dX6KzMWLLqQiDGdAI+AWcDqrq3sJ0pRpzg==", null, false, "2455e2b2-bfeb-4ba2-ad83-4c48fe62d379", false, "Theodore" }
+                    { "96969696-9696-9696-9696-969696969696", 0, "e08d9c0b-aacf-4c3e-8fd1-1ca98014f6cb", "theodore.lheureux@archlinux.net", false, "Theodore", "l'Heureux", false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAEP+PomYaJrbC2dcYGn7LMESTEK7sQgZpbG+trVR4+qnoN7u0TWbGj4rqBirU/yzW2Q==", null, false, "356d444c-c511-41cf-86c1-4b38317c8b69", false, "Theodore" },
+                    { "69696969-6969-6969-6969-696969696969", 0, "065f9bd6-8938-410d-8b25-1e775645194f", "arno.dorian@brotherhood.fr", false, "Arno", "Dorian", false, null, "ARNO.DORIAN@BROTHERHOOD.fr", "ARNO", "AQAAAAEAACcQAAAAEG+jIbluAC4StcXo5aQksCyqjkGy+wxI1S5gsYc8fOiv0z9GK0xslmz5/OujF0gvNg==", null, false, "ec150e7c-93af-46f1-8862-44cbb0335244", false, "Arno" },
+                    { "11111111-1111-1111-1111-111111111111", 0, "c8a082f6-5e40-4b33-b14b-1d4f9e95aea6", "ezio.auditore@firenze.it", false, "Ezio", "Auditore", false, null, "EZIO.AUDITORE@FIRENZE.IT", "EZIO", "AQAAAAEAACcQAAAAEM6M4J/0WsQ17uqJdnvy7BxMwxsRwXR6bOPyY7fBQO+Aeb9hk2L3J5X/vVHTEpVLAg==", null, false, "67c177ef-181a-453d-99c4-88da01737eea", false, "Ezio" }
                 });
 
             migrationBuilder.InsertData(
@@ -277,15 +286,15 @@ namespace Brotherhood_Server.Migrations
                 columns: new[] { "Id", "FirstName", "ImageCacheId", "LastName", "Title" },
                 values: new object[,]
                 {
-                    { 7, "Roger", null, "Y. Smith", "Industrial Magnate and Entrepreneur" },
-                    { 6, "Crawford", null, "Starrick", "Grandmaster of the Templar Order" },
-                    { 5, "Shay", null, "Cormac", "Knight of the Templar Order" },
                     { 4, "Charles", null, "Lee", "Knight of the Templar Order" },
-                    { 3, "Haytham", null, "Kenway", "Grandmaster of the Templar Order" },
-                    { 2, "Valory", null, "Sturgeon", "Leader of the Cult of the Asp" },
                     { 9, "Geralt", null, "of Rivia", "Renowned Monster Hunter" },
                     { 8, "Joseph", null, "de Beloeil", "Corrupt Aristocrat" },
-                    { 1, "Julie", null, "Proulx", "Entrepreneur" }
+                    { 7, "Roger", null, "Y. Smith", "Industrial Magnate and Entrepreneur" },
+                    { 6, "Crawford", null, "Starrick", "Grandmaster of the Templar Order" },
+                    { 1, "Julie", null, "Proulx", "Entrepreneur" },
+                    { 3, "Haytham", null, "Kenway", "Grandmaster of the Templar Order" },
+                    { 2, "Valory", null, "Sturgeon", "Leader of the Cult of the Asp" },
+                    { 5, "Shay", null, "Cormac", "Knight of the Templar Order" }
                 });
 
             migrationBuilder.InsertData(
@@ -296,21 +305,19 @@ namespace Brotherhood_Server.Migrations
                     { 6, "Reports indicate that Didier Paton, loyal member of the Brotherhood, has been captured by Geralt of Rivia, a notorious bounty hunter. While De Rivia's motives for the kidnapping are beyond our knowledge, it cannot but bode ill for Paton. Eliminate de Rivia and make sure his victim comes home safely.", 5, "Not the First Time", 0, false },
                     { 5, "Our contacts in Orient report that ancient and dangerous knowledge from a past civilization has been unearthed in a remote area of rural China. Indeed, traces of a forgotten language known as the Visual Basic have mysteriously emerged after centuries of being removed from this world. Most suspiciously, Valory Sturgeon's closest minion, Joseph de Beloeil, is in charge of analysing the discovered samples. Eliminate De Beloeil and destroy the samples before the world comes to know Visual Basic again.", 4, "Bury Evil", 0, false },
                     { 4, "The vile Crawford Starrick is a notorious plague to the citizens of London. His meddling with currency counterfeiting and illegal trading of pocket monsters has left thousands in the streets and many struggling with financial security. He and his left-hand Roger Smith are using the stock market to gain control over all of London's industries. Make sure to give them a share of what the Brotherhood is capable of when provoked. Eliminate Starrick and his associate.", 3, "Being Faster than the Other Guy", 6, true },
+                    { 3, "Our long-time collaborator, Paul Clayton, is being kept hostage by the Holy American Inquisition inside their headquarters of the Empire State Building. He is accused of being part of the Furry Fandom. Four men are set to witness against him in the coming days before the Inquisition's Tribunal. Paul is a valuable asset to the Brotherhood, as his status of legend amongst furries grants us a constant stream of fluffy recruits. Eliminate the three witnesses and show the furry community the support our order bestows upon its most loyal supporters.", 2, "When Fluff Isn't Enough", 0, true },
                     { 2, "Students in colleges all around the world have begun to worship the dangerous cult of JavaScript. We believe our long-time enemy Valory Sturgeon is behind this ploy to muster allies against our order. Our intelligence suspects she may be using an ancient artifact known as the Aspnet Core to aid her in her quest for absolute control. Find Sturgeon and make this dastardly plan her last. If possible, recover the artifact.", 1, "Sturgeon's Last Stand", 2, true },
-                    { 1, "Julie Proulx is using her weight loss program to gain leverage over obese people all over America. Put an end to her manipulative scheme before she uses her customers' money against the Brotherhood.", 1, "A Fat Fraud", 1, true },
-                    { 3, "Our long-time collaborator, Paul Clayton, is being kept hostage by the Holy American Inquisition inside their headquarters of the Empire State Building. He is accused of being part of the Furry Fandom. Four men are set to witness against him in the coming days before the Inquisition's Tribunal. Paul is a valuable asset to the Brotherhood, as his status of legend amongst furries grants us a constant stream of fluffy recruits. Eliminate the three witnesses and show the furry community the support our order bestows upon its most loyal supporters.", 2, "When Fluff Isn't Enough", 0, true }
+                    { 1, "Julie Proulx is using her weight loss program to gain leverage over obese people all over America. Put an end to her manipulative scheme before she uses her customers' money against the Brotherhood.", 1, "A Fat Fraud", 1, true }
                 });
 
             migrationBuilder.InsertData(
-                table: "AssassinContract",
-                columns: new[] { "AssassinsId", "ContractsId" },
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { "96969696-9696-9696-9696-969696969696", 1 },
-                    { "69696969-6969-6969-6969-696969696969", 2 },
-                    { "69696969-6969-6969-6969-696969696969", 3 },
-                    { "11111111-1111-1111-1111-111111111111", 4 },
-                    { "96969696-9696-9696-9696-969696969696", 5 }
+                    { "2", "69696969-6969-6969-6969-696969696969" },
+                    { "1", "11111111-1111-1111-1111-111111111111" },
+                    { "2", "96969696-9696-9696-9696-969696969696" }
                 });
 
             migrationBuilder.InsertData(
@@ -318,17 +325,29 @@ namespace Brotherhood_Server.Migrations
                 columns: new[] { "ContractsId", "TargetsId" },
                 values: new object[,]
                 {
-                    { 1, 1 },
-                    { 2, 2 },
-                    { 5, 2 },
-                    { 3, 3 },
-                    { 3, 4 },
-                    { 3, 5 },
-                    { 4, 6 },
-                    { 4, 7 },
+                    { 6, 9 },
                     { 3, 8 },
+                    { 4, 7 },
                     { 5, 8 },
-                    { 6, 9 }
+                    { 3, 5 },
+                    { 3, 4 },
+                    { 3, 3 },
+                    { 5, 2 },
+                    { 2, 2 },
+                    { 4, 6 },
+                    { 1, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ContractUser",
+                columns: new[] { "AssassinsId", "ContractsId" },
+                values: new object[,]
+                {
+                    { "11111111-1111-1111-1111-111111111111", 4 },
+                    { "69696969-6969-6969-6969-696969696969", 2 },
+                    { "69696969-6969-6969-6969-696969696969", 3 },
+                    { "96969696-9696-9696-9696-969696969696", 1 },
+                    { "96969696-9696-9696-9696-969696969696", 5 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -371,14 +390,14 @@ namespace Brotherhood_Server.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AssassinContract_ContractsId",
-                table: "AssassinContract",
-                column: "ContractsId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ContractContractTarget_TargetsId",
                 table: "ContractContractTarget",
                 column: "TargetsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContractUser_ContractsId",
+                table: "ContractUser",
+                column: "ContractsId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -399,25 +418,25 @@ namespace Brotherhood_Server.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "AssassinContract");
-
-            migrationBuilder.DropTable(
                 name: "Cities");
 
             migrationBuilder.DropTable(
                 name: "ContractContractTarget");
 
             migrationBuilder.DropTable(
+                name: "ContractUser");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "ContractTargets");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Contracts");
-
-            migrationBuilder.DropTable(
-                name: "ContractTargets");
         }
     }
 }

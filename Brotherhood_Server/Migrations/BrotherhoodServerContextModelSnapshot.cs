@@ -19,175 +19,6 @@ namespace Brotherhood_Server.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("AssassinContract", b =>
-                {
-                    b.Property<string>("AssassinsId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ContractsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AssassinsId", "ContractsId");
-
-                    b.HasIndex("ContractsId");
-
-                    b.ToTable("AssassinContract");
-
-                    b.HasData(
-                        new
-                        {
-                            AssassinsId = "96969696-9696-9696-9696-969696969696",
-                            ContractsId = 1
-                        },
-                        new
-                        {
-                            AssassinsId = "69696969-6969-6969-6969-696969696969",
-                            ContractsId = 2
-                        },
-                        new
-                        {
-                            AssassinsId = "69696969-6969-6969-6969-696969696969",
-                            ContractsId = 3
-                        },
-                        new
-                        {
-                            AssassinsId = "11111111-1111-1111-1111-111111111111",
-                            ContractsId = 4
-                        },
-                        new
-                        {
-                            AssassinsId = "96969696-9696-9696-9696-969696969696",
-                            ContractsId = 5
-                        });
-                });
-
-            modelBuilder.Entity("Brotherhood_Server.Models.Assassin", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "11111111-1111-1111-1111-111111111111",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "93fdaea3-0d0e-42f7-9dfe-ae48fe288f1e",
-                            Email = "ezio.auditore@firenze.it",
-                            EmailConfirmed = false,
-                            FirstName = "Ezio",
-                            LastName = "Auditore",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "EZIO.AUDITORE@FIRENZE.IT",
-                            NormalizedUserName = "EZIO",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFk6DB6v/1DtBLdaa5khMlffzIolUakKx3hS9DoZO34UPY8wMQ99Fbq0Hr4lirRlgA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "6c57304b-8eaa-4725-b1ca-53bc5a51c99a",
-                            TwoFactorEnabled = false,
-                            UserName = "Ezio"
-                        },
-                        new
-                        {
-                            Id = "69696969-6969-6969-6969-696969696969",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "4ad71eae-3906-4c06-b50f-4cdb1d2be36d",
-                            Email = "arno.dorian@brotherhood.fr",
-                            EmailConfirmed = false,
-                            FirstName = "Arno",
-                            LastName = "Dorian",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ARNO.DORIAN@BROTHERHOOD.fr",
-                            NormalizedUserName = "ARNO",
-                            PasswordHash = "AQAAAAEAACcQAAAAELIwci+k8Sun1d3JSI1HiWUwh31mH9zYr6170wYptSVRRWaNm72Zbp3W+0cDIoby1Q==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "f32be217-1337-4459-9ba1-839fd20a1a17",
-                            TwoFactorEnabled = false,
-                            UserName = "Arno"
-                        },
-                        new
-                        {
-                            Id = "96969696-9696-9696-9696-969696969696",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "5e0289b5-9681-4da6-96b7-b2f59529d017",
-                            Email = "theodore.lheureux@archlinux.net",
-                            EmailConfirmed = false,
-                            FirstName = "Theodore",
-                            LastName = "l'Heureux",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "THEODORE.LHEUREUX@ARCHLINUX.NET",
-                            NormalizedUserName = "THEODORE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDuHAI4YEkZR64O1DXiMe93CbGESfQx7dX6KzMWLLqQiDGdAI+AWcDqrq3sJ0pRpzg==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "2455e2b2-bfeb-4ba2-ad83-4c48fe62d379",
-                            TwoFactorEnabled = false,
-                            UserName = "Theodore"
-                        });
-                });
-
             modelBuilder.Entity("Brotherhood_Server.Models.City", b =>
                 {
                     b.Property<int>("Id")
@@ -430,6 +261,133 @@ namespace Brotherhood_Server.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Brotherhood_Server.Models.User", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "11111111-1111-1111-1111-111111111111",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "c8a082f6-5e40-4b33-b14b-1d4f9e95aea6",
+                            Email = "ezio.auditore@firenze.it",
+                            EmailConfirmed = false,
+                            FirstName = "Ezio",
+                            LastName = "Auditore",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "EZIO.AUDITORE@FIRENZE.IT",
+                            NormalizedUserName = "EZIO",
+                            PasswordHash = "AQAAAAEAACcQAAAAEM6M4J/0WsQ17uqJdnvy7BxMwxsRwXR6bOPyY7fBQO+Aeb9hk2L3J5X/vVHTEpVLAg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "67c177ef-181a-453d-99c4-88da01737eea",
+                            TwoFactorEnabled = false,
+                            UserName = "Ezio"
+                        },
+                        new
+                        {
+                            Id = "69696969-6969-6969-6969-696969696969",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "065f9bd6-8938-410d-8b25-1e775645194f",
+                            Email = "arno.dorian@brotherhood.fr",
+                            EmailConfirmed = false,
+                            FirstName = "Arno",
+                            LastName = "Dorian",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ARNO.DORIAN@BROTHERHOOD.fr",
+                            NormalizedUserName = "ARNO",
+                            PasswordHash = "AQAAAAEAACcQAAAAEG+jIbluAC4StcXo5aQksCyqjkGy+wxI1S5gsYc8fOiv0z9GK0xslmz5/OujF0gvNg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "ec150e7c-93af-46f1-8862-44cbb0335244",
+                            TwoFactorEnabled = false,
+                            UserName = "Arno"
+                        },
+                        new
+                        {
+                            Id = "96969696-9696-9696-9696-969696969696",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e08d9c0b-aacf-4c3e-8fd1-1ca98014f6cb",
+                            Email = "theodore.lheureux@archlinux.net",
+                            EmailConfirmed = false,
+                            FirstName = "Theodore",
+                            LastName = "l'Heureux",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "THEODORE.LHEUREUX@ARCHLINUX.NET",
+                            NormalizedUserName = "THEODORE",
+                            PasswordHash = "AQAAAAEAACcQAAAAEP+PomYaJrbC2dcYGn7LMESTEK7sQgZpbG+trVR4+qnoN7u0TWbGj4rqBirU/yzW2Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "356d444c-c511-41cf-86c1-4b38317c8b69",
+                            TwoFactorEnabled = false,
+                            UserName = "Theodore"
+                        });
+                });
+
             modelBuilder.Entity("ContractContractTarget", b =>
                 {
                     b.Property<int>("ContractsId")
@@ -502,6 +460,48 @@ namespace Brotherhood_Server.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ContractUser", b =>
+                {
+                    b.Property<string>("AssassinsId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ContractsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AssassinsId", "ContractsId");
+
+                    b.HasIndex("ContractsId");
+
+                    b.ToTable("ContractUser");
+
+                    b.HasData(
+                        new
+                        {
+                            AssassinsId = "96969696-9696-9696-9696-969696969696",
+                            ContractsId = 1
+                        },
+                        new
+                        {
+                            AssassinsId = "69696969-6969-6969-6969-696969696969",
+                            ContractsId = 2
+                        },
+                        new
+                        {
+                            AssassinsId = "69696969-6969-6969-6969-696969696969",
+                            ContractsId = 3
+                        },
+                        new
+                        {
+                            AssassinsId = "11111111-1111-1111-1111-111111111111",
+                            ContractsId = 4
+                        },
+                        new
+                        {
+                            AssassinsId = "96969696-9696-9696-9696-969696969696",
+                            ContractsId = 5
+                        });
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -527,6 +527,22 @@ namespace Brotherhood_Server.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            ConcurrencyStamp = "9742c4ed-2f5b-40a5-9c74-f6cd429e1e68",
+                            Name = "Mentor",
+                            NormalizedName = "MENTOR"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            ConcurrencyStamp = "2d174790-3ed0-40da-84ca-9c70424f09ef",
+                            Name = "Assassin",
+                            NormalizedName = "ASSASSIN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -612,6 +628,23 @@ namespace Brotherhood_Server.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "96969696-9696-9696-9696-969696969696",
+                            RoleId = "2"
+                        },
+                        new
+                        {
+                            UserId = "69696969-6969-6969-6969-696969696969",
+                            RoleId = "2"
+                        },
+                        new
+                        {
+                            UserId = "11111111-1111-1111-1111-111111111111",
+                            RoleId = "1"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -633,21 +666,6 @@ namespace Brotherhood_Server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("AssassinContract", b =>
-                {
-                    b.HasOne("Brotherhood_Server.Models.Assassin", null)
-                        .WithMany()
-                        .HasForeignKey("AssassinsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Brotherhood_Server.Models.Contract", null)
-                        .WithMany()
-                        .HasForeignKey("ContractsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ContractContractTarget", b =>
                 {
                     b.HasOne("Brotherhood_Server.Models.Contract", null)
@@ -663,6 +681,21 @@ namespace Brotherhood_Server.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ContractUser", b =>
+                {
+                    b.HasOne("Brotherhood_Server.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("AssassinsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Brotherhood_Server.Models.Contract", null)
+                        .WithMany()
+                        .HasForeignKey("ContractsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -674,7 +707,7 @@ namespace Brotherhood_Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Brotherhood_Server.Models.Assassin", null)
+                    b.HasOne("Brotherhood_Server.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -683,7 +716,7 @@ namespace Brotherhood_Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Brotherhood_Server.Models.Assassin", null)
+                    b.HasOne("Brotherhood_Server.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -698,7 +731,7 @@ namespace Brotherhood_Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Brotherhood_Server.Models.Assassin", null)
+                    b.HasOne("Brotherhood_Server.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -707,7 +740,7 @@ namespace Brotherhood_Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Brotherhood_Server.Models.Assassin", null)
+                    b.HasOne("Brotherhood_Server.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
