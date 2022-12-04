@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Brotherhood_Server.Migrations
 {
     [DbContext(typeof(BrotherhoodServerContext))]
-    [Migration("20221204033507_OWO")]
+    [Migration("20221204171632_OWO")]
     partial class OWO
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -338,7 +338,7 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c8a082f6-5e40-4b33-b14b-1d4f9e95aea6",
+                            ConcurrencyStamp = "7b81bde5-5d11-4dde-8bc3-4a75492b1013",
                             Email = "ezio.auditore@firenze.it",
                             EmailConfirmed = false,
                             FirstName = "Ezio",
@@ -346,9 +346,9 @@ namespace Brotherhood_Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "EZIO.AUDITORE@FIRENZE.IT",
                             NormalizedUserName = "EZIO",
-                            PasswordHash = "AQAAAAEAACcQAAAAEM6M4J/0WsQ17uqJdnvy7BxMwxsRwXR6bOPyY7fBQO+Aeb9hk2L3J5X/vVHTEpVLAg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDG504iPgZ991nVxDvCkQ8MEx+QFLyaiJFZymcSMPPnS4zgM2pE/i0Yi4TyFH5XOkQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "67c177ef-181a-453d-99c4-88da01737eea",
+                            SecurityStamp = "b62077a1-49b7-4f4b-b96d-1d8b58687dc1",
                             TwoFactorEnabled = false,
                             UserName = "Ezio"
                         },
@@ -356,7 +356,7 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "69696969-6969-6969-6969-696969696969",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "065f9bd6-8938-410d-8b25-1e775645194f",
+                            ConcurrencyStamp = "ba2610c5-823b-4dad-ab3e-9a4293d93cf5",
                             Email = "arno.dorian@brotherhood.fr",
                             EmailConfirmed = false,
                             FirstName = "Arno",
@@ -364,9 +364,9 @@ namespace Brotherhood_Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ARNO.DORIAN@BROTHERHOOD.fr",
                             NormalizedUserName = "ARNO",
-                            PasswordHash = "AQAAAAEAACcQAAAAEG+jIbluAC4StcXo5aQksCyqjkGy+wxI1S5gsYc8fOiv0z9GK0xslmz5/OujF0gvNg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJIEDkB+dfZ8siasqwryFcvk77dE4s3HUsPlkup80jyGd4bNaVfCLLXf++Oy+Nqhzw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ec150e7c-93af-46f1-8862-44cbb0335244",
+                            SecurityStamp = "78cff1a5-8f42-4bde-8286-865d2f244f31",
                             TwoFactorEnabled = false,
                             UserName = "Arno"
                         },
@@ -374,7 +374,7 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "96969696-9696-9696-9696-969696969696",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e08d9c0b-aacf-4c3e-8fd1-1ca98014f6cb",
+                            ConcurrencyStamp = "e53840ab-8428-495b-9313-7e418d5ddd54",
                             Email = "theodore.lheureux@archlinux.net",
                             EmailConfirmed = false,
                             FirstName = "Theodore",
@@ -382,9 +382,9 @@ namespace Brotherhood_Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "THEODORE.LHEUREUX@ARCHLINUX.NET",
                             NormalizedUserName = "THEODORE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEP+PomYaJrbC2dcYGn7LMESTEK7sQgZpbG+trVR4+qnoN7u0TWbGj4rqBirU/yzW2Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEnVi50aE/TsB5aIzEg9mSKpOdTzrA4OStgL1Bvz0T9Nnvrhsnzgjlh+9mWqGlfcGw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "356d444c-c511-41cf-86c1-4b38317c8b69",
+                            SecurityStamp = "1ecdd467-d322-42f9-a3dd-f488230a7421",
                             TwoFactorEnabled = false,
                             UserName = "Theodore"
                         });
@@ -499,8 +499,13 @@ namespace Brotherhood_Server.Migrations
                         },
                         new
                         {
-                            AssassinsId = "96969696-9696-9696-9696-969696969696",
+                            AssassinsId = "11111111-1111-1111-1111-111111111111",
                             ContractsId = 5
+                        },
+                        new
+                        {
+                            AssassinsId = "96969696-9696-9696-9696-969696969696",
+                            ContractsId = 6
                         });
                 });
 
@@ -534,14 +539,14 @@ namespace Brotherhood_Server.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "9742c4ed-2f5b-40a5-9c74-f6cd429e1e68",
+                            ConcurrencyStamp = "33848120-2201-4d7f-a2fc-bd6bd069401b",
                             Name = "Mentor",
                             NormalizedName = "MENTOR"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "2d174790-3ed0-40da-84ca-9c70424f09ef",
+                            ConcurrencyStamp = "a8cb8321-30fb-459d-8d56-61396c83924a",
                             Name = "Assassin",
                             NormalizedName = "ASSASSIN"
                         });

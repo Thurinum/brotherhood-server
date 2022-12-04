@@ -173,7 +173,8 @@ namespace Brotherhood_Server.Data
 					new { ContractsId = 2, AssassinsId = arno.Id },
 					new { ContractsId = 3, AssassinsId = arno.Id },
 					new { ContractsId = 4, AssassinsId = ezio.Id },
-					new { ContractsId = 5, AssassinsId = erhion.Id }
+					new { ContractsId = 5, AssassinsId = ezio.Id },
+					new { ContractsId = 6, AssassinsId = erhion.Id }
 				));
 
 			IdentityRole mentor = new() { Id = "1", Name = "Mentor", NormalizedName = "MENTOR" };
