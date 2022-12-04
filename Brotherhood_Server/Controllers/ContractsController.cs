@@ -21,10 +21,10 @@ namespace Brotherhood_Server.Controllers
 	public class ContractsController : ControllerBase
 	{
 		private readonly BrotherhoodServerContext _context;
-		private readonly UserManager<Assassin> _userManager;
+		private readonly UserManager<User> _userManager;
 		private readonly IErrorService _error;
 
-		public ContractsController(BrotherhoodServerContext context, UserManager<Assassin> userManager, IErrorService errorService)
+		public ContractsController(BrotherhoodServerContext context, UserManager<User> userManager, IErrorService errorService)
 		{
 			_context = context;
 			_userManager = userManager;
@@ -52,8 +52,8 @@ namespace Brotherhood_Server.Controllers
 		[Route("contract/create")]
 		public async Task<ActionResult<Contract>> CreateContract(Contract contract)
 		{
-			Assassin user = await GetCurrentUser();
-			contract.Assassins = new List<Assassin> { user };
+			User user = await GetCurrentUser();
+			contract.Assassins = new List<User> { user };
 
 			_context.Contracts.Add(contract);
 			await _context.SaveChangesAsync();
@@ -70,7 +70,7 @@ namespace Brotherhood_Server.Controllers
 			if (contract == null)
 				return NotFound();
 
-			Assassin user = await GetCurrentUser();
+			User user = await GetCurrentUser();
 			if (!contract.IsPublic && contract.Assassins.SingleOrDefault(a => a.Id == user.Id) == null)
 				return StatusCode(StatusCodes.Status403Forbidden,
 					new { Message = "You must be assigned to this contract in order to view its targets." });
@@ -89,7 +89,7 @@ namespace Brotherhood_Server.Controllers
 				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"Invalid contract id {id} provided." });
 
 			// refuse is user isn't assigned to contract
-			Assassin user = await GetCurrentUser();
+			User user = await GetCurrentUser();
 			if (!contract.Assassins.Contains(user))
 				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = $"You must be assigned to this contract in order to modify it." });
 
@@ -122,7 +122,7 @@ namespace Brotherhood_Server.Controllers
 			if (target == null)
 				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"Contract target {dto.Id} does not exist." });
 
-			Assassin user = await GetCurrentUser();
+			User user = await GetCurrentUser();
 			if (!contract.Assassins.Contains(user))
 				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = "You must be assigned to this contract in order to edit its targets." });
 			if (!contract.Targets.Contains(target))
@@ -150,7 +150,7 @@ namespace Brotherhood_Server.Controllers
 			if (contract == null)
 				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"Invalid contract id {id} provided." });
 
-			Assassin user = await GetCurrentUser();
+			User user = await GetCurrentUser();
 
 			if (!contract.Assassins.Contains(user))
 				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = $"You must be assigned to this contract in order to modify it." });
@@ -185,7 +185,7 @@ namespace Brotherhood_Server.Controllers
 			if (contract == null)
 				return StatusCode(StatusCodes.Status400BadRequest, new { Message = $"Invalid contract id {id} provided." });
 
-			Assassin user = await GetCurrentUser();
+			User user = await GetCurrentUser();
 
 			if (!contract.Assassins.Contains(user))
 				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = $"You must be assigned to this contract in order to modify it." });
@@ -213,13 +213,13 @@ namespace Brotherhood_Server.Controllers
 			if (contract == null)
 				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"The contract provided with id '{id}' was not found." });
 
-			Assassin user = await GetCurrentUser();
+			User user = await GetCurrentUser();
 			if (contract.Assassins.SingleOrDefault(a => a.Id == user.Id) == null)
 				return StatusCode(StatusCodes.Status403Forbidden,
 					new { Message = "You must be assigned to this contract in order to request a partner." }
 				);
 
-			Assassin sharee = await _userManager.FindByNameAsync(shareeName);
+			User sharee = await _userManager.FindByNameAsync(shareeName);
 
 			if (sharee == null)
 				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Assassin {shareeName} does not exist." });
@@ -250,7 +250,7 @@ namespace Brotherhood_Server.Controllers
 			if (contract == null)
 				return NotFound($"The city {id} doesn't exist.");
 
-			Assassin user = await GetCurrentUser();
+			User user = await GetCurrentUser();
 			if (contract.Assassins.SingleOrDefault(a => a.Id == user.Id) == null)
 				return StatusCode(
 					StatusCodes.Status403Forbidden,
@@ -263,6 +263,6 @@ namespace Brotherhood_Server.Controllers
 			return NoContent();
 		}
 
-		private async Task<Assassin> GetCurrentUser() => await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+		private async Task<User> GetCurrentUser() => await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
 	}
 }

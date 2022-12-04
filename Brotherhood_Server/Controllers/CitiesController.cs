@@ -21,9 +21,9 @@ namespace Brotherhood_Server.Controllers
 	public class CitiesController : ControllerBase
 	{
 		private readonly BrotherhoodServerContext _context;
-		private readonly UserManager<Assassin> _userManager;
+		private readonly UserManager<User> _userManager;
 
-		public CitiesController(BrotherhoodServerContext context, UserManager<Assassin> userManager)
+		public CitiesController(BrotherhoodServerContext context, UserManager<User> userManager)
 		{
 			_context = context;
 			_userManager = userManager;

@@ -15,12 +15,12 @@ namespace Brotherhood_Server.Controllers
 {
 	[ApiController]
 	[Route("api")]
-	public class AssassinsController : ControllerBase
+	public class UsersController : ControllerBase
 	{
-		private readonly UserManager<Assassin> _UserManager;
+		private readonly UserManager<User> _UserManager;
 		private readonly IConfiguration _Configuration;
 
-		public AssassinsController(UserManager<Assassin> userManager, IConfiguration configuration)
+		public UsersController(UserManager<User> userManager, IConfiguration configuration)
 		{
 			_UserManager = userManager;
 			_Configuration = configuration;
@@ -33,7 +33,7 @@ namespace Brotherhood_Server.Controllers
 			if (register.Password != register.PasswordConfirm)
 				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "Passwords don't match." });
 
-			Assassin assassin = new()
+			User assassin = new()
 			{
 				UserName = register.UserName,
 				Email = register.Email
@@ -50,7 +50,7 @@ namespace Brotherhood_Server.Controllers
 		[Route("login")]
 		public async Task<ActionResult> Login(LoginDTO login)
 		{
-			Assassin assassin = login.Email == null 
+			User assassin = login.Email == null 
 				? await _UserManager.FindByNameAsync(login.UserName) 
 				: await _UserManager.FindByEmailAsync(login.Email);
 

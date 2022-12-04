@@ -27,7 +27,7 @@ namespace Brotherhood_Server.Models
 		public bool IsPublic { get; set; }
 
 		[JsonIgnore]
-		public virtual List<Assassin> Assassins { get; set; }
+		public virtual List<User> Assassins { get; set; }
 
 		[JsonIgnore]
 		public virtual List<ContractTarget> Targets { get; set; }

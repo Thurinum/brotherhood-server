@@ -40,7 +40,7 @@ namespace Brotherhood_Server
 				options.UseSqlServer(Configuration.GetConnectionString("BrotherhoodServerContext"));
 			});
 
-			services.AddIdentity<Assassin, IdentityRole>().AddEntityFrameworkStores<BrotherhoodServerContext>();
+			services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<BrotherhoodServerContext>();
 
 			services.AddCors(options =>
 			{

@@ -22,9 +22,9 @@ namespace Brotherhood_Server.Controllers
 	public class ContractTargetsController : ControllerBase
 	{
 		private readonly BrotherhoodServerContext _context;
-		private readonly UserManager<Assassin> _userManager;
+		private readonly UserManager<User> _userManager;
 
-		public ContractTargetsController(BrotherhoodServerContext context, UserManager<Assassin> userManager)
+		public ContractTargetsController(BrotherhoodServerContext context, UserManager<User> userManager)
 		{
 			_context = context;
 			_userManager = userManager;
@@ -206,6 +206,6 @@ namespace Brotherhood_Server.Controllers
 			return NoContent();
 		}
 
-		private async Task<Assassin> GetCurrentUser() => await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+		private async Task<User> GetCurrentUser() => await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
 	}
 }

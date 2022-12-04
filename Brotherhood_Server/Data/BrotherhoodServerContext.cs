@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Brotherhood_Server.Data
 {
-	public class BrotherhoodServerContext : IdentityDbContext<Assassin>
+	public class BrotherhoodServerContext : IdentityDbContext<User>
 	{
 		public BrotherhoodServerContext(DbContextOptions<BrotherhoodServerContext> options) : base(options) { }
 
@@ -127,9 +127,9 @@ namespace Brotherhood_Server.Data
 				));
 
 			// Arno
-			PasswordHasher<Assassin> hasher = new();
+			PasswordHasher<User> hasher = new();
 			// Theodore
-			Assassin erhion = new()
+			User erhion = new()
 			{
 				Id = "96969696-9696-9696-9696-969696969696",
 				UserName = "Theodore",
@@ -141,7 +141,7 @@ namespace Brotherhood_Server.Data
 			};
 			erhion.PasswordHash = hasher.HashPassword(erhion, "dioxus420");
 
-			Assassin arno = new()
+			User arno = new()
 			{
 				Id = "69696969-6969-6969-6969-696969696969",
 				UserName = "Arno",
@@ -154,7 +154,7 @@ namespace Brotherhood_Server.Data
 			arno.PasswordHash = hasher.HashPassword(arno, "elise69");
 
 			// Ezio
-			Assassin ezio = new()
+			User ezio = new()
 			{
 				Id = "11111111-1111-1111-1111-111111111111",
 				UserName = "Ezio",
@@ -166,7 +166,7 @@ namespace Brotherhood_Server.Data
 			};
 			ezio.PasswordHash = hasher.HashPassword(ezio, "requiescat in pace");
 
-			builder.Entity<Assassin>().HasData(ezio, arno, erhion);
+			builder.Entity<User>().HasData(ezio, arno, erhion);
 			builder.Entity<Contract>()
 				.HasMany(c => c.Assassins)
 				.WithMany(a => a.Contracts)
