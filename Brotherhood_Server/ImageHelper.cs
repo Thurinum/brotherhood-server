@@ -45,5 +45,15 @@ namespace Brotherhood_Server
 
 			return Status.Success;
 		}
+
+		public static bool Delete(string subFolder, int entityId, Size size)
+		{
+			string path = $"{Directory.GetCurrentDirectory()}/wwwroot/images/{subFolder}/{Enum.GetName(size)}/{entityId}.webp";
+
+			try { File.Delete(path); }
+			catch { return false; }
+
+			return true;
+		}
 	}
 }

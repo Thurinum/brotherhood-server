@@ -221,19 +221,18 @@ namespace Brotherhood_Server.Controllers
 			ContractTarget target = await _context.ContractTargets.FindAsync(id);
 
 			if (target == null)
-			{
 				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Requested contract target was not found. Please make sure a target is selected and try again." });
-			}
 
 			target.Contracts.ForEach(c =>
 			{
 				if (c.CoverTargetId == target.Id)
-				{
 					c.CoverTargetId = 0;
-				}
 			});
 			_context.ContractTargets.Remove(target);
 			await _context.SaveChangesAsync();
+
+			ImageHelper.Delete("targets", id, ImageHelper.Size.sm);
+			ImageHelper.Delete("targets", id, ImageHelper.Size.lg);
 
 			return NoContent();
 		}
