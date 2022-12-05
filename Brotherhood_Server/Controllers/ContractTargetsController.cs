@@ -73,6 +73,13 @@ namespace Brotherhood_Server.Controllers
 				return StatusCode(StatusCodes.Status422UnprocessableEntity, new { Message = $"Failed to process contract target data. Please try again." });
 			}
 
+			// refuse if model invalid
+			ValidationContext context = new(target, null, null);
+			List<ValidationResult> validationResults = new();
+
+			if (!Validator.TryValidateObject(target, context, validationResults, true))
+				return StatusCode(StatusCodes.Status400BadRequest new { Message = "Some fields aren't filled. You know what they are. Go fill em'." });
+
 			// add entity
 			_context.ContractTargets.Add(target);
 			await _context.SaveChangesAsync();
