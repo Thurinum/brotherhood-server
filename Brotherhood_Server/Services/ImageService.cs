@@ -2,36 +2,22 @@
 using SixLabors.ImageSharp;
 using System;
 using System.IO;
-using System.Threading.Tasks;
 
-namespace Brotherhood_Server
+namespace Brotherhood_Server.Services
 {
-	public class ImageHelper
+	public class ImageService : IImageService
 	{
-		public enum Size
-		{
-			sm = 256,
-			lg = 1024
-		}
-
-		public enum Status
-		{
-			TooSmall,
-			Invalid,
-			Success
-		}
-
-		public static Status Upload(IFormFile file, string subFolder, int entityId, Size size)
+		public ImageUploadStatus Upload(IFormFile file, string subFolder, int entityId, ImageSize size)
 		{
 			Image image;
 
-			try   { image = Image.Load(file.OpenReadStream()); }
-			catch { return Status.Invalid; }
+			try { image = Image.Load(file.OpenReadStream()); }
+			catch { return ImageUploadStatus.Invalid; }
 
 			// refuse if image is too small or too large
 			int width = (int)size;
 			if (image.Width < width * 0.5 || image.Width > width)
-				return Status.TooSmall;
+				return ImageUploadStatus.TooSmall;
 
 			string path = $"{Directory.GetCurrentDirectory()}/wwwroot/images/{subFolder}/{Enum.GetName(size)}";
 
@@ -43,10 +29,10 @@ namespace Brotherhood_Server
 
 			image.SaveAsWebp($"{path}/{entityId}.webp");
 
-			return Status.Success;
+			return ImageUploadStatus.Success;
 		}
 
-		public static bool Delete(string subFolder, int entityId, Size size)
+		public bool Delete(string subFolder, int entityId, ImageSize size)
 		{
 			string path = $"{Directory.GetCurrentDirectory()}/wwwroot/images/{subFolder}/{Enum.GetName(size)}/{entityId}.webp";
 

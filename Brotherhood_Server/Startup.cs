@@ -30,6 +30,7 @@ namespace Brotherhood_Server
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddScoped<IErrorService, ErrorService>();
+			services.AddScoped<ImageService>();
 			services.AddControllers();
 			services.AddSwaggerGen(c =>
 			{

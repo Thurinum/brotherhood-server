@@ -1,5 +1,6 @@
 ﻿using Brotherhood_Server.Data;
 using Brotherhood_Server.Models;
+using Brotherhood_Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -23,11 +24,13 @@ namespace Brotherhood_Server.Controllers
 	{
 		private readonly BrotherhoodServerContext _context;
 		private readonly UserManager<User> _userManager;
+		private readonly ImageService _imageService;
 
-		public ContractTargetsController(BrotherhoodServerContext context, UserManager<User> userManager)
+		public ContractTargetsController(BrotherhoodServerContext context, UserManager<User> userManager, ImageService imageService)
 		{
 			_context = context;
 			_userManager = userManager;
+			_imageService = imageService;
 		}
 
 		[HttpGet]
@@ -87,19 +90,19 @@ namespace Brotherhood_Server.Controllers
 			target = await _context.ContractTargets.OrderBy(c => c.Id).LastAsync();
 
 			// save image file
-			switch (ImageHelper.Upload(smImage, "targets", target.Id, ImageHelper.Size.sm))
+			switch (_imageService.Upload(smImage, "targets", target.Id, ImageSize.sm))
 			{
-				case ImageHelper.Status.TooSmall:
+				case ImageUploadStatus.TooSmall:
 					return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is too small. Please upload an image that is at least 1024x1024 pixels." });
-				case ImageHelper.Status.Invalid:
+				case ImageUploadStatus.Invalid:
 					return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is invalid. Please upload a valid image." });
 			}
 
-			switch (ImageHelper.Upload(lgImage, "targets", target.Id, ImageHelper.Size.lg))
+			switch (_imageService.Upload(lgImage, "targets", target.Id, ImageSize.lg))
 			{
-				case ImageHelper.Status.TooSmall:
+				case ImageUploadStatus.TooSmall:
 					return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is too small. Please upload an image that is at least 1024x1024 pixels." });
-				case ImageHelper.Status.Invalid:
+				case ImageUploadStatus.Invalid:
 					return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is invalid. Please upload a valid image." });
 			}
 
@@ -153,19 +156,19 @@ namespace Brotherhood_Server.Controllers
 
 			if (smImage != null && lgImage != null)
 			{
-				switch (ImageHelper.Upload(smImage, "targets", updatedTarget.Id, ImageHelper.Size.sm))
+				switch (_imageService.Upload(smImage, "targets", updatedTarget.Id, ImageSize.sm))
 				{
-					case ImageHelper.Status.TooSmall:
+					case ImageUploadStatus.TooSmall:
 						return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is too small. Please upload an image that is at least 1024x1024 pixels." });
-					case ImageHelper.Status.Invalid:
+					case ImageUploadStatus.Invalid:
 						return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is invalid. Please upload a valid image." });
 				}
 
-				switch (ImageHelper.Upload(lgImage, "targets", updatedTarget.Id, ImageHelper.Size.lg))
+				switch (_imageService.Upload(lgImage, "targets", updatedTarget.Id, ImageSize.lg))
 				{
-					case ImageHelper.Status.TooSmall:
+					case ImageUploadStatus.TooSmall:
 						return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is too small. Please upload an image that is at least 1024x1024 pixels." });
-					case ImageHelper.Status.Invalid:
+					case ImageUploadStatus.Invalid:
 						return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is invalid. Please upload a valid image." });
 				}
 
@@ -231,8 +234,8 @@ namespace Brotherhood_Server.Controllers
 			_context.ContractTargets.Remove(target);
 			await _context.SaveChangesAsync();
 
-			ImageHelper.Delete("targets", id, ImageHelper.Size.sm);
-			ImageHelper.Delete("targets", id, ImageHelper.Size.lg);
+			_imageService.Delete("targets", id, ImageSize.sm);
+			_imageService.Delete("targets", id, ImageSize.lg);
 
 			return NoContent();
 		}
