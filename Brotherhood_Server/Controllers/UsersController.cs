@@ -96,6 +96,8 @@ namespace Brotherhood_Server.Controllers
 			User user = new()
 			{
 				UserName = register.UserName,
+				FirstName = register.FirstName,
+				LastName = register.LastName,
 				Email = register.Email
 			};
 
