@@ -221,9 +221,9 @@ namespace Brotherhood_Server.Controllers
 
 		[HttpPut]
 		[Route("contract/{id}/share")]
-		public async Task<IActionResult> ShareContract(int id, string shareeName)
+		public async Task<IActionResult> ShareContract(int id, User shareeDTO)
 		{
-			if (shareeName == null)
+			if (shareeDTO == null)
 				return _error.Response(Status400BadRequest, "No sharee name was provided to the server. Please try again.");
 
 			Contract contract = await _context.Contracts.FindAsync(id);
@@ -238,10 +238,10 @@ namespace Brotherhood_Server.Controllers
 					new { Message = "You must be assigned to this contract in order to request a partner." }
 				);
 
-			User sharee = await _userManager.FindByNameAsync(shareeName);
+			User sharee = await _userManager.FindByIdAsync(shareeDTO.Id);
 
 			if (sharee == null)
-				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Assassin {shareeName} does not exist." });
+				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Assassin {shareeDTO} does not exist." });
 
 			if (contract.Assassins.SingleOrDefault(a => a.Id == sharee.Id) != null)
 				return StatusCode(StatusCodes.Status302Found, new { Message = $"Assassin {sharee.FirstName} {sharee.LastName} is already assigned to this contract." });

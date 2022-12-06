@@ -62,7 +62,7 @@ namespace Brotherhood_Server.Controllers
 			{
 				token = new JwtSecurityTokenHandler().WriteToken(token),
 				validTo = token.ValidTo,
-				username = $"{user.FirstName} {user.LastName}",
+				userName = $"{user.FirstName} {user.LastName}",
 				role = userRoles.FirstOrDefault() // only one role per user
 			});
 		}
