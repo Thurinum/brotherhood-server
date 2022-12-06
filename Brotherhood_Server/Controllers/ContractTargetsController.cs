@@ -185,39 +185,40 @@ namespace Brotherhood_Server.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError, new { Message = $"Something went wrong when adding target {target.FirstName} {target.LastName} to this contract." });
 			}
 
-			return NoContent();
+			return Ok();
 		}
 
 		[HttpDelete]
-		[Authorize(Roles = "Mentor")]
 		[Route("contract/target/{id}/delete/soft")]
 		public async Task<ActionResult<ContractTarget>> SoftDeleteContractTarget(int id)
 		{
 			ContractTarget target = await _context.ContractTargets.FindAsync(id);
 
 			if (target == null)
-			{
 				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Requested contract target was not found. Please make sure a target is selected and try again." });
-			}
+
+			// refuse if there are contracts that depend on target but don't concern the user (UNLESS user is a mentor)
+			User user = await GetCurrentUser();
+			IList<User> mentors = await _userManager.GetUsersInRoleAsync("Mentor");
+
+			if (!mentors.Contains(user) && target.Contracts.Any(c => !c.Assassins.Contains(user)))
+				return StatusCode(StatusCodes.Status409Conflict, new { Message = $"Cannot delete target because it depends on contracts you has no business with." });
 
 			// remove from all contracts
 			target.Contracts.ForEach(c =>
 			{
 				if (c.CoverTargetId == target.Id)
-				{
 					c.CoverTargetId = 0;
-				}
 
 				c.Targets.Remove(target);
 			});
 			_context.ContractTargets.Update(target);
 			await _context.SaveChangesAsync();
 
-			return NoContent();
+			return Ok();
 		}
 
 		[HttpDelete]
-		[Authorize(Roles = "Mentor")]
 		[Route("contract/target/{id}/delete/hard")]
 		public async Task<ActionResult<ContractTarget>> HardDeleteContractTarget(int id)
 		{
@@ -226,6 +227,14 @@ namespace Brotherhood_Server.Controllers
 			if (target == null)
 				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Requested contract target was not found. Please make sure a target is selected and try again." });
 
+			// refuse if there are contracts that depend on target but don't concern the user (UNLESS user is a mentor)
+			User user = await GetCurrentUser();
+			IList<User> mentors = await _userManager.GetUsersInRoleAsync("Mentor");
+
+			if (!mentors.Contains(user) && target.Contracts.Any(c => !c.Assassins.Contains(user)))
+				return StatusCode(StatusCodes.Status409Conflict, new { Message = $"Cannot delete target because it depends on contracts you has no business with." });
+
+			// remove entirely (in production we should mark the target as "eliminated" but keep it in-database)
 			target.Contracts.ForEach(c =>
 			{
 				if (c.CoverTargetId == target.Id)
@@ -237,7 +246,7 @@ namespace Brotherhood_Server.Controllers
 			_imageService.Delete("targets", id, ImageSize.sm);
 			_imageService.Delete("targets", id, ImageSize.lg);
 
-			return NoContent();
+			return Ok();
 		}
 
 		private async Task<User> GetCurrentUser() => await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));

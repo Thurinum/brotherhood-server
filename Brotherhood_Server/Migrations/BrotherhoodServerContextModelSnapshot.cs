@@ -339,7 +339,7 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "11111111-1111-1111-1111-111111111111",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c8d6a42b-3058-4404-846e-a59c3eee644c",
+                            ConcurrencyStamp = "f37066f6-3b11-42b2-bb74-d5ef88bb975c",
                             Email = "ezio.auditore@firenze.it",
                             EmailConfirmed = false,
                             FirstName = "Ezio",
@@ -347,9 +347,9 @@ namespace Brotherhood_Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "EZIO.AUDITORE@FIRENZE.IT",
                             NormalizedUserName = "EZIO",
-                            PasswordHash = "AQAAAAEAACcQAAAAENh0wnsuS1aPL7q5q0SCKekwE03rfVTEV/5SNTI//glOcOX6HVztNYpZFm/YUu2TEQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKYoe9V+ZeIa8KUF/cNmzznsucltppUgKkGUzvDI+CUkegaOHod/jKHqdtK85r13Ag==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c610500a-5406-4f9b-8f4e-72937527fe0e",
+                            SecurityStamp = "b87c18b0-64e0-4de5-9950-f96530a3f6e4",
                             TwoFactorEnabled = false,
                             UserName = "Ezio"
                         },
@@ -357,7 +357,7 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "69696969-6969-6969-6969-696969696969",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "945f9117-b2ff-4f86-8159-27a906c46c97",
+                            ConcurrencyStamp = "7bf1d37c-60b2-4cef-a85c-415b37cf692a",
                             Email = "arno.dorian@brotherhood.fr",
                             EmailConfirmed = false,
                             FirstName = "Arno",
@@ -365,9 +365,9 @@ namespace Brotherhood_Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ARNO.DORIAN@BROTHERHOOD.fr",
                             NormalizedUserName = "ARNO",
-                            PasswordHash = "AQAAAAEAACcQAAAAELQf7xobySPPY1gdjM9we6Ncy/Lw+V469G+V8QShKzsPxBtxj6ji+RLctSlmVAjvSQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOtdLT7mbiyAUFd0Lo/KWwL0IGOazjZrUoQwmabITyP2Mw+knwMX8fQDTIth5C+xEg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "469879d6-d870-4443-a1cd-42115224c741",
+                            SecurityStamp = "b813d0fc-ca88-47cb-ba95-a30475bbeb85",
                             TwoFactorEnabled = false,
                             UserName = "Arno"
                         },
@@ -375,7 +375,7 @@ namespace Brotherhood_Server.Migrations
                         {
                             Id = "96969696-9696-9696-9696-969696969696",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "43188df7-0e24-45e2-a260-50d9ca882a6f",
+                            ConcurrencyStamp = "9509558d-30e9-429d-8541-04f2c980fdee",
                             Email = "theodore.lheureux@archlinux.net",
                             EmailConfirmed = false,
                             FirstName = "Theodore",
@@ -383,9 +383,9 @@ namespace Brotherhood_Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "THEODORE.LHEUREUX@ARCHLINUX.NET",
                             NormalizedUserName = "THEODORE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDhsJ3VSR2tYGPk2WTy+/EQa8f4T/+jRZPrbpqiVCoGl8A8Qo4RWDCuEgEKCYA/viw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBG+ISVe9nfOHW2OSOw6RtbNFwtCjjZ1bf6/yxyfw4MZPM9+kalRiTXiwsGV2jpkhg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "66a3af72-a02e-4963-b0e8-54f5cee4dd37",
+                            SecurityStamp = "b800d505-8a1a-47f1-91cc-56d32b099151",
                             TwoFactorEnabled = false,
                             UserName = "Theodore"
                         });
@@ -540,14 +540,14 @@ namespace Brotherhood_Server.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "b4150de0-7517-498c-b7e8-9516aabdb84a",
+                            ConcurrencyStamp = "f0fc772a-745f-449a-a0ce-a1315c6de916",
                             Name = "Mentor",
                             NormalizedName = "MENTOR"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "f287b839-397f-4ad3-8f58-55d0044fc40f",
+                            ConcurrencyStamp = "551aac6d-5b01-4108-92a9-d875aecb3742",
                             Name = "Assassin",
                             NormalizedName = "ASSASSIN"
                         });

@@ -115,14 +115,15 @@ namespace Brotherhood_Server.Controllers
 				UserName = register.UserName,
 				FirstName = register.FirstName,
 				LastName = register.LastName,
-				Email = register.Email
+				Email = register.Email,
+				Role = "Assassin"
 			};
 
 			IdentityResult result = await _userManager.CreateAsync(user, register.Password);
 			if (!result.Succeeded)
 				return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "Could not register assassin." });
 
-			await _userManager.AddToRoleAsync(user, "assassin");
+			await _userManager.AddToRoleAsync(user, "Assassin");
 
 			return Ok();
 		}
@@ -143,7 +144,7 @@ namespace Brotherhood_Server.Controllers
 				return StatusCode(StatusCodes.Status409Conflict, new { Message = $"The current user cannot delete itself." });
 
 			// refuse if user is a mentor
-			if (await _userManager.IsInRoleAsync(user, "Mentors"))
+			if (await _userManager.IsInRoleAsync(user, "Mentor"))
 				return StatusCode(StatusCodes.Status405MethodNotAllowed, new { Message = $"Removal of mentor users is not supported." });
 
 			await _userManager.DeleteAsync(user);

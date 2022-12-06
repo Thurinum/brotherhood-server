@@ -266,15 +266,12 @@ namespace Brotherhood_Server.Controllers
 			Contract contract = await _context.Contracts.FindAsync(id);
 
 			if (contract == null)
-				return NotFound($"The city {id} doesn't exist.");
+				return StatusCode(Status400BadRequest, new { Message = $"City {id} does not exist." }); ;
 
 			User user = await GetCurrentUser();
 			var mentors = await _userManager.GetUsersInRoleAsync("Mentor");
 			if (contract.Assassins.SingleOrDefault(a => a.Id == user.Id) == null && !mentors.Contains(user))
-				return StatusCode(
-					StatusCodes.Status403Forbidden,
-					new { Message = "You must be assigned to this contract in order to cancel it." }
-				);
+				return StatusCode(Status403Forbidden, new { Message = "You must be assigned to this contract in order to cancel it." });
 
 			_context.Contracts.Remove(contract);
 			await _context.SaveChangesAsync();
