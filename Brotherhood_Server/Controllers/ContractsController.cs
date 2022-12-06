@@ -107,7 +107,7 @@ namespace Brotherhood_Server.Controllers
 			var mentors = await _userManager.GetUsersInRoleAsync("Mentor");
 
 			if (!contract.Assassins.Contains(user) && !mentors.Contains(user))
-				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = $"You must be assigned to this contract in order to modify it." });
+				return StatusCode(StatusCodes.Status403Forbidden, new { Message = $"You must be assigned to this contract in order to modify it." });
 
 			// refuse if contract already contains target
 			if (contract.Targets.Any(c => c.Id == target.Id))
@@ -140,9 +140,9 @@ namespace Brotherhood_Server.Controllers
 			User user = await GetCurrentUser();
 			var mentors = await _userManager.GetUsersInRoleAsync("Mentor");
 			if (!contract.Assassins.Contains(user) && !mentors.Contains(user))
-				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = "You must be assigned to this contract in order to edit its targets." });
+				return StatusCode(StatusCodes.Status403Forbidden, new { Message = "You must be assigned to this contract in order to edit its targets." });
 			if (!contract.Targets.Contains(target))
-				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = $"Cannot remove target '{target.FirstName} {target.LastName}' from contract '{contract.Codename}' because it is not a target in the latter." });
+				return StatusCode(StatusCodes.Status403Forbidden, new { Message = $"Cannot remove target '{target.FirstName} {target.LastName}' from contract '{contract.Codename}' because it is not a target in the latter." });
 
 			contract.Targets.Remove(target);
 			_context.Entry(contract).State = EntityState.Modified;
@@ -169,7 +169,7 @@ namespace Brotherhood_Server.Controllers
 
 			var mentors = await _userManager.GetUsersInRoleAsync("Mentor");
 			if (!contract.Assassins.Contains(user) && !mentors.Contains(user))
-				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = $"You must be assigned to this contract in order to modify it." });
+				return StatusCode(StatusCodes.Status403Forbidden, new { Message = $"You must be assigned to this contract in order to modify it." });
 
 			ContractTarget target = await _context.ContractTargets.FindAsync(dto.Id);
 
@@ -204,7 +204,7 @@ namespace Brotherhood_Server.Controllers
 
 			var mentors = await _userManager.GetUsersInRoleAsync("Mentor");
 			if (!contract.Assassins.Contains(user) && !mentors.Contains(user))
-				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = $"You must be assigned to this contract in order to modify it." });
+				return StatusCode(StatusCodes.Status403Forbidden, new { Message = $"You must be assigned to this contract in order to modify it." });
 
 			_context.ChangeTracker.Clear();
 			_context.Contracts.Update(dto);

@@ -130,7 +130,7 @@ namespace Brotherhood_Server.Controllers
 			IList<User> mentors = await _userManager.GetUsersInRoleAsync("Mentor");
 
 			if (user.Contracts.Any(c => c.Targets.Contains(target)) && !mentors.Contains(user))
-				return StatusCode(StatusCodes.Status401Unauthorized, new { Message = $"You must have at least one contract targeting {target.FirstName} {target.LastName} in order to modify him/her." });
+				return StatusCode(StatusCodes.Status403Forbidden, new { Message = $"You must have at least one contract targeting {target.FirstName} {target.LastName} in order to modify him/her." });
 
 			// deserialize model from json
 			IFormCollection form = await Request.ReadFormAsync();

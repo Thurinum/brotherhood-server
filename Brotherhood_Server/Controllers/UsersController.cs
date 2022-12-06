@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Net.Http.Headers;
 
 namespace Brotherhood_Server.Controllers
 {
@@ -131,14 +132,25 @@ namespace Brotherhood_Server.Controllers
 		[Route("user/{id:Guid}/delete")]
 		public async Task<ActionResult> DeleteUser(Guid id)
 		{
+			// refuse if user doesn't exist
 			User user = await _userManager.FindByIdAsync(id.ToString());
-
 			if (user == null)
 				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Cannot delete user {id} because it does not exist." });
+
+			// refuse if user attempts to delete itself
+			User currentUser = await GetCurrentUser();
+			if (user == currentUser)
+				return StatusCode(StatusCodes.Status409Conflict, new { Message = $"The current user cannot delete itself." });
+
+			// refuse if user is a mentor
+			if (await _userManager.IsInRoleAsync(user, "Mentors"))
+				return StatusCode(StatusCodes.Status405MethodNotAllowed, new { Message = $"Removal of mentor users is not supported." });
 
 			await _userManager.DeleteAsync(user);
 
 			return Ok();
 		}
+
+		private async Task<User> GetCurrentUser() => await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
 	}
 }
