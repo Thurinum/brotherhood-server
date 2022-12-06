@@ -73,7 +73,15 @@ namespace Brotherhood_Server.Controllers
 		public async Task<IActionResult> GetPublicUsers()
 		{
 			IList<User> assassins = await _userManager.GetUsersInRoleAsync("Assassin");
-			return Ok(assassins.Select(a => new { Id = a.Id, username = a.UserName, email = a.Email, Role = "Assassin" }).ToList());
+			return Ok(assassins.Select(a => new User
+			{
+				Id = a.Id,
+				UserName = a.UserName,
+				FirstName = a.FirstName,
+				LastName = a.LastName,
+				Email = a.Email,
+				Role = "Assassin"
+			}).ToList());
 		}
 
 		[HttpGet]
@@ -82,7 +90,15 @@ namespace Brotherhood_Server.Controllers
 		public async Task<IActionResult> GetAllUsers()
 		{
 			IList<User> mentors = await _userManager.GetUsersInRoleAsync("Mentor");
-			return Ok(_userManager.Users.Select(a => new { Id = a.Id, username = a.UserName, email = a.Email, Role = mentors.Contains(a) ? "Mentor" : "Assassin" }).ToList());
+			return Ok(_userManager.Users.Select(a => new User
+			{
+				Id = a.Id,
+				UserName = a.UserName,
+				FirstName = a.FirstName,
+				LastName = a.LastName,
+				Email = a.Email,
+				Role = mentors.Contains(a) ? "Mentor" : "Assassin"
+			}).ToList());
 		}
 
 		[HttpPost]

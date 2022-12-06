@@ -223,6 +223,9 @@ namespace Brotherhood_Server.Controllers
 		[Route("contract/{id}/share")]
 		public async Task<IActionResult> ShareContract(int id, string shareeName)
 		{
+			if (shareeName == null)
+				return _error.Response(Status400BadRequest, "No sharee name was provided to the server. Please try again.");
+
 			Contract contract = await _context.Contracts.FindAsync(id);
 
 			if (contract == null)

@@ -28,6 +28,7 @@ namespace Brotherhood_Server.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -254,18 +255,18 @@ namespace Brotherhood_Server.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "2", "3564e880-c935-4912-8fff-d919e30bb3ca", "Assassin", "ASSASSIN" },
-                    { "1", "3cd887ee-c53c-48ab-b817-f2d7661e7a4c", "Mentor", "MENTOR" }
+                    { "2", "f287b839-397f-4ad3-8f58-55d0044fc40f", "Assassin", "ASSASSIN" },
+                    { "1", "b4150de0-7517-498c-b7e8-9516aabdb84a", "Mentor", "MENTOR" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Role", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "96969696-9696-9696-9696-969696969696", 0, "96bb9e7b-6bea-4727-b059-649505850b34", "theodore.lheureux@archlinux.net", false, "Theodore", "l'Heureux", false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAEMYpUCwifUkQCupnZFDYnfqjt7iTn3tgdUbfRNCY7mxyS4Ibqg5j8hlI9OhoLMBxsg==", null, false, "4da3fdad-1571-4dd5-b43f-c8ba16ac228d", false, "Theodore" },
-                    { "69696969-6969-6969-6969-696969696969", 0, "138ef4cf-26d4-49b9-a6d2-13098549203a", "arno.dorian@brotherhood.fr", false, "Arno", "Dorian", false, null, "ARNO.DORIAN@BROTHERHOOD.fr", "ARNO", "AQAAAAEAACcQAAAAEL5qPxmCbiL12qdmt/lG22G9eVOIB/pkr+e/zkfACbuSJ7h/A22EFeps5pu4oJ9Jfw==", null, false, "a49ee044-fc6f-4843-8556-0899ddca0ef4", false, "Arno" },
-                    { "11111111-1111-1111-1111-111111111111", 0, "df42a1ea-857f-473d-ac6a-b634b4ef81ad", "ezio.auditore@firenze.it", false, "Ezio", "Auditore", false, null, "EZIO.AUDITORE@FIRENZE.IT", "EZIO", "AQAAAAEAACcQAAAAEIr1OkmU+BoXQmUfa4tALFfLc7jfUELhLIJdVGCAAupE2ABurnVnevue7hrWDJXMFA==", null, false, "8764e39d-598d-47ac-8c17-8fa9bc8df3c5", false, "Ezio" }
+                    { "96969696-9696-9696-9696-969696969696", 0, "43188df7-0e24-45e2-a260-50d9ca882a6f", "theodore.lheureux@archlinux.net", false, "Theodore", "l'Heureux", false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAEDhsJ3VSR2tYGPk2WTy+/EQa8f4T/+jRZPrbpqiVCoGl8A8Qo4RWDCuEgEKCYA/viw==", null, false, null, "66a3af72-a02e-4963-b0e8-54f5cee4dd37", false, "Theodore" },
+                    { "69696969-6969-6969-6969-696969696969", 0, "945f9117-b2ff-4f86-8159-27a906c46c97", "arno.dorian@brotherhood.fr", false, "Arno", "Dorian", false, null, "ARNO.DORIAN@BROTHERHOOD.fr", "ARNO", "AQAAAAEAACcQAAAAELQf7xobySPPY1gdjM9we6Ncy/Lw+V469G+V8QShKzsPxBtxj6ji+RLctSlmVAjvSQ==", null, false, null, "469879d6-d870-4443-a1cd-42115224c741", false, "Arno" },
+                    { "11111111-1111-1111-1111-111111111111", 0, "c8d6a42b-3058-4404-846e-a59c3eee644c", "ezio.auditore@firenze.it", false, "Ezio", "Auditore", false, null, "EZIO.AUDITORE@FIRENZE.IT", "EZIO", "AQAAAAEAACcQAAAAENh0wnsuS1aPL7q5q0SCKekwE03rfVTEV/5SNTI//glOcOX6HVztNYpZFm/YUu2TEQ==", null, false, null, "c610500a-5406-4f9b-8f4e-72937527fe0e", false, "Ezio" }
                 });
 
             migrationBuilder.InsertData(
