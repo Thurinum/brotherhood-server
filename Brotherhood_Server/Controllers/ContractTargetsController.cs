@@ -83,14 +83,10 @@ namespace Brotherhood_Server.Controllers
 			if (!Validator.TryValidateObject(target, context, validationResults, true))
 				return StatusCode(StatusCodes.Status400BadRequest, new { Message = "Some fields aren't filled. You know what they are. Go fill em'." });
 
-			// add entity
-			_context.ContractTargets.Add(target);
-			await _context.SaveChangesAsync();
-
-			target = await _context.ContractTargets.OrderBy(c => c.Id).LastAsync();
+			int targetId = _context.ContractTargets.Count();
 
 			// save image file
-			switch (_imageService.Upload(smImage, "targets", target.Id, ImageSize.sm))
+			switch (_imageService.Upload(smImage, "targets", targetId, ImageSize.sm))
 			{
 				case ImageUploadStatus.TooSmall:
 					return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is too small. Please upload an image that is at least 1024x1024 pixels." });
@@ -98,7 +94,7 @@ namespace Brotherhood_Server.Controllers
 					return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is invalid. Please upload a valid image." });
 			}
 
-			switch (_imageService.Upload(lgImage, "targets", target.Id, ImageSize.lg))
+			switch (_imageService.Upload(lgImage, "targets", targetId, ImageSize.lg))
 			{
 				case ImageUploadStatus.TooSmall:
 					return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is too small. Please upload an image that is at least 1024x1024 pixels." });
@@ -106,10 +102,9 @@ namespace Brotherhood_Server.Controllers
 					return StatusCode(StatusCodes.Status400BadRequest, new { Message = "The image you uploaded is invalid. Please upload a valid image." });
 			}
 
+			// add entity
 			target.ImageCacheId = Guid.NewGuid().ToString();
-
-			// update entity with image
-			_context.ContractTargets.Update(target);
+			_context.ContractTargets.Add(target);
 			await _context.SaveChangesAsync();
 
 			return CreatedAtAction("CreateContractTarget", new { id = target.Id }, target);
