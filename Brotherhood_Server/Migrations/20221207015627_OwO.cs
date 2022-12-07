@@ -255,8 +255,8 @@ namespace Brotherhood_Server.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "2", "551aac6d-5b01-4108-92a9-d875aecb3742", "Assassin", "ASSASSIN" },
-                    { "1", "f0fc772a-745f-449a-a0ce-a1315c6de916", "Mentor", "MENTOR" }
+                    { "2", "77b67615-08ea-4117-83b5-368c4aaf3db5", "Assassin", "ASSASSIN" },
+                    { "1", "464f2dbc-7b17-4515-86ac-9ceea4290edc", "Mentor", "MENTOR" }
                 });
 
             migrationBuilder.InsertData(
@@ -264,9 +264,9 @@ namespace Brotherhood_Server.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Role", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "96969696-9696-9696-9696-969696969696", 0, "9509558d-30e9-429d-8541-04f2c980fdee", "theodore.lheureux@archlinux.net", false, "Theodore", "l'Heureux", false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAEBG+ISVe9nfOHW2OSOw6RtbNFwtCjjZ1bf6/yxyfw4MZPM9+kalRiTXiwsGV2jpkhg==", null, false, null, "b800d505-8a1a-47f1-91cc-56d32b099151", false, "Theodore" },
-                    { "69696969-6969-6969-6969-696969696969", 0, "7bf1d37c-60b2-4cef-a85c-415b37cf692a", "arno.dorian@brotherhood.fr", false, "Arno", "Dorian", false, null, "ARNO.DORIAN@BROTHERHOOD.fr", "ARNO", "AQAAAAEAACcQAAAAEOtdLT7mbiyAUFd0Lo/KWwL0IGOazjZrUoQwmabITyP2Mw+knwMX8fQDTIth5C+xEg==", null, false, null, "b813d0fc-ca88-47cb-ba95-a30475bbeb85", false, "Arno" },
-                    { "11111111-1111-1111-1111-111111111111", 0, "f37066f6-3b11-42b2-bb74-d5ef88bb975c", "ezio.auditore@firenze.it", false, "Ezio", "Auditore", false, null, "EZIO.AUDITORE@FIRENZE.IT", "EZIO", "AQAAAAEAACcQAAAAEKYoe9V+ZeIa8KUF/cNmzznsucltppUgKkGUzvDI+CUkegaOHod/jKHqdtK85r13Ag==", null, false, null, "b87c18b0-64e0-4de5-9950-f96530a3f6e4", false, "Ezio" }
+                    { "96969696-9696-9696-9696-969696969696", 0, "344935f3-b6ce-4877-9604-18954c0dbf72", "theodore.lheureux@archlinux.net", false, "Theodore", "l'Heureux", false, null, "THEODORE.LHEUREUX@ARCHLINUX.NET", "THEODORE", "AQAAAAEAACcQAAAAELF6edh0uo7BmP9Bn+MW2lLyfvrhDgkCl4Dm+j8Qozk5igNVno1Fh5Wu5XuEAER5rQ==", null, false, null, "e6e853d3-2147-4877-9b21-cf106d5629f5", false, "Theodore" },
+                    { "69696969-6969-6969-6969-696969696969", 0, "dc3441fa-2a9c-4eac-92e7-8beea67e5e06", "arno.dorian@brotherhood.fr", false, "Arno", "Dorian", false, null, "ARNO.DORIAN@BROTHERHOOD.fr", "ARNO", "AQAAAAEAACcQAAAAEFO1L87u5ojARGU7g7AkmZWwi6jPr+TPCagm17z+yeIaeKdKIrZ3lOZf1omH82gs/A==", null, false, null, "fab0eccc-a640-45e5-8429-6769dd9756ae", false, "Arno" },
+                    { "11111111-1111-1111-1111-111111111111", 0, "70bc093d-8904-4dd4-ab30-2d6e33810b89", "ezio.auditore@firenze.it", false, "Ezio", "Auditore", false, null, "EZIO.AUDITORE@FIRENZE.IT", "EZIO", "AQAAAAEAACcQAAAAELIwMmAR4vMpMyT74M8MTMFE8YxzfRnFyKKFgrQMTckBOPMxU993zFRroZ5q28Gukw==", null, false, null, "f356ede5-3c9a-40fa-a438-dc5057867e3d", false, "Ezio" }
                 });
 
             migrationBuilder.InsertData(
