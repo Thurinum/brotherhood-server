@@ -30,13 +30,23 @@ namespace Brotherhood_Server.Controllers
 			_Configuration = configuration;
 		}
 
+		/// <summary>
+		/// Authenticate a user with username/email and password.
+		/// </summary>
+		/// <remarks>This method is available without authentication.</remarks>
+		/// <exception cref="StatusCodes.Status400BadRequest">If the provided credentials are invalid.</exception>
+		/// <param name="login">A DTO containing the credentials needed for the login attempt.</param>
+		/// <returns>
+		///	An object containing a token to be used for authenticating to the API, as well as
+		///	the token's expiration date and the current user's full name and autorization role.
+		/// </returns>
 		[HttpPost]
 		[AllowAnonymous]
 		[Route("login")]
 		public async Task<ActionResult> Login(LoginDTO login)
 		{
-			User user = login.Email == null 
-				? await _userManager.FindByNameAsync(login.UserName) 
+			User user = login.Email == null
+				? await _userManager.FindByNameAsync(login.UserName)
 				: await _userManager.FindByEmailAsync(login.Email);
 
 			if (user == null || !(await _userManager.CheckPasswordAsync(user, login.Password)))
@@ -68,8 +78,14 @@ namespace Brotherhood_Server.Controllers
 			});
 		}
 
+		/// <summary>
+		/// Obtains the list of all publicly available users (that is, users without the Mentor special role).
+		/// </summary>
+		/// <exception cref="StatusCodes.Status400BadRequest">If the provided credentials are invalid.</exception>
+		/// <returns>
+		///	A list of objects containing the ids, user names, full names, emails, and roles of all non-admin users.
+		/// </returns>
 		[HttpGet]
-		[AllowAnonymous]
 		[Route("users/public")]
 		public async Task<IActionResult> GetPublicUsers()
 		{
