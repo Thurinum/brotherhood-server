@@ -15,8 +15,14 @@ using static Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace Brotherhood_Server.Controllers
 {
+	/// <summary>
+	///	Handles the management of contracts.
+	///	Contracts are assignments that involve zero or more Contract Targets.
+	///	Contracts may be assigned targets, may be edited, deleted, etc.
+	///	One of a contract's targets may be chosen as its cover.
+	/// </summary>
 	[ApiController]
-	[Authorize(Roles = "Mentor, Assassin")]
+	[Authorize]
 	[Route("api")]
 	public class ContractsController : ControllerBase
 	{
@@ -31,6 +37,13 @@ namespace Brotherhood_Server.Controllers
 			_error = errorService;
 		}
 
+		/// <summary>
+		///	Obtains the list of all public contracts, that is, contracts accessible to all assassins.
+		/// </summary>
+		/// <remarks>This method does not require authentication.</remarks>
+		/// <returns>
+		///	A list of contracts.
+		/// </returns>
 		[HttpGet]
 		[AllowAnonymous]
 		[Route("contracts")]
@@ -40,6 +53,11 @@ namespace Brotherhood_Server.Controllers
 			return await _context.Contracts.Where(c => c.IsPublic).ToListAsync();
 		}
 
+		/// <summary>
+		///	Obtains the list of contracts for the authenticated user.
+		///	Those are contracts involving the current user.
+		/// </summary>
+		/// <returns>A list of contracts.</returns>
 		[HttpGet]
 		[Route("contracts/private")]
 		public async Task<ActionResult<IEnumerable<Contract>>> GetPrivateContracts()
@@ -47,6 +65,14 @@ namespace Brotherhood_Server.Controllers
 			return (await GetCurrentUser()).Contracts;
 		}
 
+		/// <summary>
+		///	Gets a summary of statistics on the database.
+		/// </summary>
+		/// <remarks>This method does not require authentication.</remarks>
+		/// <returns>
+		///	An object containing statistics on the number of contracts, public contracts,
+		///	targets, users, and cities.
+		/// </returns>
 		[HttpGet]
 		[AllowAnonymous]
 		[Route("statistics")]
@@ -62,7 +88,11 @@ namespace Brotherhood_Server.Controllers
 			});
 		}
 
-			[HttpPost]
+		/// <summary>
+		///	Creates a contract.
+		/// </summary>
+		/// <param name="contract">A DTO for the contract.</param>
+		[HttpPost]
 		[Route("contract/create")]
 		public async Task<ActionResult<Contract>> CreateContract(Contract contract)
 		{
@@ -75,6 +105,12 @@ namespace Brotherhood_Server.Controllers
 			return CreatedAtAction("CreateContract", new { id = contract.Id }, contract);
 		}
 
+		/// <summary>
+		///	Obtains a list of all contract targets for a given contract.
+		/// </summary>
+		/// <param name="id">The id of the contract.</param>
+		/// <exception cref="Status403Forbidden">If the user is not himself assigned to the contract.</exception>
+		/// <returns>A list of targets for the given contract.</returns>
 		[HttpGet]
 		[Route("contract/{id}/targets")]
 		public async Task<ActionResult<IEnumerable<ContractTarget>>> GetContractTargets(int id)
@@ -93,6 +129,16 @@ namespace Brotherhood_Server.Controllers
 			return contract.Targets;
 		}
 
+		/// <summary>
+		///	Assigns an existing target to a contract.
+		/// </summary>
+		/// <param name="id">The id of the contract.</param>
+		/// <param name="target">A DTO of the target to be assigned to the contract.</param>
+		/// <exception cref="Status400BadRequest">If the contract id provided is not valid.</exception>
+		/// <exception cref="Status403Forbidden">If the user is not assigned to the contract.</exception>
+		/// <exception cref="Status409Conflict">If the target is already assigned to the contract.</exception>
+		/// <exception cref="Status500InternalServerError">If the assignment of the target to the contract fails.</exception>
+		/// <returns></returns>
 		[HttpPut]
 		[Route("contract/{id}/target/add")]
 		public async Task<IActionResult> AddContractTarget(int id, ContractTarget target)
@@ -125,6 +171,20 @@ namespace Brotherhood_Server.Controllers
 			return NoContent();
 		}
 
+		/// <summary>
+		///	Unassigns a target from a contract.
+		/// </summary>
+		/// <param name="id">The id of the contract.</param>
+		/// <param name="dto">A dto of the contract target to remove.</param>
+		/// <remarks>
+		///	This does not delete the target: it remains assigned to other contracts, and remains
+		///	available for use in other contracts.
+		/// </remarks>
+		/// <exception cref="Status400BadRequest">If the provided data is invalid.</exception>
+		/// <exception cref="Status403Forbidden">If the user is not assigned to the contract.</exception>
+		/// <exception cref="Status404NotFound">If the target is not assigned to the contract.</exception>
+		/// <exception cref="Status500InternalServerError">If the server encounters an error unassigning the target.</exception>
+		/// <returns></returns>
 		[HttpPut]
 		[Route("contract/{id}/target/remove")]
 		public async Task<IActionResult> RemoveContractTarget(int id, ContractTarget dto)
@@ -142,7 +202,7 @@ namespace Brotherhood_Server.Controllers
 			if (!contract.Assassins.Contains(user) && !mentors.Contains(user))
 				return StatusCode(StatusCodes.Status403Forbidden, new { Message = "You must be assigned to this contract in order to edit its targets." });
 			if (!contract.Targets.Contains(target))
-				return StatusCode(StatusCodes.Status403Forbidden, new { Message = $"Cannot remove target '{target.FirstName} {target.LastName}' from contract '{contract.Codename}' because it is not a target in the latter." });
+				return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Cannot remove target '{target.FirstName} {target.LastName}' from contract '{contract.Codename}' because it is not a target in the latter." });
 
 			contract.Targets.Remove(target);
 			_context.Entry(contract).State = EntityState.Modified;
@@ -156,8 +216,14 @@ namespace Brotherhood_Server.Controllers
 			return NoContent();
 		}
 
+		/// <summary>
+		///	
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="dto"></param>
+		/// <returns></returns>
 		[HttpPut]
-		[Route("contract/{id}/setcover")]
+		[Route("contract/{id}/edit/cover")]
 		public async Task<IActionResult> SetContractCover(int id, ContractTarget dto)
 		{
 			Contract contract = await _context.Contracts.FindAsync(id);

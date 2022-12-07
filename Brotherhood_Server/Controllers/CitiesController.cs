@@ -9,7 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Brotherhood_Server.Controllers
 {
+	/// <summary>
+	///	Handles cities. Cities cannot be managed in this version of the API.
+	/// </summary>
 	[ApiController]
+	[Authorize]
 	[Route("api")]
 	public class CitiesController : ControllerBase
 	{
@@ -22,8 +26,13 @@ namespace Brotherhood_Server.Controllers
 			_userManager = userManager;
 		}
 
-		// get all cities
+		/// <summary>
+		///	Gets a list of all cities.
+		/// </summary>
+		/// <remarks>This method does not require authentication.</remarks>
+		/// <returns>A list of City objects.</returns>
 		[HttpGet]
+		[AllowAnonymous]
 		[Route("cities")]
 		public async Task<ActionResult<IEnumerable<City>>> GetCities()
 		{

@@ -16,6 +16,12 @@ using Microsoft.Net.Http.Headers;
 
 namespace Brotherhood_Server.Controllers
 {
+	/// <summary>
+	///	Handles the management of users.
+	///	Unauthentified users (guests) may access the list of contracts and cities.
+	///	Users with the Assassin role may access most of the API.
+	///	Some destructive actions, as well as permission bypass, can be accomplished only by users with the Mentor role.
+	/// </summary>
 	[ApiController]
 	[Authorize]
 	[Route("api")]
@@ -31,7 +37,7 @@ namespace Brotherhood_Server.Controllers
 		}
 
 		/// <summary>
-		/// Authenticate a user with username/email and password.
+		///	Authenticates a user with username/email and password.
 		/// </summary>
 		/// <remarks>This method is available without authentication.</remarks>
 		/// <exception cref="StatusCodes.Status400BadRequest">If the provided credentials are invalid.</exception>
@@ -79,7 +85,7 @@ namespace Brotherhood_Server.Controllers
 		}
 
 		/// <summary>
-		/// Obtains the list of all publicly available users (that is, users without the Mentor special role).
+		///	Obtains the list of all publicly available users (that is, users without the Mentor special role).
 		/// </summary>
 		/// <exception cref="StatusCodes.Status400BadRequest">If the provided credentials are invalid.</exception>
 		/// <returns>
@@ -101,6 +107,13 @@ namespace Brotherhood_Server.Controllers
 			}).ToList());
 		}
 
+		/// <summary>
+		///	Obtains the list of all publicly available users (that is, users without the Mentor special role).
+		/// </summary>
+		/// <remarks>This method requires the special Mentor role.</remarks>
+		/// <returns>
+		///	A list of objects containing the ids, user names, full names, emails, and roles of all users, including admins.
+		/// </returns>
 		[HttpGet]
 		[Authorize(Roles = "Mentor")]
 		[Route("users/private")]
@@ -118,6 +131,13 @@ namespace Brotherhood_Server.Controllers
 			}).ToList());
 		}
 
+		/// <summary>
+		///	Creates a new user.
+		/// </summary>
+		/// <remarks>This method requires the special Mentor role.</remarks>
+		/// <param name="register">A DTO containing the credentials needed for user creation.</param>
+		/// <exception cref="StatusCodes.Status400BadRequest">If the passwords don't match.</exception>
+		/// <exception cref="StatusCodes.Status500InternalServerError">If the user manager fails to register the new user.</exception>
 		[HttpPost]
 		[Authorize(Roles = "Mentor")]
 		[Route("user/create")]
@@ -144,6 +164,15 @@ namespace Brotherhood_Server.Controllers
 			return Ok();
 		}
 
+		/// <summary>
+		///	Deletes a user.
+		/// </summary>
+		/// <remarks>
+		///	This method requires the special Mentor role.
+		///	User deletion is not supported on users with the Mentor role. No workaround is available at this time.
+		///	This is to prevent loss of access to the database.
+		/// </remarks>
+		/// <param name="id">The GUID of the user to remove.</param>
 		[HttpDelete]
 		[Authorize(Roles = "Mentor")]
 		[Route("user/{id:Guid}/delete")]
