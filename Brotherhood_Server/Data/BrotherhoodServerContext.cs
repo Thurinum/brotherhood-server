@@ -25,9 +25,9 @@ namespace Brotherhood_Server.Data
 					Id = 1,
 					CoverTargetId = 1,
 					CityId = 1,
-					Codename = "A Fat Fraud",
+					Codename = "Ill Deontology",
 					IsPublic = true,
-					Briefing = "Julie Proulx is using her weight loss program to gain leverage over obese people all over America. " +
+					Briefing = "Julie Proulx is using her fraudulent weight loss program to gain leverage over many people all over the USA. " +
 							   "Put an end to her manipulative scheme before she uses her customers' money against the Brotherhood."
 				},
 				new Contract()
@@ -46,13 +46,13 @@ namespace Brotherhood_Server.Data
 				{
 					Id = 3,
 					CityId = 2,
-					Codename = "When Fluff Isn't Enough",
+					Codename = "When Patriotism Isn't Enough",
 					IsPublic = true,
 					Briefing = "Our long-time collaborator, Paul Clayton, is being kept hostage by the Holy American Inquisition inside " +
-							   "their headquarters of the Empire State Building. He is accused of being part of the Furry Fandom. Four men " +
+							   "their headquarters of the Empire State Building. He is accused of being part of the patriots. Four men " +
 							   "are set to witness against him in the coming days before the Inquisition's Tribunal. Paul is a valuable asset to " +
-							   "the Brotherhood, as his status of legend amongst furries grants us a constant stream of fluffy recruits. " +
-							   "Eliminate the three witnesses and show the furry community the support our order bestows upon its most loyal supporters."
+							   "the Brotherhood, as his status of legend amongst patriots grants us a constant stream of patriotic recruits. " +
+							   "Eliminate the three witnesses and show the patriot community the support our order bestows upon its most loyal supporters."
 				},
 				new Contract()
 				{
